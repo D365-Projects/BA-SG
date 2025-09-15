@@ -1,5 +1,6 @@
 namespace Microsoft.Sales.Document;
 
+using Microsoft.Assembly.Document;
 using Microsoft.Bank.BankAccount;
 using Microsoft.CRM.Contact;
 using Microsoft.CRM.Interaction;
@@ -7,6 +8,7 @@ using Microsoft.CRM.Segment;
 using Microsoft.CRM.Team;
 using Microsoft.Finance.Currency;
 using Microsoft.Finance.GeneralLedger.Setup;
+using Microsoft.Finance.SalesTax;
 using Microsoft.Finance.VAT.Calculation;
 using Microsoft.Finance.VAT.Clause;
 using Microsoft.Foundation.Address;
@@ -14,7 +16,7 @@ using Microsoft.Foundation.Company;
 using Microsoft.Foundation.PaymentTerms;
 using Microsoft.Foundation.Reporting;
 using Microsoft.Foundation.Shipping;
-using Microsoft.Inventory.Item;
+using Microsoft.Foundation.UOM;
 using Microsoft.Inventory.Location;
 using Microsoft.Sales.Customer;
 using Microsoft.Sales.Posting;
@@ -25,10 +27,10 @@ using System.Globalization;
 using System.Text;
 using System.Utilities;
 
-report 50106 "Devices Sales Quote"
+report 50111 "Standard Sales Order T&M"
 {
-    Caption = 'Devices Sales Quote';
-    DefaultRenderingLayout = "DevicesQuote.rdl";
+    Caption = 'Sales - Confirmation-T&M';
+    DefaultRenderingLayout = "T&M Order.rdl";
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
 
@@ -36,9 +38,9 @@ report 50106 "Devices Sales Quote"
     {
         dataitem(Header; "Sales Header")
         {
-            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Quote));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Quote';
+            RequestFilterHeading = 'Sales Order';
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -61,6 +63,9 @@ report 50106 "Devices Sales Quote"
             {
             }
             column(CompanyAddress8; CompanyAddr[8])
+            {
+            }
+            column(CompanyHomePage; CompanyInfo."Home Page")
             {
             }
             column(CompanyEMail; CompanyInfo."E-Mail")
@@ -171,25 +176,61 @@ report 50106 "Devices Sales Quote"
             column(CustomerAddress8; CustAddr[8])
             {
             }
+            column(SellToContactPhoneNoLbl; SellToContactPhoneNoLbl)
+            {
+            }
+            column(SellToContactMobilePhoneNoLbl; SellToContactMobilePhoneNoLbl)
+            {
+            }
+            column(SellToContactEmailLbl; SellToContactEmailLbl)
+            {
+            }
+            column(BillToContactPhoneNoLbl; BillToContactPhoneNoLbl)
+            {
+            }
+            column(BillToContactMobilePhoneNoLbl; BillToContactMobilePhoneNoLbl)
+            {
+            }
+            column(BillToContactEmailLbl; BillToContactEmailLbl)
+            {
+            }
+            column(SellToContactPhoneNo; SellToContact."Phone No.")
+            {
+            }
+            column(SellToContactMobilePhoneNo; SellToContact."Mobile Phone No.")
+            {
+            }
+            column(SellToContactEmail; SellToContact."E-Mail")
+            {
+            }
+            column(BillToContactPhoneNo; BillToContact."Phone No.")
+            {
+            }
+            column(BillToContactMobilePhoneNo; BillToContact."Mobile Phone No.")
+            {
+            }
+            column(BillToContactEmail; BillToContact."E-Mail")
+            {
+            }
             column(CustomerPostalBarCode; FormatAddr.PostalBarCode(1))
-            {
-            }
-            column(ExternalDocumentNo; "External Document No.")
-            {
-            }
-            column(ExternalDocumentNoLbl; FieldCaption("External Document No."))
             {
             }
             column(YourReference; "Your Reference")
             {
             }
-            column(YourReference__Lbl; FieldCaption("Your Reference"))
+            column(YourReference_Lbl; FieldCaption("Your Reference"))
             {
             }
             column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
             column(ShipmentMethodDescription_Lbl; ShptMethodDescLbl)
+            {
+            }
+            column(ShipmentDate; Format("Shipment Date", 0, 4))
+            {
+            }
+            column(ShipmentDate_Lbl; FieldCaption("Shipment Date"))
             {
             }
             column(Shipment_Lbl; ShipmentLbl)
@@ -228,42 +269,6 @@ report 50106 "Devices Sales Quote"
             column(ShipToPhoneNo; Header."Ship-to Phone No.")
             {
             }
-            column(SellToContactPhoneNoLbl; SellToContactPhoneNoLbl)
-            {
-            }
-            column(SellToContactMobilePhoneNoLbl; SellToContactMobilePhoneNoLbl)
-            {
-            }
-            column(SellToContactEmailLbl; SellToContactEmailLbl)
-            {
-            }
-            column(BillToContactPhoneNoLbl; BillToContactPhoneNoLbl)
-            {
-            }
-            column(BillToContactMobilePhoneNoLbl; BillToContactMobilePhoneNoLbl)
-            {
-            }
-            column(BillToContactEmailLbl; BillToContactEmailLbl)
-            {
-            }
-            column(SellToContactPhoneNo; SellToContact."Phone No.")
-            {
-            }
-            column(SellToContactMobilePhoneNo; SellToContact."Mobile Phone No.")
-            {
-            }
-            column(SellToContactEmail; SellToContact."E-Mail")
-            {
-            }
-            column(BillToContactPhoneNo; BillToContact."Phone No.")
-            {
-            }
-            column(BillToContactMobilePhoneNo; BillToContact."Mobile Phone No.")
-            {
-            }
-            column(BillToContactEmail; BillToContact."E-Mail")
-            {
-            }
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
@@ -297,18 +302,16 @@ report 50106 "Devices Sales Quote"
             column(DueDate_Lbl; FieldCaption("Due Date"))
             {
             }
-            column(QuoteValidToDate; Format("Quote Valid Until Date", 0, 4))
-            {
-            }
-            column(QuoteValidToDate_Lbl; QuoteValidToDateLbl)
-            {
-            }
             column(DocumentNo; "No.")
             {
             }
             column(DocumentNo_Lbl; InvNoLbl)
             {
             }
+            column(PONumber_Lbl; PONumberLbl)
+            {
+            }
+
             column(PricesIncludingVAT; "Prices Including VAT")
             {
             }
@@ -319,6 +322,9 @@ report 50106 "Devices Sales Quote"
             {
             }
             column(SalesPerson_Lbl; SalespersonLbl)
+            {
+            }
+            column(Salesperson_Lbl2; SalespersonLbl2)
             {
             }
             column(SalesPersonBlank_Lbl; SalesPersonText)
@@ -353,6 +359,12 @@ report 50106 "Devices Sales Quote"
                 ObsoleteTag = '25.0';
             }
 #endif
+            column(SellToFaxNo; GetSellToCustomerFaxNo())
+            {
+            }
+            column(SellToPhoneNo; "Sell-to Phone No.")
+            {
+            }
             column(LegalEntityType; Cust.GetLegalEntityType())
             {
             }
@@ -365,33 +377,9 @@ report 50106 "Devices Sales Quote"
             column(EMail_Lbl; EMailLbl)
             {
             }
-            column(Estimate_Lbl; EstimateLbl)
+            column(HomePage_Lbl; HomePageLbl)
             {
             }
-            column(YourEstimate_Lbl; YourEstimateLbl)
-            {
-            }
-            column(EstimateBody_Lbl; EstimateBodyLbl)
-            {
-            }
-            column(From_Lbl; FromLbl)
-            {
-            }
-            column(EstimateFor_Lbl; EstimateForLbl)
-            {
-            }
-            column(Questions_Lbl; QuestionsLbl)
-            {
-            }
-            column(Contact_Lbl; CompanyInfo.GetContactUsText())
-            {
-            }
-            column(Thanks_Lbl; ThanksLbl)
-            {
-            }
-            // column(HomePage_Lbl; HomePageLbl)
-            // {
-            // }
             column(InvoiceDiscountBaseAmount_Lbl; InvDiscBaseAmtLbl)
             {
             }
@@ -413,10 +401,7 @@ report 50106 "Devices Sales Quote"
             column(SalesInvoiceLineDiscount_Lbl; SalesInvLineDiscLbl)
             {
             }
-            column(DocumentTitle_Lbl; SalesConfirmationLbl)
-            {
-            }
-            column(ShowWorkDescription; ShowWorkDescription)
+            column(DocumentTitle; SalesConfirmationLbl)
             {
             }
             column(Subtotal_Lbl; SubtotalLbl)
@@ -446,6 +431,15 @@ report 50106 "Devices Sales Quote"
             column(VATClause_Lbl; VATClause.TableCaption())
             {
             }
+            column(ExtDocNo_SalesHeader; "External Document No.")
+            {
+            }
+            column(ExtDocNo_SalesHeader_Lbl; FieldCaption("External Document No."))
+            {
+            }
+            column(ShowWorkDescription; ShowWorkDescription)
+            {
+            }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -455,13 +449,10 @@ report 50106 "Devices Sales Quote"
                 column(LineNo_Line; "Line No.")
                 {
                 }
-                column(UPC_SG; UPC_SG)
+                column(Line_SKU; SKU)
                 {
+
                 }
-                column(Line_sku; SKU)
-                {
-                }
-                column(Item_Type; Type) { }
                 column(AmountExcludingVAT_Line; Amount)
                 {
                     AutoFormatExpression = "Currency Code";
@@ -472,12 +463,12 @@ report 50106 "Devices Sales Quote"
                 }
                 column(AmountIncludingVAT_Line; "Amount Including VAT")
                 {
-                    AutoFormatExpression = Header."Currency Code";
+                    AutoFormatExpression = "Currency Code";
                     AutoFormatType = 1;
                 }
                 column(AmountIncludingVAT_Line_Lbl; FieldCaption("Amount Including VAT"))
                 {
-                    AutoFormatExpression = Header."Currency Code";
+                    AutoFormatExpression = "Currency Code";
                     AutoFormatType = 1;
                 }
                 column(Description_Line; Description)
@@ -506,16 +497,16 @@ report 50106 "Devices Sales Quote"
                 column(ItemNo_Line_Lbl; FieldCaption("No."))
                 {
                 }
-                column(ItemReferenceNo_Line; "Item Reference No.")
-                {
-                }
-                column(ItemReferenceNo_Line_Lbl; FieldCaption("Item Reference No."))
-                {
-                }
                 column(ShipmentDate_Line; Format("Shipment Date"))
                 {
                 }
-                column(ShipmentDate_Lbl; PostedShipmentDateLbl)
+                column(ShipmentDate_Line_Lbl; PostedShipmentDateLbl)
+                {
+                }
+                column(PlannedShipmentDate_Line; Format("Planned Shipment Date"))
+                {
+                }
+                column(PlannedShipmentDate_Line_Lbl; FieldCaption("Planned Shipment Date"))
                 {
                 }
                 column(Quantity_Line; FormattedQuantity)
@@ -541,6 +532,9 @@ report 50106 "Devices Sales Quote"
                 column(UnitOfMeasure_Lbl; FieldCaption("Unit of Measure"))
                 {
                 }
+                column(Unit_Lbl; UnitLbl)
+                {
+                }
                 column(VATIdentifier_Line; "VAT Identifier")
                 {
                 }
@@ -558,22 +552,50 @@ report 50106 "Devices Sales Quote"
                     AutoFormatExpression = "Currency Code";
                     AutoFormatType = 1;
                 }
-                column(Unit_Lbl; UnitLbl)
+                column(ItemReferenceNo; "Item Reference No.")
                 {
                 }
-                column(Qty_Lbl; QtyLbl)
+                column(ItemReferenceNo_Lbl; FieldCaption("Item Reference No."))
                 {
                 }
-                column(Price_Lbl; PriceLbl)
+                column(UnitPrice_Lbl2; UnitPriceLbl)
                 {
                 }
-                column(PricePer_Lbl; PricePerLbl)
+                column(LineAmount_Lbl; LineAmountLbl)
                 {
+                }
+                dataitem(AssemblyLine; "Assembly Line")
+                {
+                    DataItemTableView = sorting("Document No.", "Line No.");
+                    column(LineNo_AssemblyLine; "No.")
+                    {
+                    }
+                    column(Description_AssemblyLine; Description)
+                    {
+                    }
+                    column(Quantity_AssemblyLine; Quantity)
+                    {
+                        DecimalPlaces = 0 : 5;
+                    }
+                    column(UnitOfMeasure_AssemblyLine; GetUOMText("Unit of Measure Code"))
+                    {
+                    }
+                    column(VariantCode_AssemblyLine; "Variant Code")
+                    {
+                    }
+
+                    trigger OnPreDataItem()
+                    begin
+                        if not DisplayAssemblyInformation then
+                            CurrReport.Break();
+                        if not AsmInfoExistsForLine then
+                            CurrReport.Break();
+                        SetRange("Document Type", AsmHeader."Document Type");
+                        SetRange("Document No.", AsmHeader."No.");
+                    end;
                 }
 
                 trigger OnAfterGetRecord()
-                var
-                    Item: Record Item;
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
@@ -583,6 +605,11 @@ report 50106 "Devices Sales Quote"
                     else
                         LineDiscountPctText := StrSubstNo('%1%', -Round("Line Discount %", 0.1));
 
+                    if DisplayAssemblyInformation then
+                        AsmInfoExistsForLine := AsmToOrderExists(AsmHeader);
+
+                    OnLineOnAfterGetRecordOnBeforeCalcTotals(Header, Line, VATAmountLine);
+
                     TransHeaderAmount += PrevLineAmount;
                     PrevLineAmount := "Line Amount";
                     TotalSubTotal += "Line Amount";
@@ -591,6 +618,8 @@ report 50106 "Devices Sales Quote"
                     TotalAmountVAT += "Amount Including VAT" - Amount;
                     TotalAmountInclVAT += "Amount Including VAT";
                     TotalPaymentDiscOnVAT += -("Line Amount" - "Inv. Discount Amount" - "Amount Including VAT");
+
+                    OnLineOnAfterGetRecordOnAfterCalcTotals(Header, Line, TotalAmount, TotalAmountVAT, TotalAmountInclVAT);
 
                     FormatDocument.SetSalesLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
 
@@ -639,15 +668,13 @@ report 50106 "Devices Sales Quote"
                 begin
                     if not ShowWorkDescription then
                         CurrReport.Break();
-
                     Header."Work Description".CreateInStream(WorkDescriptionInstream, TEXTENCODING::UTF8);
                 end;
             }
             dataitem(VATAmountLine; "VAT Amount Line")
             {
-                UseTemporary = true; // Ensure this dataitem is only used as a temporary buffer as per deprecation notice
                 DataItemTableView = sorting("VAT Identifier", "VAT Calculation Type", "Tax Group Code", "Use Tax", Positive);
-
+                UseTemporary = true;
                 column(InvoiceDiscountAmount_VATAmountLine; "Invoice Discount Amount")
                 {
                     AutoFormatExpression = Header."Currency Code";
@@ -730,6 +757,11 @@ report 50106 "Devices Sales Quote"
 
                     TotalVATBaseLCY += VATBaseLCY;
                     TotalVATAmountLCY += VATAmountLCY;
+
+                    if "VAT Clause Code" <> '' then begin
+                        VATClauseLine := VATAmountLine;
+                        if VATClauseLine.Insert() then;
+                    end;
                 end;
 
                 trigger OnPreDataItem()
@@ -739,6 +771,45 @@ report 50106 "Devices Sales Quote"
 
                     TotalVATBaseLCY := 0;
                     TotalVATAmountLCY := 0;
+
+                    VATClauseLine.DeleteAll();
+                end;
+            }
+            dataitem(VATClauseLine; "VAT Amount Line")
+            {
+                DataItemTableView = sorting("VAT Identifier", "VAT Calculation Type", "Tax Group Code", "Use Tax", Positive);
+                UseTemporary = true;
+                column(VATIdentifier_VATClauseLine; "VAT Identifier")
+                {
+                }
+                column(Code_VATClauseLine; VATClause.Code)
+                {
+                }
+                column(Code_VATClauseLine_Lbl; VATClause.FieldCaption(Code))
+                {
+                }
+                column(Description_VATClauseLine; VATClauseText)
+                {
+                }
+                column(Description2_VATClauseLine; VATClause."Description 2")
+                {
+                }
+                column(VATAmount_VATClauseLine; "VAT Amount")
+                {
+                    AutoFormatExpression = Header."Currency Code";
+                    AutoFormatType = 1;
+                }
+                column(NoOfVATClauses; Count)
+                {
+                }
+
+                trigger OnAfterGetRecord()
+                begin
+                    if "VAT Clause Code" = '' then
+                        CurrReport.Skip();
+                    if not VATClause.Get("VAT Clause Code") then
+                        CurrReport.Skip();
+                    VATClauseText := VATClause.GetDescriptionText(Header);
                 end;
             }
             dataitem(ReportTotalsLine; "Report Totals Buffer")
@@ -750,6 +821,8 @@ report 50106 "Devices Sales Quote"
                 }
                 column(Amount_ReportTotalsLine; Amount)
                 {
+                    AutoFormatExpression = Header."Currency Code";
+                    AutoFormatType = 1;
                 }
                 column(AmountFormatted_ReportTotalsLine; "Amount Formatted")
                 {
@@ -764,6 +837,31 @@ report 50106 "Devices Sales Quote"
                 trigger OnPreDataItem()
                 begin
                     CreateReportTotalLines();
+                end;
+            }
+            dataitem(USReportTotalsLine; "Report Totals Buffer")
+            {
+                DataItemTableView = sorting("Line No.");
+                UseTemporary = true;
+                column(Description_USReportTotalsLine; Description)
+                {
+                }
+                column(Amount_USReportTotalsLine; Amount)
+                {
+                }
+                column(AmountFormatted_USReportTotalsLine; "Amount Formatted")
+                {
+                }
+                column(FontBold_USReportTotalsLine; "Font Bold")
+                {
+                }
+                column(FontUnderline_USReportTotalsLine; "Font Underline")
+                {
+                }
+
+                trigger OnPreDataItem()
+                begin
+                    CreateUSReportTotalLines();
                 end;
             }
             dataitem(LetterText; "Integer")
@@ -800,10 +898,8 @@ report 50106 "Devices Sales Quote"
                 column(TotalVATBaseLCY; TotalVATBaseLCY)
                 {
                 }
-                column(TotalAmountIncludingVAT; Format(TotalAmountInclVAT, 0, AutoFormat.ResolveAutoFormat(Enum::"Auto Format"::AmountFormat, Header."Currency Code")))
+                column(TotalAmountIncludingVAT; Format(TotalAmountInclVAT, 0, AutoFormat.ResolveAutoFormat("Auto Format"::AmountFormat, Header."Currency Code")))
                 {
-                    AutoFormatExpression = Header."Currency Code";
-                    AutoFormatType = 1;
                 }
                 column(TotalVATAmount; TotalAmountVAT)
                 {
@@ -841,6 +937,18 @@ report 50106 "Devices Sales Quote"
                 column(TotalText; TotalText)
                 {
                 }
+                column(AmountSubjectToSalesTax; VATAmountLine.GetAmtSubjectToSalesTax())
+                {
+                }
+                column(AmountSubjectToSalesTaxLbl; AmtSubjecttoSalesTaxLbl)
+                {
+                }
+                column(AmountExemptFromSalesTax; VATAmountLine.GetAmtExemptFromSalesTax())
+                {
+                }
+                column(AmountExemptFromSalesTaxLbl; AmtExemptfromSalesTaxLbl)
+                {
+                }
                 column(CurrencyCode; CurrCode)
                 {
                 }
@@ -862,19 +970,20 @@ report 50106 "Devices Sales Quote"
                 Clear(SalesPost);
                 VATAmountLine.DeleteAll();
                 Line.DeleteAll();
-                SalesPost.GetSalesLines(Header, Line, 0);
-                OnBeforeCalcVATAmountLines(Header, Line);
+                SalesPost.GetSalesLines(Header, Line, 0, false);
+                OnLineOnAfterGetRecordOnBeforeCalcVATAmountLines(Header, Line);
                 Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
                 Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
-                OnLineOnAfterGetRecordOnAfterUpdateVATOnLines(Header, Line);
+                Line.CalcSalesTaxLines(Header, Line);
+                OnHeaderOnAfterGetRecordOnAfterUpdateVATOnLines(Header, Line, VATAmountLine);
 
                 if not IsReportInPreviewMode() then
                     CODEUNIT.Run(CODEUNIT::"Sales-Printed", Header);
 
                 OnHeaderOnAfterGetRecordOnAfterUpdateNoPrinted(IsReportInPreviewMode(), Header);
 
-                SetFormatRegion("Format Region");
-                SetLanguage("Language Code");
+                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
+                CurrReport.FormatRegion := LanguageMgt.GetFormatRegionOrDefault("Format Region");
                 FormatAddr.SetLanguageCode("Language Code");
 
                 CalcFields("Work Description");
@@ -910,29 +1019,16 @@ report 50106 "Devices Sales Quote"
 
                 if not IsReportInPreviewMode() and
                    (CurrReport.UseRequestPage and ArchiveDocument or
-                    not CurrReport.UseRequestPage and (SalesSetup."Archive Quotes" <> SalesSetup."Archive Quotes"::Never))
+                    not CurrReport.UseRequestPage and SalesSetup."Archive Orders")
                 then
-                    case SalesSetup."Archive Quotes" of
-                        SalesSetup."Archive Quotes"::Always:
-                            ArchiveManagement.ArchSalesDocumentNoConfirm(Header);
-                        SalesSetup."Archive Quotes"::Question:
-                            begin
-                                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault(LanguageMgt.GetUserLanguageCode());
-                                ArchiveManagement.ArchiveSalesDocument(Header);
-                                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
-                            end;
-                    end;
+                    ArchiveManagement.StoreSalesDocument(Header, LogInteraction);
 
                 TotalSubTotal := 0;
                 TotalInvDiscAmount := 0;
                 TotalAmount := 0;
                 TotalAmountVAT := 0;
                 TotalAmountInclVAT := 0;
-            end;
-
-            trigger OnPreDataItem()
-            begin
-                FirstLineHasBeenOutput := false;
+                TotalPaymentDiscOnVAT := 0;
             end;
         }
     }
@@ -953,13 +1049,19 @@ report 50106 "Devices Sales Quote"
                         ApplicationArea = Basic, Suite;
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
-                        ToolTip = 'Specifies that interactions with the contact are logged.';
+                        ToolTip = 'Specifies if you want to record the related interactions with the involved contact person in the Interaction Log Entry table.';
+                    }
+                    field(DisplayAsmInformation; DisplayAssemblyInformation)
+                    {
+                        ApplicationArea = Assembly;
+                        Caption = 'Show Assembly Components';
+                        ToolTip = 'Specifies if you want the report to include information about components that were used in linked assembly orders that supplied the item(s) being sold. (Only possible for RDLC report layout.)';
                     }
                     field(ArchiveDocument; ArchiveDocument)
                     {
                         ApplicationArea = Basic, Suite;
                         Caption = 'Archive Document';
-                        ToolTip = 'Specifies if the document is archived after you preview or print it.';
+                        ToolTip = 'Specifies if the document is archived after you print it.';
 
                         trigger OnValidate()
                         begin
@@ -977,26 +1079,25 @@ report 50106 "Devices Sales Quote"
 
         trigger OnInit()
         begin
-            LogInteractionEnable := true;
-            ArchiveDocument := SalesSetup."Archive Quotes" <> SalesSetup."Archive Quotes"::Never;
-        end;
-
-        trigger OnOpenPage()
-        begin
             InitLogInteraction();
             LogInteractionEnable := LogInteraction;
+            ArchiveDocument := SalesSetup."Archive Orders";
+
+            OnAfterOnInit(Header);
         end;
     }
 
     rendering
     {
-        layout("DevicesQuote.rdl")
+        layout("T&M Order.rdl")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/DevicesQuote.rdl';
-            Caption = 'Standard Devices Quote (RDLC)';
-            Summary = 'The Standard Devices Quote (RDLC) provides a detailed layout.';
+            LayoutFile = './Layouts/T&M Order.rdl';
+            Caption = 'Standard Sales Order T&M Confirmation (RDLC)';
+            Summary = 'Detailed layout with all fields.';
         }
+
+
 
     }
 
@@ -1020,11 +1121,6 @@ report 50106 "Devices Sales Quote"
 
         IsHandled := false;
         OnInitReportForGlobalVariable(IsHandled, LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl);
-#if not CLEAN23
-        if not IsHandled then begin
-
-        end;
-#endif
     end;
 
     trigger OnPostReport()
@@ -1035,14 +1131,15 @@ report 50106 "Devices Sales Quote"
                     Header.CalcFields("No. of Archived Versions");
                     if Header."Bill-to Contact No." <> '' then
                         SegManagement.LogDocument(
-                          1, Header."No.", Header."Doc. No. Occurrence",
-                          Header."No. of Archived Versions", Database::Contact, Header."Bill-to Contact No.",
-                          Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.")
+                          3, Header."No.", Header."Doc. No. Occurrence",
+                          Header."No. of Archived Versions", DATABASE::Contact, Header."Bill-to Contact No."
+                          , Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.")
                     else
                         SegManagement.LogDocument(
-                          1, Header."No.", Header."Doc. No. Occurrence",
-                          Header."No. of Archived Versions", Database::Customer, Header."Bill-to Customer No.",
+                          3, Header."No.", Header."Doc. No. Occurrence",
+                          Header."No. of Archived Versions", DATABASE::Customer, Header."Bill-to Customer No.",
                           Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.");
+
                 until Header.Next() = 0;
     end;
 
@@ -1051,37 +1148,37 @@ report 50106 "Devices Sales Quote"
         if Header.GetFilters = '' then
             Error(NoFilterSetErr);
 
-        if not CurrReport.UseRequestPage then
-            InitLogInteraction();
-
         CompanyLogoPosition := SalesSetup."Logo Position on Documents";
     end;
 
     var
-        CompanyBankAccount: Record "Bank Account";
+        GLSetup: Record "General Ledger Setup";
         DummyCompanyInfo: Record "Company Information";
+        SalesSetup: Record "Sales & Receivables Setup";
         Cust: Record Customer;
+        RespCenter: Record "Responsibility Center";
+        AsmHeader: Record "Assembly Header";
+        SellToContact: Record Contact;
+        BillToContact: Record Contact;
         LanguageMgt: Codeunit Language;
         FormatAddr: Codeunit "Format Address";
         FormatDocument: Codeunit "Format Document";
         SegManagement: Codeunit SegManagement;
         AutoFormat: Codeunit "Auto Format";
         WorkDescriptionInstream: InStream;
-        WorkDescriptionLine: Text;
         MoreLines: Boolean;
-        ShowWorkDescription: Boolean;
         CopyText: Text[30];
-        ShowShippingAddr: Boolean;
+        TransHeaderAmount: Decimal;
         LogInteractionEnable: Boolean;
+        AsmInfoExistsForLine: Boolean;
         CompanyLogoPosition: Integer;
         CalculatedExchRate: Decimal;
         ExchangeRateText: Text;
+        VATClauseText: Text;
         PrevLineAmount: Decimal;
         PmtDiscText: Text;
-        SalesConfirmationLbl: Label 'Sales Quote';
-        YourEstimateLbl: Label 'Your Estimate';
-        EstimateLbl: Label 'Estimate';
-        SalespersonLbl: Label 'Sales person';
+        ShowWorkDescription: Boolean;
+        WorkDescriptionLine: Text;
         CompanyInfoBankAccNoLbl: Label 'Account No.';
         CompanyInfoBankNameLbl: Label 'Bank';
         CompanyInfoGiroNoLbl: Label 'Giro No.';
@@ -1091,18 +1188,15 @@ report 50106 "Devices Sales Quote"
         HomePageLbl: Label 'Home Page';
         InvDiscBaseAmtLbl: Label 'Invoice Discount Base Amount';
         InvDiscountAmtLbl: Label 'Invoice Discount';
-        InvNoLbl: Label 'No.';
+        InvNoLbl: Label 'Order No.';
         LineAmtAfterInvDiscLbl: Label 'Payment Discount on VAT';
         LocalCurrencyLbl: Label 'Local Currency';
         PageLbl: Label 'Page';
-        PaymentMethodDescLbl: Label 'Payment Method';
         PostedShipmentDateLbl: Label 'Shipment Date';
-        SalesInvLineDiscLbl: Label 'Discount %';
         ShipmentLbl: Label 'Shipment';
         ShiptoAddrLbl: Label 'Ship-to Address';
         SubtotalLbl: Label 'Subtotal';
         TotalLbl: Label 'Total';
-        UnitLbl: Label 'Unit';
         VATAmtSpecificationLbl: Label 'VAT Amount Specification';
         VATAmtLbl: Label 'VAT Amount';
         VATAmountLCYLbl: Label 'VAT Amount (LCY)';
@@ -1113,45 +1207,39 @@ report 50106 "Devices Sales Quote"
         VATPercentageLbl: Label 'VAT %';
         ExchangeRateTxt: Label 'Exchange rate: %1/%2', Comment = '%1 and %2 are both amounts.';
         NoFilterSetErr: Label 'You must specify one or more filters to avoid accidently printing all documents.';
-        FromLbl: Label 'From';
-        EstimateForLbl: Label 'Estimate for';
-        QuestionsLbl: Label 'Questions?';
-        ThanksLbl: Label 'Thank You!';
         GreetingLbl: Label 'Hello';
         ClosingLbl: Label 'Sincerely';
-        PmtDiscTxt: Label 'If we receive the payment before %1, you are eligible for a %2% payment discount.', Comment = '%1 = Discount Due Date %2 = value of Payment Discount % ';
-        BodyLbl: Label 'Thank you for your business. Your quote is attached to this message.';
-        EstimateBodyLbl: Label 'As promised, here''s our estimate. Please see the attached estimate for details.';
-        QuoteValidToDateLbl: Label 'Valid to';
-        QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';
-        PriceLbl: Label 'Price';
-        PricePerLbl: Label 'Price per';
+        PmtDiscTxt: Label 'If we receive the payment before %1, you are eligible for a %2% payment discount.', Comment = '%1 Discount Due Date %2 = value of Payment Discount % ';
+        BodyLbl: Label 'Thank you for your business. Your order confirmation is attached to this message.';
         SellToContactPhoneNoLbl: Label 'Sell-to Contact Phone No.';
         SellToContactMobilePhoneNoLbl: Label 'Sell-to Contact Mobile Phone No.';
         SellToContactEmailLbl: Label 'Sell-to Contact E-Mail';
         BillToContactPhoneNoLbl: Label 'Bill-to Contact Phone No.';
         BillToContactMobilePhoneNoLbl: Label 'Bill-to Contact Mobile Phone No.';
         BillToContactEmailLbl: Label 'Bill-to Contact E-Mail';
-        LCYTxt: label ' (LCY)';
+        AmtSubjecttoSalesTaxLbl: Label 'Amount Subject to Sales Tax';
+        AmtExemptfromSalesTaxLbl: Label 'Amount Exempt from Sales Tax';
+        PONumberLbl: Label 'P.O. Number';
+        TotalTaxLbl: Label 'Total Tax';
+        UnitLbl: Label 'Unit';
+        UnitPriceLbl: Label 'Unit Price';
+        LineAmountLbl: Label 'Line Amount';
+        SalespersonLbl2: Label 'Salesperson';
         LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl : Text;
 
     protected var
-        GLSetup: Record "General Ledger Setup";
-        SalesSetup: Record "Sales & Receivables Setup";
         CompanyInfo: Record "Company Information";
-        RespCenter: Record "Responsibility Center";
-        SellToContact: Record Contact;
-        BillToContact: Record Contact;
+        PaymentTerms: Record "Payment Terms";
+        PaymentMethod: Record "Payment Method";
+        SalespersonPurchaser: Record "Salesperson/Purchaser";
+        ShipmentMethod: Record "Shipment Method";
+        CompanyBankAccount: Record "Bank Account";
         VATClause: Record "VAT Clause";
         CustAddr: array[8] of Text[100];
         ShipToAddr: array[8] of Text[100];
         CompanyAddr: array[8] of Text[100];
-        CurrCode: Text[10];
-        CurrSymbol: Text[10];
-        TotalText: Text[50];
-        TotalExclVATText: Text[50];
-        TotalInclVATText: Text[50];
         ArchiveDocument: Boolean;
+        DisplayAssemblyInformation: Boolean;
         LogInteraction: Boolean;
         TotalSubTotal: Decimal;
         TotalAmount: Decimal;
@@ -1159,38 +1247,46 @@ report 50106 "Devices Sales Quote"
         TotalAmountVAT: Decimal;
         TotalInvDiscAmount: Decimal;
         TotalPaymentDiscOnVAT: Decimal;
-        TransHeaderAmount: Decimal;
-        ShipmentMethod: Record "Shipment Method";
-        PaymentTerms: Record "Payment Terms";
-        PaymentMethod: Record "Payment Method";
-        SalespersonPurchaser: Record "Salesperson/Purchaser";
         FirstLineHasBeenOutput: Boolean;
-        SalesPersonText: Text[50];
-        LineDiscountPctText: Text;
-        FormattedVATPct: Text;
-        FormattedUnitPrice: Text;
-        FormattedQuantity: Text;
+        TotalExclVATText: Text[50];
+        TotalInclVATText: Text[50];
+        TotalText: Text[50];
+        CurrCode: Text[10];
+        CurrSymbol: Text[10];
         FormattedLineAmount: Text;
+        FormattedQuantity: Text;
+        FormattedUnitPrice: Text;
+        FormattedVATPct: Text;
+        LineDiscountPctText: Text;
+        SalesPersonText: Text[50];
+        ShowShippingAddr: Boolean;
         VATBaseLCY: Decimal;
         VATAmountLCY: Decimal;
         TotalVATBaseLCY: Decimal;
         TotalVATAmountLCY: Decimal;
         PaymentTermsDescLbl: Label 'Payment Terms';
+        PaymentMethodDescLbl: Label 'Payment Method';
+        SalesConfirmationLbl: Label 'Order Confirmation';
+        SalesInvLineDiscLbl: Label 'Discount %';
+        SalespersonLbl: Label 'Sales person';
         ShptMethodDescLbl: Label 'Shipment Method';
 
     local procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractionTemplateCode(Enum::"Interaction Log Entry Document Type"::"Sales Qte.") <> '';
+        LogInteraction := SegManagement.FindInteractionTemplateCode(Enum::"Interaction Log Entry Document Type"::"Sales Ord. Cnfrmn.") <> '';
     end;
 
-    local procedure DocumentCaption(): Text[250]
+    local procedure DocumentCaption() DocCaption: Text[250]
     begin
-        exit(SalesConfirmationLbl);
+        DocCaption := SalesConfirmationLbl;
+
+        OnAfterDocumentCaption(Header, DocCaption);
     end;
 
-    procedure InitializeRequest(NewLogInteraction: Boolean)
+    procedure InitializeRequest(NewLogInteraction: Boolean; DisplayAsmInfo: Boolean)
     begin
         LogInteraction := NewLogInteraction;
+        DisplayAssemblyInformation := DisplayAsmInfo;
     end;
 
     protected procedure IsReportInPreviewMode(): Boolean
@@ -1202,7 +1298,7 @@ report 50106 "Devices Sales Quote"
 
     local procedure FormatDocumentFields(SalesHeader: Record "Sales Header")
     begin
-        FormatDocument.SetTotalLabels(SalesHeader.GetCurrencySymbol(), TotalText, TotalInclVATText, TotalExclVATText);
+        FormatDocument.SetTotalLabels(SalesHeader."Currency Code", TotalText, TotalInclVATText, TotalExclVATText);
         FormatDocument.SetSalesPerson(SalespersonPurchaser, SalesHeader."Salesperson Code", SalesPersonText);
         FormatDocument.SetPaymentTerms(PaymentTerms, SalesHeader."Payment Terms Code", SalesHeader."Language Code");
         FormatDocument.SetPaymentMethod(PaymentMethod, SalesHeader."Payment Method Code", SalesHeader."Language Code");
@@ -1211,9 +1307,28 @@ report 50106 "Devices Sales Quote"
         OnAfterFormatDocumentFields(SalesHeader);
     end;
 
+    local procedure GetUOMText(UOMCode: Code[10]): Text[50]
+    var
+        UnitOfMeasure: Record "Unit of Measure";
+    begin
+        if not UnitOfMeasure.Get(UOMCode) then
+            exit(UOMCode);
+        exit(UnitOfMeasure.Description);
+    end;
+
     local procedure CreateReportTotalLines()
+    var
+        TempSalesTaxAmountLine: Record "Sales Tax Amount Line" temporary;
+        TaxArea: Record "Tax Area";
     begin
         ReportTotalsLine.DeleteAll();
+        if Header."Tax Area Code" <> '' then
+            if TaxArea.Get(Header."Tax Area Code") then;
+        if (Header."Tax Area Code" = '') or (TaxArea."Country/Region" = TaxArea."Country/Region"::US) then begin
+            CreateUSReportTotalLines();
+            exit;
+        end;
+
         if (TotalInvDiscAmount <> 0) or (TotalAmountVAT <> 0) then
             ReportTotalsLine.Add(SubtotalLbl, TotalSubTotal, true, false, false, Header."Currency Code");
         if TotalInvDiscAmount <> 0 then begin
@@ -1222,23 +1337,75 @@ report 50106 "Devices Sales Quote"
                 ReportTotalsLine.Add(TotalExclVATText, TotalAmount, true, false, false, Header."Currency Code");
         end;
         if TotalAmountVAT <> 0 then begin
-            ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
-            if TotalVATAmountLCY <> TotalAmountVAT then
-                ReportTotalsLine.Add(VATAmountLine.VATAmountText() + LCYTxt, TotalVATAmountLCY, false, true, false);
+            GetTaxSummarizedLines(TempSalesTaxAmountLine);
+            TempSalesTaxAmountLine.SetCurrentKey("Print Order");
+            TempSalesTaxAmountLine.Ascending(true);
+            if TempSalesTaxAmountLine.FindSet() then
+                repeat
+                    ReportTotalsLine.Add(TempSalesTaxAmountLine."Print Description", TempSalesTaxAmountLine."Tax Amount", false, true, false, Header."Currency Code");
+                until TempSalesTaxAmountLine.Next() = 0;
         end;
     end;
 
-    local procedure SetFormatRegion(FormatRegion: Text[80])
+    local procedure CreateUSReportTotalLines()
     begin
-        CurrReport.FormatRegion := LanguageMgt.GetFormatRegionOrDefault(FormatRegion);
-        OnAfterSetFormatRegion();
+        ReportTotalsLine.DeleteAll();
+        ReportTotalsLine.Add(SubtotalLbl, TotalSubTotal, true, false, false);
+        ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false);
+        ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
     end;
 
-    local procedure SetLanguage(LanguageCode: Code[10])
+    local procedure GetTaxSummarizedLines(var TempSalesTaxAmountLine: Record "Sales Tax Amount Line" temporary)
+    var
+        TaxArea: Record "Tax Area";
+        SalesTaxCalculate: Codeunit "Sales Tax Calculate";
     begin
-        CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault(LanguageCode);
+        if not TaxArea.Get(Header."Tax Area Code") then
+            exit;
 
-        OnAfterSetLanguage();
+        SalesTaxCalculate.StartSalesTaxCalculation();
+        Line.SetRange("Document Type", Header."Document Type");
+        Line.SetRange("Document No.", Header."No.");
+        Line.SetFilter(Type, '>0');
+        Line.SetFilter(Quantity, '<>0');
+        if Line.Find('-') then
+            repeat
+                if not TaxArea."Use External Tax Engine" then
+                    SalesTaxCalculate.AddSalesLine(Line);
+            until Line.Next() = 0;
+        TempSalesTaxAmountLine.DeleteAll();
+        if TaxArea."Use External Tax Engine" then
+            SalesTaxCalculate.CallExternalTaxEngineForSales(Header, true)
+        else
+            SalesTaxCalculate.EndSalesTaxCalculation(Header."Posting Date");
+
+        SalesTaxCalculate.GetSalesTaxAmountLineTable(TempSalesTaxAmountLine);
+        SalesTaxCalculate.GetSummarizedSalesTaxTable(TempSalesTaxAmountLine);
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterOnInit(var SalesHeader: Record "Sales Header")
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterDocumentCaption(SalesHeader: Record "Sales Header"; var DocCaption: Text[250])
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnHeaderOnAfterGetRecordOnAfterUpdateVATOnLines(var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; var VATAmountLine: Record "VAT Amount Line")
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnLineOnAfterGetRecordOnBeforeCalcVATAmountLines(SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line")
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnLineOnAfterGetRecordOnAfterCalcTotals(var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; var VATBaseAmount: Decimal; var VATAmount: Decimal; var TotalAmountInclVAT: Decimal)
+    begin
     end;
 
     [IntegrationEvent(false, false)]
@@ -1247,27 +1414,12 @@ report 50106 "Devices Sales Quote"
     end;
 
     [IntegrationEvent(false, false)]
-    local procedure OnAfterSetLanguage()
-    begin
-    end;
-
-    [IntegrationEvent(false, false)]
-    local procedure OnAfterSetFormatRegion()
-    begin
-    end;
-
-    [IntegrationEvent(false, false)]
-    local procedure OnBeforeCalcVATAmountLines(var Header: Record "Sales Header"; var Line: Record "Sales Line")
-    begin
-    end;
-
-    [IntegrationEvent(false, false)]
-    local procedure OnLineOnAfterGetRecordOnAfterUpdateVATOnLines(var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line")
-    begin
-    end;
-
-    [IntegrationEvent(false, false)]
     local procedure OnInitReportForGlobalVariable(var IsHandled: Boolean; var LegalOfficeTxt: Text; var LegalOfficeLbl: Text; var CustomGiroTxt: Text; var CustomGiroLbl: Text; var LegalStatementLbl: Text)
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnLineOnAfterGetRecordOnBeforeCalcTotals(var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; var VATAmountLine: Record "VAT Amount Line")
     begin
     end;
 

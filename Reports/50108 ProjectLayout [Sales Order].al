@@ -14,7 +14,6 @@ using Microsoft.Foundation.Company;
 using Microsoft.Foundation.PaymentTerms;
 using Microsoft.Foundation.Reporting;
 using Microsoft.Foundation.Shipping;
-using Microsoft.Inventory.Item;
 using Microsoft.Inventory.Location;
 using Microsoft.Sales.Customer;
 using Microsoft.Sales.Posting;
@@ -25,10 +24,10 @@ using System.Globalization;
 using System.Text;
 using System.Utilities;
 
-report 50106 "Devices Sales Quote"
+report 50108 "Project Sales Order"
 {
-    Caption = 'Devices Sales Quote';
-    DefaultRenderingLayout = "DevicesQuote.rdl";
+    Caption = 'Project Sales Order';
+    DefaultRenderingLayout = "ProjectOrder.rdl";
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
 
@@ -36,9 +35,9 @@ report 50106 "Devices Sales Quote"
     {
         dataitem(Header; "Sales Header")
         {
-            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Quote));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Quote';
+            RequestFilterHeading = 'Sales Order';
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -389,9 +388,9 @@ report 50106 "Devices Sales Quote"
             column(Thanks_Lbl; ThanksLbl)
             {
             }
-            // column(HomePage_Lbl; HomePageLbl)
-            // {
-            // }
+            column(HomePage_Lbl; HomePageLbl)
+            {
+            }
             column(InvoiceDiscountBaseAmount_Lbl; InvDiscBaseAmtLbl)
             {
             }
@@ -455,13 +454,6 @@ report 50106 "Devices Sales Quote"
                 column(LineNo_Line; "Line No.")
                 {
                 }
-                column(UPC_SG; UPC_SG)
-                {
-                }
-                column(Line_sku; SKU)
-                {
-                }
-                column(Item_Type; Type) { }
                 column(AmountExcludingVAT_Line; Amount)
                 {
                     AutoFormatExpression = "Currency Code";
@@ -572,8 +564,6 @@ report 50106 "Devices Sales Quote"
                 }
 
                 trigger OnAfterGetRecord()
-                var
-                    Item: Record Item;
                 begin
                     if Type = Type::"G/L Account" then
                         "No." := '';
@@ -990,12 +980,12 @@ report 50106 "Devices Sales Quote"
 
     rendering
     {
-        layout("DevicesQuote.rdl")
+        layout("ProjectOrder.rdl")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/DevicesQuote.rdl';
-            Caption = 'Standard Devices Quote (RDLC)';
-            Summary = 'The Standard Devices Quote (RDLC) provides a detailed layout.';
+            LayoutFile = './Layouts/ProjectOrder.rdl';
+            Caption = 'Standard Project Order (RDLC)';
+            Summary = 'The Standard Sales Order (RDLC) provides a detailed layout.';
         }
 
     }
@@ -1021,9 +1011,7 @@ report 50106 "Devices Sales Quote"
         IsHandled := false;
         OnInitReportForGlobalVariable(IsHandled, LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl);
 #if not CLEAN23
-        if not IsHandled then begin
 
-        end;
 #endif
     end;
 

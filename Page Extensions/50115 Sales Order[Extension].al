@@ -1,4 +1,4 @@
-pageextension 50107 SalesQuoteExt extends "Sales Quote"
+pageextension 50115 SalesOrderExt_SG extends "Sales Order"
 {
     layout
     {
@@ -22,7 +22,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
             {
                 ApplicationArea = All;
                 Caption = 'Project Report';
-                ToolTip = 'Indicates if the quote is related to a project';
+                ToolTip = 'Indicates if the Order is related to a project';
                 trigger OnValidate()
                 var
                 begin
@@ -66,24 +66,8 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
 
     actions
     {
-        addafter(Customer)
-        {
 
-            action("PR")
-            {
-                Caption = 'Project';
-                ApplicationArea = All;
-                Image = Quote;
-                trigger OnAction()
-                var
-                    SalesQuoteRec: Record "Sales Header";
-                begin
-                    CurrPage.SetSelectionFilter(Rec);
-                    Report.RunModal(50105, true, false, Rec)
-                end;
-            }
-        }
-        addafter(Print)
+        addafter("Print Confirmation")
         {
             group(Reports)
             {
@@ -99,7 +83,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50105, true, false, Rec)
+                        Report.RunModal(50108, true, false, Rec)
                     end;
                 }
                 action("Product")
@@ -114,7 +98,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50106, true, false, Rec)
+                        Report.RunModal(50109, true, false, Rec)
                     end;
                 }
                 action("TM")
@@ -129,7 +113,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50112, true, false, Rec)
+                        Report.RunModal(50111, true, false, Rec)
                     end;
                 }
                 action("Price Sheet")
@@ -144,7 +128,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50107, true, false, Rec)
+                        Report.RunModal(50110, true, false, Rec)
                     end;
                 }
                 action("Attach Price Sheet")
@@ -156,7 +140,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                     PromotedCategory = Process;
                     trigger OnAction()
                     begin
-                        ExportSalesQuoteToAttachment(Rec);
+                        ExportSalesOrderToAttachment(Rec);
                     end;
                 }
             }
@@ -203,7 +187,9 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
     end;
 
 
-    procedure ExportSalesQuoteToAttachment(SalesHeader: Record "Sales Header")
+
+
+    procedure ExportSalesOrderToAttachment(SalesHeader: Record "Sales Header")
     var
         SalesHdr: Record "Sales Header";
         RecRef: RecordRef;
@@ -216,6 +202,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
     begin
         CurrPage.SetSelectionFilter(SalesHeader);
         SalesHdr.Copy(SalesHeader);
+
         ProcessCount := 0;
         if SalesHdr.FindSet() then
             repeat
@@ -225,17 +212,17 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
         if ProcessCount = 0 then
             Error('You must specify one or more filters to avoid accidentally printing all documents.');
         if ProcessCount > 1 then
-            if not Confirm('%1 quotes will be processed. Do you want to continue?', true, ProcessCount) then
+            if not Confirm('%1 orders will be processed. Do you want to continue?', true, ProcessCount) then
                 exit;
 
         if SalesHdr.FindSet() then
             repeat
-                FileName := StrSubstNo('%1_SalesQuotePriceSheet', SalesHdr."No.");
+                FileName := StrSubstNo('%1_SalesOrderPriceSheet', SalesHdr."No.");
                 TempBlob.CreateOutStream(OutStr);
                 RecRef.GetTable(SalesHdr);
 
                 Report.SaveAs(
-                    Report::"Pricing Sheet Sales Quote",
+                    Report::"Pricing Sheet Sales Order",
                     '',
                     ReportFormat::Pdf,
                     OutStr,
@@ -244,8 +231,8 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
 
                 TempBlob.CreateInStream(InStr);
                 DocAttachment.Init();
-                DocAttachment.Validate("Table ID", RecRef.Number);
-                DocAttachment.Validate("Document Type", DocAttachment."Document Type"::Quote);
+                DocAttachment.Validate("Table ID", DATABASE::"Sales Header");
+                DocAttachment.Validate("Document Type", DocAttachment."Document Type"::Order);
                 DocAttachment.Validate("No.", SalesHdr."No.");
                 DocAttachment.Validate("File Name", FileName);
                 DocAttachment."File Type" := DocAttachment."File Type"::PDF;
@@ -254,7 +241,8 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                 DocAttachment.Insert(true);
             until SalesHdr.Next() = 0;
 
-        // Message('%1 PDF(s) attached successfully.', ProcessCount);
+        Commit(); // make sure attachments show immediately
+        Message('%1 PDF(s) attached successfully.', ProcessCount);
     end;
 
 }

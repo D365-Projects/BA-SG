@@ -25,10 +25,10 @@ using System.Globalization;
 using System.Text;
 using System.Utilities;
 
-report 50106 "Devices Sales Quote"
+report 50109 "Devices Sales Order"
 {
-    Caption = 'Devices Sales Quote';
-    DefaultRenderingLayout = "DevicesQuote.rdl";
+    Caption = 'Devices Sales Order';
+    DefaultRenderingLayout = "DevicesOrder.rdl";
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
 
@@ -36,9 +36,9 @@ report 50106 "Devices Sales Quote"
     {
         dataitem(Header; "Sales Header")
         {
-            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Quote));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Quote';
+            RequestFilterHeading = 'Devices Sales Order';
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -990,12 +990,12 @@ report 50106 "Devices Sales Quote"
 
     rendering
     {
-        layout("DevicesQuote.rdl")
+        layout("DevicesOrder.rdl")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/DevicesQuote.rdl';
-            Caption = 'Standard Devices Quote (RDLC)';
-            Summary = 'The Standard Devices Quote (RDLC) provides a detailed layout.';
+            LayoutFile = './Layouts/DevicesOrder.rdl';
+            Caption = 'Standard Devices Order (RDLC)';
+            Summary = 'The Standard Devices Order (RDLC) provides a detailed layout.';
         }
 
     }
@@ -1078,7 +1078,7 @@ report 50106 "Devices Sales Quote"
         ExchangeRateText: Text;
         PrevLineAmount: Decimal;
         PmtDiscText: Text;
-        SalesConfirmationLbl: Label 'Sales Quote';
+        SalesConfirmationLbl: Label 'Sales Order';
         YourEstimateLbl: Label 'Your Estimate';
         EstimateLbl: Label 'Estimate';
         SalespersonLbl: Label 'Sales person';
@@ -1120,7 +1120,7 @@ report 50106 "Devices Sales Quote"
         GreetingLbl: Label 'Hello';
         ClosingLbl: Label 'Sincerely';
         PmtDiscTxt: Label 'If we receive the payment before %1, you are eligible for a %2% payment discount.', Comment = '%1 = Discount Due Date %2 = value of Payment Discount % ';
-        BodyLbl: Label 'Thank you for your business. Your quote is attached to this message.';
+        BodyLbl: Label 'Thank you for your business. Your Order is attached to this message.';
         EstimateBodyLbl: Label 'As promised, here''s our estimate. Please see the attached estimate for details.';
         QuoteValidToDateLbl: Label 'Valid to';
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';

@@ -88,6 +88,9 @@ End Function
         <Field Name="CompanyAddress8">
           <DataField>CompanyAddress8</DataField>
         </Field>
+        <Field Name="CompanyHomePage">
+          <DataField>CompanyHomePage</DataField>
+        </Field>
         <Field Name="CompanyEMail">
           <DataField>CompanyEMail</DataField>
         </Field>
@@ -172,6 +175,9 @@ End Function
         <Field Name="CompanyLegalStatement">
           <DataField>CompanyLegalStatement</DataField>
         </Field>
+        <Field Name="DisplayAdditionalFeeNote">
+          <DataField>DisplayAdditionalFeeNote</DataField>
+        </Field>
         <Field Name="CustomerAddress1">
           <DataField>CustomerAddress1</DataField>
         </Field>
@@ -199,23 +205,23 @@ End Function
         <Field Name="CustomerPostalBarCode">
           <DataField>CustomerPostalBarCode</DataField>
         </Field>
-        <Field Name="ExternalDocumentNo">
-          <DataField>ExternalDocumentNo</DataField>
+        <Field Name="YourReference_Header">
+          <DataField>YourReference_Header</DataField>
         </Field>
-        <Field Name="ExternalDocumentNoLbl">
-          <DataField>ExternalDocumentNoLbl</DataField>
-        </Field>
-        <Field Name="YourReference">
-          <DataField>YourReference</DataField>
-        </Field>
-        <Field Name="YourReference__Lbl">
-          <DataField>YourReference__Lbl</DataField>
+        <Field Name="YourReference_Header_Lbl">
+          <DataField>YourReference_Header_Lbl</DataField>
         </Field>
         <Field Name="ShipmentMethodDescription">
           <DataField>ShipmentMethodDescription</DataField>
         </Field>
         <Field Name="ShipmentMethodDescription_Lbl">
           <DataField>ShipmentMethodDescription_Lbl</DataField>
+        </Field>
+        <Field Name="ShipmentDate">
+          <DataField>ShipmentDate</DataField>
+        </Field>
+        <Field Name="ShipmentDate_Lbl">
+          <DataField>ShipmentDate_Lbl</DataField>
         </Field>
         <Field Name="Shipment_Lbl">
           <DataField>Shipment_Lbl</DataField>
@@ -301,9 +307,6 @@ End Function
         <Field Name="PaymentMethodDescription_Lbl">
           <DataField>PaymentMethodDescription_Lbl</DataField>
         </Field>
-        <Field Name="DocumentCopyText">
-          <DataField>DocumentCopyText</DataField>
-        </Field>
         <Field Name="BilltoCustumerNo">
           <DataField>BilltoCustumerNo</DataField>
         </Field>
@@ -322,17 +325,23 @@ End Function
         <Field Name="DueDate_Lbl">
           <DataField>DueDate_Lbl</DataField>
         </Field>
-        <Field Name="QuoteValidToDate">
-          <DataField>QuoteValidToDate</DataField>
-        </Field>
-        <Field Name="QuoteValidToDate_Lbl">
-          <DataField>QuoteValidToDate_Lbl</DataField>
-        </Field>
         <Field Name="DocumentNo">
           <DataField>DocumentNo</DataField>
         </Field>
         <Field Name="DocumentNo_Lbl">
           <DataField>DocumentNo_Lbl</DataField>
+        </Field>
+        <Field Name="OrderNo">
+          <DataField>OrderNo</DataField>
+        </Field>
+        <Field Name="OrderNo_Lbl">
+          <DataField>OrderNo_Lbl</DataField>
+        </Field>
+        <Field Name="OrderDate">
+          <DataField>OrderDate</DataField>
+        </Field>
+        <Field Name="OrderDate_Lbl">
+          <DataField>OrderDate_Lbl</DataField>
         </Field>
         <Field Name="PricesIncludingVAT">
           <DataField>PricesIncludingVAT</DataField>
@@ -370,6 +379,27 @@ End Function
         <Field Name="GlobalLocationNumber_Lbl">
           <DataField>GlobalLocationNumber_Lbl</DataField>
         </Field>
+        <Field Name="SellToFaxNo">
+          <DataField>SellToFaxNo</DataField>
+        </Field>
+        <Field Name="SellToPhoneNo">
+          <DataField>SellToPhoneNo</DataField>
+        </Field>
+        <Field Name="PaymentReference">
+          <DataField>PaymentReference</DataField>
+        </Field>
+        <Field Name="From_Lbl">
+          <DataField>From_Lbl</DataField>
+        </Field>
+        <Field Name="BilledTo_Lbl">
+          <DataField>BilledTo_Lbl</DataField>
+        </Field>
+        <Field Name="ChecksPayable_Lbl">
+          <DataField>ChecksPayable_Lbl</DataField>
+        </Field>
+        <Field Name="PaymentReference_Lbl">
+          <DataField>PaymentReference_Lbl</DataField>
+        </Field>
         <Field Name="LegalEntityType">
           <DataField>LegalEntityType</DataField>
         </Field>
@@ -379,32 +409,11 @@ End Function
         <Field Name="Copy_Lbl">
           <DataField>Copy_Lbl</DataField>
         </Field>
-        <Field Name="EMail_Lbl">
-          <DataField>EMail_Lbl</DataField>
+        <Field Name="EMail_Header_Lbl">
+          <DataField>EMail_Header_Lbl</DataField>
         </Field>
-        <Field Name="Estimate_Lbl">
-          <DataField>Estimate_Lbl</DataField>
-        </Field>
-        <Field Name="YourEstimate_Lbl">
-          <DataField>YourEstimate_Lbl</DataField>
-        </Field>
-        <Field Name="EstimateBody_Lbl">
-          <DataField>EstimateBody_Lbl</DataField>
-        </Field>
-        <Field Name="From_Lbl">
-          <DataField>From_Lbl</DataField>
-        </Field>
-        <Field Name="EstimateFor_Lbl">
-          <DataField>EstimateFor_Lbl</DataField>
-        </Field>
-        <Field Name="Questions_Lbl">
-          <DataField>Questions_Lbl</DataField>
-        </Field>
-        <Field Name="Contact_Lbl">
-          <DataField>Contact_Lbl</DataField>
-        </Field>
-        <Field Name="Thanks_Lbl">
-          <DataField>Thanks_Lbl</DataField>
+        <Field Name="HomePage_Lbl">
+          <DataField>HomePage_Lbl</DataField>
         </Field>
         <Field Name="InvoiceDiscountBaseAmount_Lbl">
           <DataField>InvoiceDiscountBaseAmount_Lbl</DataField>
@@ -427,11 +436,32 @@ End Function
         <Field Name="SalesInvoiceLineDiscount_Lbl">
           <DataField>SalesInvoiceLineDiscount_Lbl</DataField>
         </Field>
+        <Field Name="Questions_Lbl">
+          <DataField>Questions_Lbl</DataField>
+        </Field>
+        <Field Name="Contact_Lbl">
+          <DataField>Contact_Lbl</DataField>
+        </Field>
         <Field Name="DocumentTitle_Lbl">
           <DataField>DocumentTitle_Lbl</DataField>
         </Field>
+        <Field Name="YourDocumentTitle_Lbl">
+          <DataField>YourDocumentTitle_Lbl</DataField>
+        </Field>
+        <Field Name="Thanks_Lbl">
+          <DataField>Thanks_Lbl</DataField>
+        </Field>
         <Field Name="ShowWorkDescription">
           <DataField>ShowWorkDescription</DataField>
+        </Field>
+        <Field Name="RemainingAmount">
+          <DataField>RemainingAmount</DataField>
+        </Field>
+        <Field Name="RemainingAmountFormat">
+          <DataField>RemainingAmountFormat</DataField>
+        </Field>
+        <Field Name="RemainingAmountText">
+          <DataField>RemainingAmountText</DataField>
         </Field>
         <Field Name="Subtotal_Lbl">
           <DataField>Subtotal_Lbl</DataField>
@@ -460,32 +490,38 @@ End Function
         <Field Name="VATClause_Lbl">
           <DataField>VATClause_Lbl</DataField>
         </Field>
+        <Field Name="PackageTrackingNo">
+          <DataField>PackageTrackingNo</DataField>
+        </Field>
+        <Field Name="PackageTrackingNo_Lbl">
+          <DataField>PackageTrackingNo_Lbl</DataField>
+        </Field>
+        <Field Name="ShippingAgentCode">
+          <DataField>ShippingAgentCode</DataField>
+        </Field>
+        <Field Name="ShippingAgentCode_Lbl">
+          <DataField>ShippingAgentCode_Lbl</DataField>
+        </Field>
+        <Field Name="PaymentInstructions_Txt">
+          <DataField>PaymentInstructions_Txt</DataField>
+        </Field>
+        <Field Name="CustomerPONumber_Lbl">
+          <DataField>CustomerPONumber_Lbl</DataField>
+        </Field>
+        <Field Name="CustomerPONumber">
+          <DataField>CustomerPONumber</DataField>
+        </Field>
+        <Field Name="ExternalDocumentNo">
+          <DataField>ExternalDocumentNo</DataField>
+        </Field>
+        <Field Name="ExternalDocumentNo_Lbl">
+          <DataField>ExternalDocumentNo_Lbl</DataField>
+        </Field>
+        <Field Name="DisplayAssemblyLines">
+          <DataField>DisplayAssemblyLines</DataField>
+        </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
-        </Field>
-        <Field Name="Line_sku">
-          <DataField>Line_sku</DataField>
-        </Field>
-        <Field Name="UPC_SG">
-          <DataField>UPC_SG</DataField>
-        </Field>
-        <Field Name="Notes">
-          <DataField>Notes</DataField>
-        </Field>
-        <Field Name="Shipping_Cost">
-          <DataField>Shipping_Cost</DataField>
-        </Field>
-        <Field Name="Shipping_CostFormat">
-          <DataField>Shipping_CostFormat</DataField>
-        </Field>
-        <Field Name="itemSalesPrice">
-          <DataField>itemSalesPrice</DataField>
-        </Field>
-        <Field Name="itemSalesPriceFormat">
-          <DataField>itemSalesPriceFormat</DataField>
-        </Field>
-        <Field Name="Item_Type">
-          <DataField>Item_Type</DataField>
         </Field>
         <Field Name="AmountExcludingVAT_Line">
           <DataField>AmountExcludingVAT_Line</DataField>
@@ -541,14 +577,17 @@ End Function
         <Field Name="ShipmentDate_Line">
           <DataField>ShipmentDate_Line</DataField>
         </Field>
-        <Field Name="ShipmentDate_Lbl">
-          <DataField>ShipmentDate_Lbl</DataField>
+        <Field Name="ShipmentDate_Line_Lbl">
+          <DataField>ShipmentDate_Line_Lbl</DataField>
         </Field>
         <Field Name="Quantity_Line">
           <DataField>Quantity_Line</DataField>
         </Field>
         <Field Name="Quantity_Line_Lbl">
           <DataField>Quantity_Line_Lbl</DataField>
+        </Field>
+        <Field Name="Quantity_Line_Lbl2">
+          <DataField>Quantity_Line_Lbl2</DataField>
         </Field>
         <Field Name="Type_Line">
           <DataField>Type_Line</DataField>
@@ -583,8 +622,32 @@ End Function
         <Field Name="TransHeaderAmountFormat">
           <DataField>TransHeaderAmountFormat</DataField>
         </Field>
+        <Field Name="JobTaskNo_Lbl">
+          <DataField>JobTaskNo_Lbl</DataField>
+        </Field>
+        <Field Name="JobTaskNo">
+          <DataField>JobTaskNo</DataField>
+        </Field>
+        <Field Name="JobTaskDescription">
+          <DataField>JobTaskDescription</DataField>
+        </Field>
+        <Field Name="JobTaskDesc_Lbl">
+          <DataField>JobTaskDesc_Lbl</DataField>
+        </Field>
         <Field Name="Unit_Lbl">
           <DataField>Unit_Lbl</DataField>
+        </Field>
+        <Field Name="UnitPrice_Lbl2">
+          <DataField>UnitPrice_Lbl2</DataField>
+        </Field>
+        <Field Name="LineAmount_Lbl">
+          <DataField>LineAmount_Lbl</DataField>
+        </Field>
+        <Field Name="JobNo_Lbl">
+          <DataField>JobNo_Lbl</DataField>
+        </Field>
+        <Field Name="JobNo">
+          <DataField>JobNo</DataField>
         </Field>
         <Field Name="Qty_Lbl">
           <DataField>Qty_Lbl</DataField>
@@ -594,6 +657,42 @@ End Function
         </Field>
         <Field Name="PricePer_Lbl">
           <DataField>PricePer_Lbl</DataField>
+        </Field>
+        <Field Name="DocumentNo_ShipmentLine">
+          <DataField>DocumentNo_ShipmentLine</DataField>
+        </Field>
+        <Field Name="PostingDate_ShipmentLine">
+          <DataField>PostingDate_ShipmentLine</DataField>
+        </Field>
+        <Field Name="PostingDate_ShipmentLine_Lbl">
+          <DataField>PostingDate_ShipmentLine_Lbl</DataField>
+        </Field>
+        <Field Name="Quantity_ShipmentLine">
+          <DataField>Quantity_ShipmentLine</DataField>
+        </Field>
+        <Field Name="Quantity_ShipmentLineFormat">
+          <DataField>Quantity_ShipmentLineFormat</DataField>
+        </Field>
+        <Field Name="Quantity_ShipmentLine_Lbl">
+          <DataField>Quantity_ShipmentLine_Lbl</DataField>
+        </Field>
+        <Field Name="LineNo_AssemblyLine">
+          <DataField>LineNo_AssemblyLine</DataField>
+        </Field>
+        <Field Name="Description_AssemblyLine">
+          <DataField>Description_AssemblyLine</DataField>
+        </Field>
+        <Field Name="Quantity_AssemblyLine">
+          <DataField>Quantity_AssemblyLine</DataField>
+        </Field>
+        <Field Name="Quantity_AssemblyLineFormat">
+          <DataField>Quantity_AssemblyLineFormat</DataField>
+        </Field>
+        <Field Name="UnitOfMeasure_AssemblyLine">
+          <DataField>UnitOfMeasure_AssemblyLine</DataField>
+        </Field>
+        <Field Name="VariantCode_AssemblyLine">
+          <DataField>VariantCode_AssemblyLine</DataField>
         </Field>
         <Field Name="WorkDescriptionLineNumber">
           <DataField>WorkDescriptionLineNumber</DataField>
@@ -682,6 +781,30 @@ End Function
         <Field Name="NoOfVATIdentifiers">
           <DataField>NoOfVATIdentifiers</DataField>
         </Field>
+        <Field Name="VATIdentifier_VATClauseLine">
+          <DataField>VATIdentifier_VATClauseLine</DataField>
+        </Field>
+        <Field Name="Code_VATClauseLine">
+          <DataField>Code_VATClauseLine</DataField>
+        </Field>
+        <Field Name="Code_VATClauseLine_Lbl">
+          <DataField>Code_VATClauseLine_Lbl</DataField>
+        </Field>
+        <Field Name="Description_VATClauseLine">
+          <DataField>Description_VATClauseLine</DataField>
+        </Field>
+        <Field Name="Description2_VATClauseLine">
+          <DataField>Description2_VATClauseLine</DataField>
+        </Field>
+        <Field Name="VATAmount_VATClauseLine">
+          <DataField>VATAmount_VATClauseLine</DataField>
+        </Field>
+        <Field Name="VATAmount_VATClauseLineFormat">
+          <DataField>VATAmount_VATClauseLineFormat</DataField>
+        </Field>
+        <Field Name="NoOfVATClauses">
+          <DataField>NoOfVATClauses</DataField>
+        </Field>
         <Field Name="Description_ReportTotalsLine">
           <DataField>Description_ReportTotalsLine</DataField>
         </Field>
@@ -700,6 +823,54 @@ End Function
         <Field Name="FontUnderline_ReportTotalsLine">
           <DataField>FontUnderline_ReportTotalsLine</DataField>
         </Field>
+        <Field Name="Description_USReportTotalsLine">
+          <DataField>Description_USReportTotalsLine</DataField>
+        </Field>
+        <Field Name="Amount_USReportTotalsLine">
+          <DataField>Amount_USReportTotalsLine</DataField>
+        </Field>
+        <Field Name="Amount_USReportTotalsLineFormat">
+          <DataField>Amount_USReportTotalsLineFormat</DataField>
+        </Field>
+        <Field Name="AmountFormatted_USReportTotalsLine">
+          <DataField>AmountFormatted_USReportTotalsLine</DataField>
+        </Field>
+        <Field Name="FontBold_USReportTotalsLine">
+          <DataField>FontBold_USReportTotalsLine</DataField>
+        </Field>
+        <Field Name="FontUnderline_USReportTotalsLine">
+          <DataField>FontUnderline_USReportTotalsLine</DataField>
+        </Field>
+        <Field Name="LineFeeCaptionText">
+          <DataField>LineFeeCaptionText</DataField>
+        </Field>
+        <Field Name="PaymentServiceLogo">
+          <DataField>PaymentServiceLogo</DataField>
+        </Field>
+        <Field Name="PaymentServiceLogo_UrlText">
+          <DataField>PaymentServiceLogo_UrlText</DataField>
+        </Field>
+        <Field Name="PaymentServiceLogo_Url">
+          <DataField>PaymentServiceLogo_Url</DataField>
+        </Field>
+        <Field Name="PaymentServiceText_UrlText">
+          <DataField>PaymentServiceText_UrlText</DataField>
+        </Field>
+        <Field Name="PaymentServiceText_Url">
+          <DataField>PaymentServiceText_Url</DataField>
+        </Field>
+        <Field Name="LeftHeaderName">
+          <DataField>LeftHeaderName</DataField>
+        </Field>
+        <Field Name="LeftHeaderValue">
+          <DataField>LeftHeaderValue</DataField>
+        </Field>
+        <Field Name="RightHeaderName">
+          <DataField>RightHeaderName</DataField>
+        </Field>
+        <Field Name="RightHeaderValue">
+          <DataField>RightHeaderValue</DataField>
+        </Field>
         <Field Name="GreetingText">
           <DataField>GreetingText</DataField>
         </Field>
@@ -715,9 +886,6 @@ End Function
         <Field Name="TotalNetAmount">
           <DataField>TotalNetAmount</DataField>
         </Field>
-        <Field Name="TotalNetAmountFormat">
-          <DataField>TotalNetAmountFormat</DataField>
-        </Field>
         <Field Name="TotalVATBaseLCY">
           <DataField>TotalVATBaseLCY</DataField>
         </Field>
@@ -730,9 +898,6 @@ End Function
         <Field Name="TotalVATAmount">
           <DataField>TotalVATAmount</DataField>
         </Field>
-        <Field Name="TotalVATAmountFormat">
-          <DataField>TotalVATAmountFormat</DataField>
-        </Field>
         <Field Name="TotalVATAmountLCY">
           <DataField>TotalVATAmountLCY</DataField>
         </Field>
@@ -741,9 +906,6 @@ End Function
         </Field>
         <Field Name="TotalInvoiceDiscountAmount">
           <DataField>TotalInvoiceDiscountAmount</DataField>
-        </Field>
-        <Field Name="TotalInvoiceDiscountAmountFormat">
-          <DataField>TotalInvoiceDiscountAmountFormat</DataField>
         </Field>
         <Field Name="TotalPaymentDiscountOnVAT">
           <DataField>TotalPaymentDiscountOnVAT</DataField>
@@ -763,23 +925,53 @@ End Function
         <Field Name="TotalSubTotal">
           <DataField>TotalSubTotal</DataField>
         </Field>
-        <Field Name="TotalSubTotalFormat">
-          <DataField>TotalSubTotalFormat</DataField>
-        </Field>
         <Field Name="TotalSubTotalMinusInvoiceDiscount">
           <DataField>TotalSubTotalMinusInvoiceDiscount</DataField>
         </Field>
-        <Field Name="TotalSubTotalMinusInvoiceDiscountFormat">
-          <DataField>TotalSubTotalMinusInvoiceDiscountFormat</DataField>
-        </Field>
         <Field Name="TotalText">
           <DataField>TotalText</DataField>
+        </Field>
+        <Field Name="TotalAmountExclInclVAT">
+          <DataField>TotalAmountExclInclVAT</DataField>
+        </Field>
+        <Field Name="TotalAmountExclInclVATText">
+          <DataField>TotalAmountExclInclVATText</DataField>
+        </Field>
+        <Field Name="AmountSubjectToSalesTax">
+          <DataField>AmountSubjectToSalesTax</DataField>
+        </Field>
+        <Field Name="AmountSubjectToSalesTaxFormat">
+          <DataField>AmountSubjectToSalesTaxFormat</DataField>
+        </Field>
+        <Field Name="AmountSubjectToSalesTaxLbl">
+          <DataField>AmountSubjectToSalesTaxLbl</DataField>
+        </Field>
+        <Field Name="AmountExemptFromSalesTax">
+          <DataField>AmountExemptFromSalesTax</DataField>
+        </Field>
+        <Field Name="AmountExemptFromSalesTaxFormat">
+          <DataField>AmountExemptFromSalesTaxFormat</DataField>
+        </Field>
+        <Field Name="AmountExemptFromSalesTaxLbl">
+          <DataField>AmountExemptFromSalesTaxLbl</DataField>
         </Field>
         <Field Name="CurrencyCode">
           <DataField>CurrencyCode</DataField>
         </Field>
         <Field Name="CurrencySymbol">
           <DataField>CurrencySymbol</DataField>
+        </Field>
+        <Field Name="SKU">
+          <DataField>SKU</DataField>
+        </Field>
+        <Field Name="UPC_SG">
+          <DataField>UPC_SG</DataField>
+        </Field>
+        <Field Name="Shipping_Cost">
+          <DataField>Shipping_Cost</DataField>
+        </Field>
+        <Field Name="Shipping_CostFormat">
+          <DataField>Shipping_CostFormat</DataField>
         </Field>
         <Field Name="Unit_Price">
           <DataField>Unit_Price</DataField>

@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-11T12:36:55.2320767Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-15T12:38:00.3259557Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -76,7 +76,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>TASK NO.</Value>
+                                                    <Value>TASK No.</Value>
                                                     <Style>
                                                       <Color>#5392bc</Color>
                                                     </Style>
@@ -114,7 +114,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>PROJECT DESCRIPTION</Value>
+                                                    <Value>TASK DESCRIPTION</Value>
                                                     <Style>
                                                       <Color>#5392bc</Color>
                                                     </Style>
@@ -1868,7 +1868,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>Project Quote No.</Value>
+                                                    <Value>Project Order No.</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -2386,7 +2386,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>This quote does not included tax or freight charges. Any applicable tax or freight charge will be included in the tax invoice.</Value>
+                    <Value>This Order does not included tax or freight charges. Any applicable tax or freight charge will be included in the tax invoice.</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontFamily>Times New Roman</FontFamily>
@@ -2696,7 +2696,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Project Quote</Value>
+                      <Value>Project Order</Value>
                       <Style>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>

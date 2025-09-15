@@ -983,7 +983,7 @@ report 50105 "Project Sales Quote"
         layout("ProjectQuote.rdl")
         {
             Type = RDLC;
-            LayoutFile = 'ProjectQuote.rdl';
+            LayoutFile = './Layouts/ProjectQuote.rdl';
             Caption = 'Standard Project Quote (RDLC)';
             Summary = 'The Standard Sales Quote (RDLC) provides a detailed layout.';
         }

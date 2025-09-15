@@ -33,7 +33,7 @@ reportextension 50104 PostedSalesInvoice_SG extends 1306
         {
             Type = RDLC;
 
-            LayoutFile = './StandardSalesInvoice.rdlc';
+            LayoutFile = './Layouts/StandardSalesInvoice.rdlc';
         }
     }
 }

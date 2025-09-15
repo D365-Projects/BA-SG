@@ -456,6 +456,11 @@ report 50107 "Pricing Sheet Sales Quote"
                 column(LineNo_Line; "Line No.")
                 {
                 }
+                column(Unit_Price; "Unit Price") { }
+
+                column(SKU; SKU)
+                {
+                }
                 column(Line_sku; SKU)
                 {
                 }
@@ -996,7 +1001,7 @@ report 50107 "Pricing Sheet Sales Quote"
         layout("PricingSheet.rdl")
         {
             Type = RDLC;
-            LayoutFile = 'PricingSheet.rdl';
+            LayoutFile = './Layouts/PricingSheet.rdl';
             Caption = 'Standard Pricing Sheet Quote (RDLC)';
             Summary = 'The Standard Devices Quote (RDLC) provides a detailed layout.';
         }
