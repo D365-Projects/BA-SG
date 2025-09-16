@@ -26,4 +26,5 @@ pageextension 50102 PurchaseOrderSubformext extends "Purchase Order Subform"
     }
     var
         Directcost: Codeunit "DirectUnitCost Event";
+       
 }

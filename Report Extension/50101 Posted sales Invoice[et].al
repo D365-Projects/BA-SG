@@ -1,4 +1,4 @@
-reportextension 50104 PostedSalesInvoice_SG extends 1306
+reportextension 50101 PostedSalesInvoice_SG extends 1306
 {
 
     dataset

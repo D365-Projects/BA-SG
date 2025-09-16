@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-16T05:40:45.5887233Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-16T05:52:52.6306122Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -409,10 +409,10 @@
                   <Width>6.73416cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.53633cm</Width>
+                  <Width>3.21883cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.07531cm</Width>
+                  <Width>2.77898cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.11029cm</Width>
@@ -421,16 +421,16 @@
                   <Width>2.11991cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.44034cm</Width>
+                  <Width>2.37684cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.87828cm</Width>
+                  <Width>2.98411cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.04006cm</Width>
+                  <Width>2.82839cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.18676cm</Width>
+                  <Width>3.07576cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1140,7 +1140,7 @@
             <Top>2.99494cm</Top>
             <Left>0cm</Left>
             <Height>1.40433cm</Height>
-            <Width>27.12143cm</Width>
+            <Width>27.22727cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -1204,7 +1204,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Pricing Sheet should be used by team members to provide finance team pricing details for sales Order</Value>
+                                  <Value>Pricing Sheet should be used by team members to provide finance team pricing details for sales Invoice</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -1470,42 +1470,16 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>8.27in</Height>
+        <Height>3.87in</Height>
         <Style />
       </Body>
-      <Width>10.71107in</Width>
+      <Width>10.7194in</Width>
       <Page>
         <PageHeader>
           <Height>1.02619in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Rectangle Name="Rectangle3">
-              <ReportItems>
-                <Line Name="Line3">
-                  <Height>0cm</Height>
-                  <Width>6cm</Width>
-                  <Visibility>
-                    <Hidden>true</Hidden>
-                  </Visibility>
-                  <Style>
-                    <Border>
-                      <Style>Solid</Style>
-                    </Border>
-                  </Style>
-                </Line>
-              </ReportItems>
-              <KeepTogether>true</KeepTogether>
-              <Top>0.00952in</Top>
-              <Left>20.88983cm</Left>
-              <Height>2.57123cm</Height>
-              <Width>6.2316cm</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Rectangle>
             <Rectangle Name="Rectangle4">
               <ReportItems>
                 <Line Name="Line2">
@@ -1523,10 +1497,9 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Top>0.00952in</Top>
-              <Left>11.28135cm</Left>
+              <Left>10.96385cm</Left>
               <Height>2.46731cm</Height>
               <Width>6.06349cm</Width>
-              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1572,7 +1545,7 @@
               <Left>0.01579in</Left>
               <Height>2.46731cm</Height>
               <Width>6.27691cm</Width>
-              <ZIndex>2</ZIndex>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1587,7 +1560,7 @@
               <Left>8.30162in</Left>
               <Height>24.65401mm</Height>
               <Width>59.76852mm</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>2</ZIndex>
               <Visibility>
                 <Hidden>=iif(First(Fields!CompanyLogoPosition.Value, "DataSet_Result")=3,false,true)</Hidden>
               </Visibility>
@@ -1603,10 +1576,10 @@
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
               <Top>0.05043in</Top>
-              <Left>4.98702in</Left>
+              <Left>4.86202in</Left>
               <Height>24.67306mm</Height>
               <Width>46.24166mm</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>3</ZIndex>
               <Visibility>
                 <Hidden>=iif(First(Fields!CompanyLogoPosition.Value, "DataSet_Result")=2,false,true)</Hidden>
               </Visibility>

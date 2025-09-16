@@ -25,10 +25,10 @@ using System.Globalization;
 using System.Text;
 using System.Utilities;
 
-report 50110 "Pricing Sheet Sales Order"
+report 50114 "Devices Sales Invoice"
 {
-    Caption = 'Pricing Sales Order';
-    DefaultRenderingLayout = "PricingSheet(Order).rdl";
+    Caption = 'Devices Sales Invoice';
+    DefaultRenderingLayout = "DevicesInvoice.rdl";
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
 
@@ -36,9 +36,9 @@ report 50110 "Pricing Sheet Sales Order"
     {
         dataitem(Header; "Sales Header")
         {
-            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Invoice));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Order';
+            RequestFilterHeading = 'Devices Sales Invoice';
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -452,19 +452,15 @@ report 50110 "Pricing Sheet Sales Order"
                 DataItemLinkReference = Header;
                 DataItemTableView = sorting("Document No.", "Line No.");
                 UseTemporary = true;
-                column(Unit_Price; "Unit Price") { }
-
-
                 column(LineNo_Line; "Line No.")
+                {
+                }
+                column(UPC_SG; UPC_SG)
                 {
                 }
                 column(Line_sku; SKU)
                 {
                 }
-                column(UPC_SG; UPC_SG) { }
-                column(Notes; "Description 2") { }
-                column(Shipping_Cost; "Shipping Cost") { }
-                column(itemSalesPrice; itemSalesPrice) { }
                 column(Item_Type; Type) { }
                 column(AmountExcludingVAT_Line; Amount)
                 {
@@ -579,7 +575,6 @@ report 50110 "Pricing Sheet Sales Order"
                 var
                     Item: Record Item;
                 begin
-
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
@@ -596,7 +591,7 @@ report 50110 "Pricing Sheet Sales Order"
                     TotalAmountVAT += "Amount Including VAT" - Amount;
                     TotalAmountInclVAT += "Amount Including VAT";
                     TotalPaymentDiscOnVAT += -("Line Amount" - "Inv. Discount Amount" - "Amount Including VAT");
-                    itemSalesPrice := Item."Unit Price";
+
                     FormatDocument.SetSalesLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
 
                     if FirstLineHasBeenOutput then
@@ -995,12 +990,12 @@ report 50110 "Pricing Sheet Sales Order"
 
     rendering
     {
-        layout("PricingSheet(Order).rdl")
+        layout("DevicesInvoice.rdl")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/PricingSheet(Order).rdl';
-            Caption = 'Standard Pricing Sheet Order (RDLC)';
-            Summary = 'The Standard Devices Order (RDLC) provides a detailed layout.';
+            LayoutFile = './Layouts/DevicesInvoice.rdl';
+            Caption = 'Standard Devices Invoice (RDLC)';
+            Summary = 'The Standard Devices Invoice (RDLC) provides a detailed layout.';
         }
 
     }
@@ -1063,7 +1058,6 @@ report 50110 "Pricing Sheet Sales Order"
     end;
 
     var
-        itemSalesPrice: Decimal;
         CompanyBankAccount: Record "Bank Account";
         DummyCompanyInfo: Record "Company Information";
         Cust: Record Customer;
@@ -1084,7 +1078,7 @@ report 50110 "Pricing Sheet Sales Order"
         ExchangeRateText: Text;
         PrevLineAmount: Decimal;
         PmtDiscText: Text;
-        SalesConfirmationLbl: Label 'Sales Order';
+        SalesConfirmationLbl: Label 'Sales Invoice';
         YourEstimateLbl: Label 'Your Estimate';
         EstimateLbl: Label 'Estimate';
         SalespersonLbl: Label 'Sales person';
@@ -1126,7 +1120,7 @@ report 50110 "Pricing Sheet Sales Order"
         GreetingLbl: Label 'Hello';
         ClosingLbl: Label 'Sincerely';
         PmtDiscTxt: Label 'If we receive the payment before %1, you are eligible for a %2% payment discount.', Comment = '%1 = Discount Due Date %2 = value of Payment Discount % ';
-        BodyLbl: Label 'Thank you for your business. Your Order is attached to this message.';
+        BodyLbl: Label 'Thank you for your business. Your Invoice is attached to this message.';
         EstimateBodyLbl: Label 'As promised, here''s our estimate. Please see the attached estimate for details.';
         QuoteValidToDateLbl: Label 'Valid to';
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';

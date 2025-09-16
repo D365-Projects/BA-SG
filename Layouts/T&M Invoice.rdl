@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-16T09:57:28.3620960Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-16T05:42:30.4349991Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -305,7 +305,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!SKU.Value</Value>
+                                                    <Value>=Fields!Line_SKU.Value</Value>
                                                     <Style>
                                                       <FontSize>7pt</FontSize>
                                                     </Style>
@@ -1019,7 +1019,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>This quote does not included tax or freight charges. Any applicable tax or freight charge will be included in the tax invoice.</Value>
+                    <Value>This invoice does not included tax or freight charges. Any applicable tax or freight charge will be included in the tax invoice.</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontFamily>Times New Roman</FontFamily>
@@ -2270,7 +2270,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Sales Order No.</Value>
+                                  <Value>Sales Invoice No.</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -2590,14 +2590,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox1">
+                        <Textbox Name="PaymentTermsDescription_Lbl2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Quote Validity Date</Value>
+                                  <Value>=Fields!PaymentTermsDescription_Lbl.Value</Value>
                                   <Style>
                                     <FontFamily>segoe uI</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -2607,7 +2607,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <rd:DefaultName>PaymentTermsDescription_Lbl</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2620,18 +2620,17 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="DueDate2">
+                        <Textbox Name="PaymentTermsDescription2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Quote_Valid_Date.Value</Value>
+                                  <Value>=Fields!PaymentTermsDescription.Value</Value>
                                   <Style>
-                                    <FontFamily>Segoe UI</FontFamily>
+                                    <FontFamily>segoe uI</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <Format>dd-MMM-yy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2640,7 +2639,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>DueDate</rd:DefaultName>
+                          <rd:DefaultName>PaymentTermsDescription</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2756,14 +2755,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="PaymentTermsDescription_Lbl2">
+                        <Textbox Name="Textbox28">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PaymentTermsDescription_Lbl.Value</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>segoe uI</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -2773,7 +2772,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>PaymentTermsDescription_Lbl</rd:DefaultName>
+                          <rd:DefaultName>Textbox28</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2786,14 +2785,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="PaymentTermsDescription2">
+                        <Textbox Name="Textbox29">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PaymentTermsDescription.Value</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>segoe uI</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -2805,7 +2804,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>PaymentTermsDescription</rd:DefaultName>
+                          <rd:DefaultName>Textbox29</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3674,9 +3673,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="Quote_Valid_Date">
-          <DataField>Quote_Valid_Date</DataField>
-        </Field>
         <Field Name="CompanyAddress1">
           <DataField>CompanyAddress1</DataField>
         </Field>
@@ -4070,8 +4066,8 @@ End Function
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
         </Field>
-        <Field Name="SKU">
-          <DataField>SKU</DataField>
+        <Field Name="Line_SKU">
+          <DataField>Line_SKU</DataField>
         </Field>
         <Field Name="AmountExcludingVAT_Line">
           <DataField>AmountExcludingVAT_Line</DataField>

@@ -25,10 +25,10 @@ using System.Globalization;
 using System.Text;
 using System.Utilities;
 
-report 50110 "Pricing Sheet Sales Order"
+report 50116 "Pricing Sheet Sales Invoice"
 {
-    Caption = 'Pricing Sales Order';
-    DefaultRenderingLayout = "PricingSheet(Order).rdl";
+    Caption = 'Pricing Sales Invoice';
+    DefaultRenderingLayout = "PricingSheet(Invoice).rdl";
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
 
@@ -36,9 +36,9 @@ report 50110 "Pricing Sheet Sales Order"
     {
         dataitem(Header; "Sales Header")
         {
-            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Invoice));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Order';
+            RequestFilterHeading = 'Devices Sales Invoice';
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -995,12 +995,12 @@ report 50110 "Pricing Sheet Sales Order"
 
     rendering
     {
-        layout("PricingSheet(Order).rdl")
+        layout("PricingSheet(Invoice).rdl")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/PricingSheet(Order).rdl';
-            Caption = 'Standard Pricing Sheet Order (RDLC)';
-            Summary = 'The Standard Devices Order (RDLC) provides a detailed layout.';
+            LayoutFile = './Layouts/PricingSheet(Invoice).rdl';
+            Caption = 'Standard Pricing Sheet Invoice (RDLC)';
+            Summary = 'The Standard Devices Invoice (RDLC) provides a detailed layout.';
         }
 
     }

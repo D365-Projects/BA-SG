@@ -14,7 +14,6 @@ using Microsoft.Foundation.Company;
 using Microsoft.Foundation.PaymentTerms;
 using Microsoft.Foundation.Reporting;
 using Microsoft.Foundation.Shipping;
-using Microsoft.Inventory.Item;
 using Microsoft.Inventory.Location;
 using Microsoft.Sales.Customer;
 using Microsoft.Sales.Posting;
@@ -25,10 +24,10 @@ using System.Globalization;
 using System.Text;
 using System.Utilities;
 
-report 50110 "Pricing Sheet Sales Order"
+report 50113 "Project Sales Invoice"
 {
-    Caption = 'Pricing Sales Order';
-    DefaultRenderingLayout = "PricingSheet(Order).rdl";
+    Caption = 'Project Sales Invoice';
+    DefaultRenderingLayout = "ProjectInvoice.rdl";
     PreviewMode = PrintLayout;
     WordMergeDataItem = Header;
 
@@ -36,9 +35,9 @@ report 50110 "Pricing Sheet Sales Order"
     {
         dataitem(Header; "Sales Header")
         {
-            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
+            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Invoice));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Order';
+            RequestFilterHeading = 'Sales Invoice';
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -389,9 +388,9 @@ report 50110 "Pricing Sheet Sales Order"
             column(Thanks_Lbl; ThanksLbl)
             {
             }
-            // column(HomePage_Lbl; HomePageLbl)
-            // {
-            // }
+            column(HomePage_Lbl; HomePageLbl)
+            {
+            }
             column(InvoiceDiscountBaseAmount_Lbl; InvDiscBaseAmtLbl)
             {
             }
@@ -452,20 +451,9 @@ report 50110 "Pricing Sheet Sales Order"
                 DataItemLinkReference = Header;
                 DataItemTableView = sorting("Document No.", "Line No.");
                 UseTemporary = true;
-                column(Unit_Price; "Unit Price") { }
-
-
                 column(LineNo_Line; "Line No.")
                 {
                 }
-                column(Line_sku; SKU)
-                {
-                }
-                column(UPC_SG; UPC_SG) { }
-                column(Notes; "Description 2") { }
-                column(Shipping_Cost; "Shipping Cost") { }
-                column(itemSalesPrice; itemSalesPrice) { }
-                column(Item_Type; Type) { }
                 column(AmountExcludingVAT_Line; Amount)
                 {
                     AutoFormatExpression = "Currency Code";
@@ -576,10 +564,7 @@ report 50110 "Pricing Sheet Sales Order"
                 }
 
                 trigger OnAfterGetRecord()
-                var
-                    Item: Record Item;
                 begin
-
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
@@ -596,7 +581,7 @@ report 50110 "Pricing Sheet Sales Order"
                     TotalAmountVAT += "Amount Including VAT" - Amount;
                     TotalAmountInclVAT += "Amount Including VAT";
                     TotalPaymentDiscOnVAT += -("Line Amount" - "Inv. Discount Amount" - "Amount Including VAT");
-                    itemSalesPrice := Item."Unit Price";
+
                     FormatDocument.SetSalesLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
 
                     if FirstLineHasBeenOutput then
@@ -995,12 +980,12 @@ report 50110 "Pricing Sheet Sales Order"
 
     rendering
     {
-        layout("PricingSheet(Order).rdl")
+        layout("ProjectInvoice.rdl")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/PricingSheet(Order).rdl';
-            Caption = 'Standard Pricing Sheet Order (RDLC)';
-            Summary = 'The Standard Devices Order (RDLC) provides a detailed layout.';
+            LayoutFile = './Layouts/ProjectInvoice.rdl';
+            Caption = 'Standard Project Invoice (RDLC)';
+            Summary = 'The Standard Sales Invoice (RDLC) provides a detailed layout.';
         }
 
     }
@@ -1026,9 +1011,7 @@ report 50110 "Pricing Sheet Sales Order"
         IsHandled := false;
         OnInitReportForGlobalVariable(IsHandled, LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl);
 #if not CLEAN23
-        if not IsHandled then begin
 
-        end;
 #endif
     end;
 
@@ -1063,7 +1046,6 @@ report 50110 "Pricing Sheet Sales Order"
     end;
 
     var
-        itemSalesPrice: Decimal;
         CompanyBankAccount: Record "Bank Account";
         DummyCompanyInfo: Record "Company Information";
         Cust: Record Customer;
@@ -1084,7 +1066,7 @@ report 50110 "Pricing Sheet Sales Order"
         ExchangeRateText: Text;
         PrevLineAmount: Decimal;
         PmtDiscText: Text;
-        SalesConfirmationLbl: Label 'Sales Order';
+        SalesConfirmationLbl: Label 'Sales Quote';
         YourEstimateLbl: Label 'Your Estimate';
         EstimateLbl: Label 'Estimate';
         SalespersonLbl: Label 'Sales person';
@@ -1126,7 +1108,7 @@ report 50110 "Pricing Sheet Sales Order"
         GreetingLbl: Label 'Hello';
         ClosingLbl: Label 'Sincerely';
         PmtDiscTxt: Label 'If we receive the payment before %1, you are eligible for a %2% payment discount.', Comment = '%1 = Discount Due Date %2 = value of Payment Discount % ';
-        BodyLbl: Label 'Thank you for your business. Your Order is attached to this message.';
+        BodyLbl: Label 'Thank you for your business. Your quote is attached to this message.';
         EstimateBodyLbl: Label 'As promised, here''s our estimate. Please see the attached estimate for details.';
         QuoteValidToDateLbl: Label 'Valid to';
         QtyLbl: Label 'Qty', Comment = 'Short form of Quantity';

@@ -1,4 +1,4 @@
-pageextension 50107 SalesQuoteExt extends "Sales Quote"
+pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
 {
     layout
     {
@@ -22,7 +22,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
             {
                 ApplicationArea = All;
                 Caption = 'Project Report';
-                ToolTip = 'Indicates if the quote is related to a project';
+                ToolTip = 'Indicates if the Order is related to a project';
                 trigger OnValidate()
                 var
                 begin
@@ -67,18 +67,10 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
     actions
     {
 
-        modify(Email)
+        addafter(Post)
         {
-            Visible = false;
-        }
-
-
-        addafter(Print)
-        {
-
             group(Reports)
             {
-
                 action("Project")
                 {
                     Caption = 'Project';
@@ -91,7 +83,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50105, true, false, Rec)
+                        Report.RunModal(50113, true, false, Rec)
                     end;
                 }
                 action("Product")
@@ -106,7 +98,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50106, true, false, Rec)
+                        Report.RunModal(50114, true, false, Rec)
                     end;
                 }
                 action("TM")
@@ -121,7 +113,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50112, true, false, Rec)
+                        Report.RunModal(50115, true, false, Rec)
                     end;
                 }
                 action("Price Sheet")
@@ -136,7 +128,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50107, true, false, Rec)
+                        Report.RunModal(50116, true, false, Rec)
                     end;
                 }
                 action("Attach Price Sheet")
@@ -148,32 +140,11 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                     PromotedCategory = Process;
                     trigger OnAction()
                     begin
-                        ExportSalesQuoteToAttachment(Rec);
+                        ExportSalesOrderToAttachment(Rec);
                     end;
                 }
-
-                action(SendEmail)
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Send by &Email';
-                    Image = Email;
-                    ToolTip = 'Prepare to mail the document. The Send Email window opens prefilled with the customer''s email address so you can add or edit information.';
-                    Promoted = true;
-                    PromotedCategory = Process;
-                    trigger OnAction()
-                    begin
-                        SendEmailWithAttachment();
-                    end;
-
-                }
-
             }
-
-
         }
-
-
-
     }
 
 
@@ -215,27 +186,10 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
 
     end;
 
-    //Email attachment
-    procedure SendEmailWithAttachment()
-    var
-        Email: Codeunit Email;
-        EmailMessage: Codeunit "Email Message";
-        TempBlob: Codeunit "Temp Blob";
-        InStr: Instream;
-        OutStr: OutStream;
-        Salesheader: Record "Sales Header";
-        recref: RecordRef;
-    begin
-        Salesheader.SetRange("No.", Rec."No.");
-        recref.GetTable(Salesheader);
-        TempBlob.CreateOutStream(OutStr);
-        REPORT.SaveAs(Report::"Devices Sales Quote", Rec."No.", REPORTFORMAT::Pdf, OutStr, recref);
-        TempBlob.CreateInStream(InStr);
-        EmailMessage.Create(Rec."Sell-to E-Mail", Rec."No." + '-' + 'Sale Quote', '', true);
-        EmailMessage.AddAttachment(Rec."No." + 'SalesQuote.pdf', 'PDF', InStr);
-        Email.OpenInEditorModally(EmailMessage, Enum::"Email Scenario"::Default);
-    end;
-    procedure ExportSalesQuoteToAttachment(SalesHeader: Record "Sales Header")
+
+
+
+    procedure ExportSalesOrderToAttachment(SalesHeader: Record "Sales Header")
     var
         SalesHdr: Record "Sales Header";
         RecRef: RecordRef;
@@ -248,6 +202,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
     begin
         CurrPage.SetSelectionFilter(SalesHeader);
         SalesHdr.Copy(SalesHeader);
+
         ProcessCount := 0;
         if SalesHdr.FindSet() then
             repeat
@@ -257,17 +212,17 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
         if ProcessCount = 0 then
             Error('You must specify one or more filters to avoid accidentally printing all documents.');
         if ProcessCount > 1 then
-            if not Confirm('%1 quotes will be processed. Do you want to continue?', true, ProcessCount) then
+            if not Confirm('%1 orders will be processed. Do you want to continue?', true, ProcessCount) then
                 exit;
 
         if SalesHdr.FindSet() then
             repeat
-                FileName := StrSubstNo('%1_SalesQuotePriceSheet', SalesHdr."No.");
+                FileName := StrSubstNo('%1_SalesiNVOICEPriceSheet', SalesHdr."No.");
                 TempBlob.CreateOutStream(OutStr);
                 RecRef.GetTable(SalesHdr);
 
                 Report.SaveAs(
-                    Report::"Pricing Sheet Sales Quote",
+                    Report::"Pricing Sheet Sales Invoice",
                     '',
                     ReportFormat::Pdf,
                     OutStr,
@@ -276,8 +231,8 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
 
                 TempBlob.CreateInStream(InStr);
                 DocAttachment.Init();
-                DocAttachment.Validate("Table ID", RecRef.Number);
-                DocAttachment.Validate("Document Type", DocAttachment."Document Type"::Quote);
+                DocAttachment.Validate("Table ID", DATABASE::"Sales Header");
+                DocAttachment.Validate("Document Type", DocAttachment."Document Type"::Invoice);
                 DocAttachment.Validate("No.", SalesHdr."No.");
                 DocAttachment.Validate("File Name", FileName);
                 DocAttachment."File Type" := DocAttachment."File Type"::PDF;
@@ -286,7 +241,8 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                 DocAttachment.Insert(true);
             until SalesHdr.Next() = 0;
 
-        // Message('%1 PDF(s) attached successfully.', ProcessCount);
+        Commit();
+        Message('%1 PDF(s) attached successfully.', ProcessCount);
     end;
 
 }
