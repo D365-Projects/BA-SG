@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-16T05:42:30.4349991Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-16T16:34:33.6757747Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -370,6 +370,7 @@
                                                     <Value>=Fields!Quantity_Line.Value</Value>
                                                     <Style>
                                                       <FontSize>7pt</FontSize>
+                                                      <Format>n2</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -468,6 +469,7 @@
                                                     <Value>=Fields!LineAmount_Line.Value</Value>
                                                     <Style>
                                                       <FontSize>7pt</FontSize>
+                                                      <Format>n2</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
