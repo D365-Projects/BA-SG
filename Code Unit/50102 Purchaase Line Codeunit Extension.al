@@ -6,7 +6,6 @@ codeunit 50102 "DirectUnitCost Event"
     var
         SalesLine: Record "Sales Line";
     begin
-        // Check if linked to a Sales Order Line
         if Rec."Sales Order Line No." <> 0 then begin
             if SalesLine.Get(SalesLine."Document Type"::Order, Rec."Sales Order No.", Rec."Sales Order Line No.") then begin
                 SalesLine.Validate("Unit Cost", Rec."Direct Unit Cost");

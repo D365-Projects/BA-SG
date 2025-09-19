@@ -1,5 +1,6 @@
 pageextension 50115 SalesOrderExt_SG extends "Sales Order"
 {
+    PromotedActionCategories = 'Category5';
     layout
     {
         addafter(Status)
@@ -134,17 +135,40 @@ pageextension 50115 SalesOrderExt_SG extends "Sales Order"
                 action("Attach Price Sheet")
                 {
                     Caption = 'Price Sheet As Attachment';
-                    ApplicationArea = all;
+                     ApplicationArea = All;
 
                     Promoted = true;
                     PromotedCategory = Process;
+
                     trigger OnAction()
                     begin
                         ExportSalesOrderToAttachment(Rec);
                     end;
                 }
+
+
             }
+
         }
+        addbefore(Action96)
+        {
+            //     action("Attach Price Sheet")
+            //     {
+            //         Caption = 'Price Sheet As Attachment';
+            //         ApplicationArea = All;
+
+            //         Promoted = true;
+            //         PromotedCategory = Category11;
+
+            //     trigger OnAction()
+            //         begin
+            //             ExportSalesOrderToAttachment(Rec);
+            //     end;
+            // }
+        }
+
+
+
     }
 
 
