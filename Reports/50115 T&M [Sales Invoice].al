@@ -345,6 +345,7 @@ report 50115 "Standard Sales Invoice T&M"
             column(VATRegistrationNo_Lbl; GetCustomerVATRegistrationNumberLbl())
             {
             }
+            column(CurrencyCode_SG; CurrencyCode_SG) { }
 #if not CLEAN25
             column(GlobalLocationNumber; '')
             {
@@ -596,7 +597,13 @@ report 50115 "Standard Sales Invoice T&M"
                 }
 
                 trigger OnAfterGetRecord()
+                var
+                    genledset: Record "General Ledger Setup";
                 begin
+                    if Header."Currency Code" = '' then begin
+                        if genledset.get() then
+                            CurrencyCode_SG := genledset."LCY Code";
+                    end;
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
@@ -1152,6 +1159,7 @@ report 50115 "Standard Sales Invoice T&M"
     end;
 
     var
+        CurrencyCode_SG: Text;
         GLSetup: Record "General Ledger Setup";
         DummyCompanyInfo: Record "Company Information";
         SalesSetup: Record "Sales & Receivables Setup";
@@ -1352,7 +1360,7 @@ report 50115 "Standard Sales Invoice T&M"
         ReportTotalsLine.DeleteAll();
         ReportTotalsLine.Add(SubtotalLbl, TotalSubTotal, true, false, false);
         ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false);
-        ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
+        // ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
     end;
 
     local procedure GetTaxSummarizedLines(var TempSalesTaxAmountLine: Record "Sales Tax Amount Line" temporary)

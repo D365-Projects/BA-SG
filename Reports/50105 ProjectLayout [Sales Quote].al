@@ -173,6 +173,7 @@ report 50105 "Project Sales Quote"
             column(CustomerPostalBarCode; FormatAddr.PostalBarCode(1))
             {
             }
+            column(CurrencyCode_SG; CurrencyCode_SG) { }
             column(ExternalDocumentNo; "External Document No.")
             {
             }
@@ -445,6 +446,7 @@ report 50105 "Project Sales Quote"
             column(VATClause_Lbl; VATClause.TableCaption())
             {
             }
+            column(CurrCode; CurrCode) { }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -564,7 +566,13 @@ report 50105 "Project Sales Quote"
                 }
 
                 trigger OnAfterGetRecord()
+                var
+                    genledset: Record "General Ledger Setup";
                 begin
+                    if Header."Currency Code" = '' then begin
+                        if genledset.get() then
+                            CurrencyCode_SG := genledset."LCY Code";
+                    end;
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
@@ -848,6 +856,10 @@ report 50105 "Project Sales Quote"
                 SalesPost: Codeunit "Sales-Post";
             begin
                 FirstLineHasBeenOutput := false;
+                if CurrCode = '' then begin
+                    if GeneralLedgerSetup.Get() then
+                        CurrCode := GeneralLedgerSetup."LCY Code";
+                end;
                 Clear(Line);
                 Clear(SalesPost);
                 VATAmountLine.DeleteAll();
@@ -888,7 +900,8 @@ report 50105 "Project Sales Quote"
                     CurrCode := "Currency Code";
                     if Currency.Get("Currency Code") then
                         CurrSymbol := Currency.GetCurrencySymbol();
-                end else
+                end
+                else
                     if GeneralLedgerSetup.Get() then begin
                         CurrCode := GeneralLedgerSetup."LCY Code";
                         CurrSymbol := GeneralLedgerSetup.GetCurrencySymbol();
@@ -1046,6 +1059,8 @@ report 50105 "Project Sales Quote"
     end;
 
     var
+        CurrencyCode_SG: Text;
+
         CompanyBankAccount: Record "Bank Account";
         DummyCompanyInfo: Record "Company Information";
         Cust: Record Customer;
@@ -1209,11 +1224,11 @@ report 50105 "Project Sales Quote"
             if TotalAmountVAT <> 0 then
                 ReportTotalsLine.Add(TotalExclVATText, TotalAmount, true, false, false, Header."Currency Code");
         end;
-        if TotalAmountVAT <> 0 then begin
-            ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
-            if TotalVATAmountLCY <> TotalAmountVAT then
-                ReportTotalsLine.Add(VATAmountLine.VATAmountText() + LCYTxt, TotalVATAmountLCY, false, true, false);
-        end;
+        // if TotalAmountVAT <> 0 then begin
+        //     // ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
+        //     if TotalVATAmountLCY <> TotalAmountVAT then
+        //         // ReportTotalsLine.Add(VATAmountLine.VATAmountText() + LCYTxt, TotalVATAmountLCY, false, true, false);
+        // end
     end;
 
     local procedure SetFormatRegion(FormatRegion: Text[80])

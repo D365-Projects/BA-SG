@@ -338,6 +338,7 @@ report 50108 "Project Sales Order"
             column(VATRegistrationNo_Lbl; GetCustomerVATRegistrationNumberLbl())
             {
             }
+            column(CurrencyCode_SG; CurrencyCode_SG) { }
 #if not CLEAN25
             column(GlobalLocationNumber; '')
             {
@@ -564,7 +565,15 @@ report 50108 "Project Sales Order"
                 }
 
                 trigger OnAfterGetRecord()
+
+                var
+                    genledset: Record "General Ledger Setup";
                 begin
+                    if Header."Currency Code" = '' then begin
+                        if genledset.get() then
+                            CurrencyCode_SG := genledset."LCY Code";
+                    end;
+
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
@@ -1046,6 +1055,7 @@ report 50108 "Project Sales Order"
     end;
 
     var
+        CurrencyCode_SG: Text;
         CompanyBankAccount: Record "Bank Account";
         DummyCompanyInfo: Record "Company Information";
         Cust: Record Customer;
@@ -1209,11 +1219,11 @@ report 50108 "Project Sales Order"
             if TotalAmountVAT <> 0 then
                 ReportTotalsLine.Add(TotalExclVATText, TotalAmount, true, false, false, Header."Currency Code");
         end;
-        if TotalAmountVAT <> 0 then begin
-            ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
-            if TotalVATAmountLCY <> TotalAmountVAT then
-                ReportTotalsLine.Add(VATAmountLine.VATAmountText() + LCYTxt, TotalVATAmountLCY, false, true, false);
-        end;
+        // if TotalAmountVAT <> 0 then begin
+        //     ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
+        //     if TotalVATAmountLCY <> TotalAmountVAT then
+        //         ReportTotalsLine.Add(VATAmountLine.VATAmountText() + LCYTxt, TotalVATAmountLCY, false, true, false);
+        // end;
     end;
 
     local procedure SetFormatRegion(FormatRegion: Text[80])

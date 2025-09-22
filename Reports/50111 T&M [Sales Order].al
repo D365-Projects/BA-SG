@@ -41,6 +41,7 @@ report 50111 "Standard Sales Order T&M"
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Sales Order';
+            column(CurrencyCode_SG; CurrencyCode_SG) { }
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -410,6 +411,8 @@ report 50111 "Standard Sales Order T&M"
             column(Total_Lbl; TotalLbl)
             {
             }
+            column(TotalAmount; TotalAmount) { }
+
             column(VATAmount_Lbl; VATAmtLbl)
             {
             }
@@ -440,6 +443,7 @@ report 50111 "Standard Sales Order T&M"
             column(ShowWorkDescription; ShowWorkDescription)
             {
             }
+
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -596,7 +600,15 @@ report 50111 "Standard Sales Order T&M"
                 }
 
                 trigger OnAfterGetRecord()
+                var
+                    genledset: Record "General Ledger Setup";
+                    vat: Decimal;
                 begin
+                    if Header."Currency Code" = '' then begin
+                        if genledset.get() then
+                            CurrencyCode_SG := genledset."LCY Code";
+                    end;
+
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
@@ -619,7 +631,7 @@ report 50111 "Standard Sales Order T&M"
                     TotalAmountInclVAT += "Amount Including VAT";
                     TotalPaymentDiscOnVAT += -("Line Amount" - "Inv. Discount Amount" - "Amount Including VAT");
 
-                    OnLineOnAfterGetRecordOnAfterCalcTotals(Header, Line, TotalAmount, TotalAmountVAT, TotalAmountInclVAT);
+                    OnLineOnAfterGetRecordOnAfterCalcTotals(Header, Line, TotalAmount, TotalAmountVAT, TotalAmountVAT);
 
                     FormatDocument.SetSalesLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
 
@@ -957,6 +969,7 @@ report 50111 "Standard Sales Order T&M"
                 }
             }
 
+
             trigger OnAfterGetRecord()
             var
                 CurrencyExchangeRate: Record "Currency Exchange Rate";
@@ -966,6 +979,7 @@ report 50111 "Standard Sales Order T&M"
                 SalesPost: Codeunit "Sales-Post";
             begin
                 FirstLineHasBeenOutput := false;
+
                 Clear(Line);
                 Clear(SalesPost);
                 VATAmountLine.DeleteAll();
@@ -1152,6 +1166,7 @@ report 50111 "Standard Sales Order T&M"
     end;
 
     var
+        CurrencyCode_SG: Text;
         GLSetup: Record "General Ledger Setup";
         DummyCompanyInfo: Record "Company Information";
         SalesSetup: Record "Sales & Receivables Setup";
@@ -1352,7 +1367,7 @@ report 50111 "Standard Sales Order T&M"
         ReportTotalsLine.DeleteAll();
         ReportTotalsLine.Add(SubtotalLbl, TotalSubTotal, true, false, false);
         ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false);
-        ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
+        // ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
     end;
 
     local procedure GetTaxSummarizedLines(var TempSalesTaxAmountLine: Record "Sales Tax Amount Line" temporary)

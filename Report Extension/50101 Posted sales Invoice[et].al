@@ -3,6 +3,22 @@ reportextension 50101 PostedSalesInvoice_SG extends 1306
 
     dataset
     {
+        modify(Header)
+        {
+            trigger OnAfterAfterGetRecord()
+            var
+                GLSetup: Record "General Ledger Setup";
+            begin
+                if "Currency Code" = '' then begin
+                    if GLSetup.Get() then
+                        "Currency Code" := GLSetup."LCY Code";
+                end;
+            end;
+        }
+        add(header)
+        {
+            column(CurrCode; CurrCode) { }
+        }
 
         add(Line)
         {
@@ -19,8 +35,10 @@ reportextension 50101 PostedSalesInvoice_SG extends 1306
 
         }
 
+
         // Add changes to dataitems and columns here
     }
+
 
     requestpage
     {
@@ -36,4 +54,10 @@ reportextension 50101 PostedSalesInvoice_SG extends 1306
             LayoutFile = './Layouts/StandardSalesInvoice.rdlc';
         }
     }
+    trigger OnPostReport()
+    var
+        myInt: Integer;
+    begin
+
+    end;
 }

@@ -5,20 +5,20 @@ pageextension 50115 SalesOrderExt_SG extends "Sales Order"
     {
         addafter(Status)
         {
-            field("Quote Status"; Rec."Quote Status")
-            {
-                ApplicationArea = All;
-                Caption = 'Quote Status';
-                ToolTip = 'Status of the Sales Quote';
-                ShowMandatory = true;
-            }
-            field("Follow Up Date"; Rec."Follow Up Date")
-            {
-                ApplicationArea = All;
-                Caption = 'Follow Up Date';
-                ToolTip = 'Date to follow up Sales Quote';
-                ShowMandatory = true;
-            }
+            // field("Quote Status"; Rec."Quote Status")
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Quote Status';
+            //     ToolTip = 'Status of the Sales Quote';
+            //     ShowMandatory = true;
+            // }
+            // field("Follow Up Date"; Rec."Follow Up Date")
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Follow Up Date';
+            //     ToolTip = 'Date to follow up Sales Quote';
+            //     ShowMandatory = true;
+            // }
             field("Project Report"; Rec."Project")
             {
                 ApplicationArea = All;

@@ -2,6 +2,11 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
 {
     layout
     {
+
+        modify(Status)
+        {
+            Visible = VisibleEMail;
+        }
         addafter(Status)
         {
             field("Quote Status"; Rec."Quote Status")
@@ -10,6 +15,10 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                 Caption = 'Quote Status';
                 ToolTip = 'Status of the Sales Quote';
                 ShowMandatory = true;
+                trigger OnValidate()
+                begin
+                    CurrPage.Update();
+                end;
             }
             field("Follow Up Date"; Rec."Follow Up Date")
             {
@@ -66,6 +75,10 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
 
     actions
     {
+        modify(MakeOrder)
+        {
+            Visible = VisibleSalesOrder;
+        }
 
         modify(Email)
         {
@@ -155,6 +168,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                 action(SendEmail)
                 {
                     ApplicationArea = Basic, Suite;
+                    Visible = visibleEmail;
                     Caption = 'Send by &Email';
                     Image = Email;
                     ToolTip = 'Prepare to mail the document. The Send Email window opens prefilled with the customer''s email address so you can add or edit information.';
@@ -182,6 +196,8 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
         VisibleProjectAction: Boolean;
         VisibleDevicesAction: Boolean;
         VisibleTMAction: Boolean;
+        VisibleEMail: Boolean;
+        VisibleSalesOrder: Boolean;
 
     trigger OnAfterGetCurrRecord();
     var
@@ -211,7 +227,22 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
             VisibleDevicesAction := false;
             CurrPage.Update();
         end;
-
+if Rec.Status = Rec.Status::Released then begin
+            VisibleEMail := true;
+            CurrPage.Update();
+        end
+        else begin
+            VisibleEMail := false;
+            CurrPage.Update();
+        end;
+        if Rec."Quote Status" = Rec."Quote Status"::"Approved by Customer" then begin
+            VisibleSalesOrder := true;
+            CurrPage.Update();
+        end
+        else begin
+            VisibleSalesOrder := false;
+            CurrPage.Update();
+        end;
 
     end;
 

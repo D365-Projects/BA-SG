@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-19T10:50:03.9370407Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-19T15:45:26.5318041Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -1886,14 +1886,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ShippingAgentCode_Lbl">
+                        <Textbox Name="Textbox12">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ShippingAgentCode_Lbl.Value</Value>
+                                  <Value />
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1904,7 +1904,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ShippingAgentCode_Lbl</rd:DefaultName>
+                          <rd:DefaultName>Textbox12</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1917,14 +1917,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ShippingAgentCode">
+                        <Textbox Name="Textbox14">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ShippingAgentCode.Value</Value>
+                                  <Value />
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1935,7 +1935,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ShippingAgentCode</rd:DefaultName>
+                          <rd:DefaultName>Textbox14</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2044,14 +2044,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="PackageTrackingNo_Lbl">
+                        <Textbox Name="Textbox15">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PackageTrackingNo_Lbl.Value</Value>
+                                  <Value />
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -2062,7 +2062,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>PackageTrackingNo_Lbl</rd:DefaultName>
+                          <rd:DefaultName>Textbox15</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2075,14 +2075,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="PackageTrackingNo">
+                        <Textbox Name="Textbox16">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PackageTrackingNo.Value</Value>
+                                  <Value />
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -2093,7 +2093,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>PackageTrackingNo</rd:DefaultName>
+                          <rd:DefaultName>Textbox16</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2331,7 +2331,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!CurrencyCode.Value</Value>
+                                  <Value>=IIF(Trim(Fields!CurrencyCode.Value) = "", Fields!CurrCode.Value,Fields!CurrencyCode.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -2404,7 +2404,7 @@
             <Top>0.07765cm</Top>
             <Left>0.00541in</Left>
             <Height>7.49454cm</Height>
-            <Width>19.35692cm</Width>
+            <Width>19.35694cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -2864,7 +2864,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!UPC_SG.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -4290,7 +4290,7 @@
             <Top>8.20919cm</Top>
             <Left>0.00541in</Left>
             <Height>3.71113cm</Height>
-            <Width>19.35692cm</Width>
+            <Width>19.35689cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -4824,7 +4824,7 @@
             <Top>12.20254cm</Top>
             <Left>12.53148cm</Left>
             <Height>1.76266cm</Height>
-            <Width>6.83917cm</Width>
+            <Width>6.83918cm</Width>
             <ZIndex>6</ZIndex>
             <Style>
               <Border>
@@ -5391,7 +5391,7 @@
             <Top>14.87142cm</Top>
             <Left>0.01373cm</Left>
             <Height>3.88058cm</Height>
-            <Width>19.35692cm</Width>
+            <Width>19.35693cm</Width>
             <ZIndex>7</ZIndex>
             <Visibility>
               <Hidden>=NOT Fields!ShowShippingAddress.Value</Hidden>
@@ -5731,7 +5731,7 @@
         <Height>21.5265cm</Height>
         <Style />
       </Body>
-      <Width>19.37065cm</Width>
+      <Width>19.37068cm</Width>
       <Page>
         <PageHeader>
           <Height>3.83958cm</Height>
@@ -6888,6 +6888,9 @@ End Function
         </Field>
         <Field Name="CurrencySymbol">
           <DataField>CurrencySymbol</DataField>
+        </Field>
+        <Field Name="CurrCode">
+          <DataField>CurrCode</DataField>
         </Field>
         <Field Name="SKU">
           <DataField>SKU</DataField>
