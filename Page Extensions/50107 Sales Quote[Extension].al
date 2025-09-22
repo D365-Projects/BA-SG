@@ -82,7 +82,11 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
 
         modify(Email)
         {
-            Visible = false;
+            Visible = VisibleEMail;
+        }
+        modify(MakeInvoice)
+        {
+            Visible = VisibleSalesOrder;
         }
 
 

@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-19T15:41:57.9630201Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-22T07:48:39.8236775Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -1555,6 +1555,7 @@
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -2271,7 +2272,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Sales Order No.</Value>
+                                  <Value>Sales Quote No.</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>

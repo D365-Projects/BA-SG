@@ -24,9 +24,45 @@ pageextension 50113 "Sales Quotes" extends "Sales Quotes"
 
     actions
     {
+        modify(Email)
+        {
+            Visible = VisibleEMail;
+        }
+        modify(MakeOrder)
+        {
+            Visible = VisibleSalesOrder;
+        }
+        modify(MakeInvoice)
+        {
+            Visible = VisibleSalesOrder;
+        }
         // Add changes to page actions here
     }
 
     var
-        myInt: Integer;
+        VisibleEMail: Boolean;
+        VisibleSalesOrder: Boolean;
+
+    trigger OnAfterGetCurrRecord();
+    begin
+        if Rec.Status = Rec.Status::Released then begin
+            VisibleEMail := true;
+            CurrPage.Update();
+        end
+        else begin
+            VisibleEMail := false;
+            CurrPage.Update();
+        end;
+        if Rec."Quote Status" = Rec."Quote Status"::"Approved by Customer" then begin
+            VisibleSalesOrder := true;
+            CurrPage.Update();
+        end
+        else begin
+            VisibleSalesOrder := false;
+            CurrPage.Update();
+        end;
+    end;
+
+
+
 }
