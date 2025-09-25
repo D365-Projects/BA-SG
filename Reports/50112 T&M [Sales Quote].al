@@ -129,6 +129,7 @@ report 50112 "Standard Sales Quote T&M"
             column(CompanyVATRegNo; CompanyInfo.GetVATRegistrationNumber())
             {
             }
+
             column(CompanyVATRegNo_Lbl; CompanyInfo.GetVATRegistrationNumberLbl())
             {
             }
@@ -442,7 +443,8 @@ report 50112 "Standard Sales Quote T&M"
             column(ShowWorkDescription; ShowWorkDescription)
             {
             }
-            column(CurrencyCode_SG; CurrencyCode_SG) { }
+            column(Currency_CodeSG; "Currency Code") { }
+            // column(CurrencyCode_SG; CurrencyCode_SG) { }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -603,10 +605,7 @@ report 50112 "Standard Sales Quote T&M"
                     genledset: Record "General Ledger Setup";
                     vat: Decimal;
                 begin
-                    if Header."Currency Code" = '' then begin
-                        if genledset.get() then
-                            CurrencyCode_SG := genledset."LCY Code";
-                    end;
+
                     if Type = Type::"G/L Account" then
                         "No." := '';
 
@@ -959,9 +958,7 @@ report 50112 "Standard Sales Quote T&M"
                 column(AmountExemptFromSalesTaxLbl; AmtExemptfromSalesTaxLbl)
                 {
                 }
-                column(CurrencyCode; CurrCode)
-                {
-                }
+
                 column(CurrencySymbol; CurrSymbol)
                 {
                 }
@@ -975,6 +972,13 @@ report 50112 "Standard Sales Quote T&M"
                 ArchiveManagement: Codeunit ArchiveManagement;
                 SalesPost: Codeunit "Sales-Post";
             begin
+
+                if "Currency Code" <> '' then begin
+                    CurrCode := "Currency Code"
+                end
+                else begin
+                    CurrCode := GLSetup."LCY Code";
+                end;
                 FirstLineHasBeenOutput := false;
                 Clear(Line);
                 Clear(SalesPost);
@@ -1010,11 +1014,11 @@ report 50112 "Standard Sales Quote T&M"
                     Clear(Cust);
 
                 if "Currency Code" <> '' then begin
+                    CurrCode := "Currency Code";
                     CurrencyExchangeRate.FindCurrency("Posting Date", "Currency Code", 1);
                     CalculatedExchRate :=
                       Round(1 / "Currency Factor" * CurrencyExchangeRate."Exchange Rate Amount", 0.000001);
                     ExchangeRateText := StrSubstNo(ExchangeRateTxt, CalculatedExchRate, CurrencyExchangeRate."Exchange Rate Amount");
-                    CurrCode := "Currency Code";
                     if Currency.Get("Currency Code") then
                         CurrSymbol := Currency.GetCurrencySymbol();
                 end else

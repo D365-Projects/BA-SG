@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-22T05:09:15.1330478Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-25T17:58:58.1077048Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -3546,11 +3546,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIF(
-    Trim(Fields!CurrencyCode.Value) = "",
-    Fields!CurrencyCode_SG.Value,
-    Fields!CurrencyCode.Value
-)</Value>
+                                  <Value>=Fields!CurrencyCode_SG.Value</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>8pt</FontSize>

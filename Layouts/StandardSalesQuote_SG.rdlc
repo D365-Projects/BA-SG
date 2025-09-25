@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-25T11:05:31.8546440Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-25T17:37:12.1736144Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -382,14 +382,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="item_Category">
+                        <Textbox Name="Item_Category_Code">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!item_Category.Value</Value>
+                                  <Value>=Fields!Item_Category_Code.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -400,7 +400,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>item_Category</rd:DefaultName>
+                          <rd:DefaultName>Item_Category_Code</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>

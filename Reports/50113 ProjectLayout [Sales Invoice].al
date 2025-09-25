@@ -221,7 +221,7 @@ report 50113 "Project Sales Invoice"
             column(ShipToAddress7; ShipToAddr[7])
             {
             }
-            column(CurrencyCode_SG; CurrencyCode_SG)
+            column(CurrencyCode_SG; "Currency Code")
             {
 
             }

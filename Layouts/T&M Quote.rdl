@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-22T07:48:39.8236775Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-25T17:53:14.0419066Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -1555,7 +1555,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -3548,11 +3547,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIF(
-    Trim(Fields!CurrencyCode.Value) = "",
-    Fields!CurrencyCode_SG.Value,
-    Fields!CurrencyCode.Value
-)</Value>
+                                  <Value>=Fields!Currency_CodeSG.Value</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -4234,8 +4229,8 @@ End Function
         <Field Name="ShowWorkDescription">
           <DataField>ShowWorkDescription</DataField>
         </Field>
-        <Field Name="CurrencyCode_SG">
-          <DataField>CurrencyCode_SG</DataField>
+        <Field Name="Currency_CodeSG">
+          <DataField>Currency_CodeSG</DataField>
         </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
@@ -4611,9 +4606,6 @@ End Function
         </Field>
         <Field Name="AmountExemptFromSalesTaxLbl">
           <DataField>AmountExemptFromSalesTaxLbl</DataField>
-        </Field>
-        <Field Name="CurrencyCode">
-          <DataField>CurrencyCode</DataField>
         </Field>
         <Field Name="CurrencySymbol">
           <DataField>CurrencySymbol</DataField>

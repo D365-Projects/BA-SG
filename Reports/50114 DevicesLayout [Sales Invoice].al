@@ -186,7 +186,7 @@ report 50114 "Devices Sales Invoice"
             column(YourReference__Lbl; FieldCaption("Your Reference"))
             {
             }
-            column(CurrencyCode_SG; CurrencyCode_SG)
+            column(CurrencyCode_SG; "Currency Code")
             {
 
             }

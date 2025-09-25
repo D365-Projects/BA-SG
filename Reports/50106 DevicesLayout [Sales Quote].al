@@ -267,7 +267,7 @@ report 50106 "Devices Sales Quote"
             column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
-            column(CurrencyCode_SG; CurrencyCode_SG) { }
+            column(CurrencyCode_SG; "Currency Code") { }
             column(PaymentTermsDescription_Lbl; PaymentTermsDescLbl)
             {
             }

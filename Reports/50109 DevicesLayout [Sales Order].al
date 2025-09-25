@@ -288,7 +288,7 @@ report 50109 "Devices Sales Order"
             column(DocumentDate; Format("Document Date", 0, 4))
             {
             }
-            column(CurrencyCode_SG; CurrencyCode_SG) { }
+            column(CurrencyCode_SG; "Currency Code") { }
             column(DocumentDate_Lbl; FieldCaption("Document Date"))
             {
             }

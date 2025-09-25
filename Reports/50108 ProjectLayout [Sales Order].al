@@ -338,7 +338,7 @@ report 50108 "Project Sales Order"
             column(VATRegistrationNo_Lbl; GetCustomerVATRegistrationNumberLbl())
             {
             }
-            column(CurrencyCode_SG; CurrencyCode_SG) { }
+            column(CurrencyCode_SG; "Currency Code") { }
 #if not CLEAN25
             column(GlobalLocationNumber; '')
             {
@@ -569,10 +569,7 @@ report 50108 "Project Sales Order"
                 var
                     genledset: Record "General Ledger Setup";
                 begin
-                    if Header."Currency Code" = '' then begin
-                        if genledset.get() then
-                            CurrencyCode_SG := genledset."LCY Code";
-                    end;
+
 
                     if Type = Type::"G/L Account" then
                         "No." := '';

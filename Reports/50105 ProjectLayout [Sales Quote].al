@@ -173,7 +173,7 @@ report 50105 "Project Sales Quote"
             column(CustomerPostalBarCode; FormatAddr.PostalBarCode(1))
             {
             }
-            column(CurrencyCode_SG; CurrencyCode_SG) { }
+            column(CurrencyCode_SG; "Currency Code") { }
             column(ExternalDocumentNo; "External Document No.")
             {
             }
@@ -569,10 +569,7 @@ report 50105 "Project Sales Quote"
                 var
                     genledset: Record "General Ledger Setup";
                 begin
-                    if Header."Currency Code" = '' then begin
-                        if genledset.get() then
-                            CurrencyCode_SG := genledset."LCY Code";
-                    end;
+
                     if Type = Type::"G/L Account" then
                         "No." := '';
 

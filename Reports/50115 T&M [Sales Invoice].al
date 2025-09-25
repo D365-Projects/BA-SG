@@ -345,7 +345,7 @@ report 50115 "Standard Sales Invoice T&M"
             column(VATRegistrationNo_Lbl; GetCustomerVATRegistrationNumberLbl())
             {
             }
-            column(CurrencyCode_SG; CurrencyCode_SG) { }
+            column(CurrencyCode_SG; "Currency Code") { }
 #if not CLEAN25
             column(GlobalLocationNumber; '')
             {
