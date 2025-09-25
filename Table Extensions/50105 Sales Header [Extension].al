@@ -31,7 +31,11 @@ tableextension 50105 SalesHederExt extends "Sales Header"
         {
             Caption = 'T&M';
             DataClassification = ToBeClassified;
-
+        }
+        field(50106; "License"; Boolean)
+        {
+            Caption = 'License';
+            DataClassification = ToBeClassified;
         }
 
 

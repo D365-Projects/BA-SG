@@ -2,32 +2,21 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
 {
     layout
     {
+
         addafter(Status)
         {
-            field("Quote Status"; Rec."Quote Status")
-            {
-                ApplicationArea = All;
-                Caption = 'Quote Status';
-                ToolTip = 'Status of the Sales Quote';
-                ShowMandatory = true;
-            }
-            field("Follow Up Date"; Rec."Follow Up Date")
-            {
-                ApplicationArea = All;
-                Caption = 'Follow Up Date';
-                ToolTip = 'Date to follow up Sales Quote';
-                ShowMandatory = true;
-            }
+
+
             field("Project Report"; Rec."Project")
             {
                 ApplicationArea = All;
                 Caption = 'Project Report';
-                ToolTip = 'Indicates if the Order is related to a project';
                 trigger OnValidate()
                 var
                 begin
                     Rec.Device := false;
                     Rec."T&M" := false;
+                    Rec.License := false;
                     CurrPage.Update();
                 end;
 
@@ -37,12 +26,12 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
             {
                 ApplicationArea = All;
                 Caption = 'Device Report';
-                ToolTip = 'Indicates if the quote includes devices';
                 trigger OnValidate()
                 var
                 begin
                     Rec.Project := false;
                     Rec."T&M" := false;
+                    Rec.License := false;
                     CurrPage.Update();
                 end;
             }
@@ -50,12 +39,25 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
             {
                 ApplicationArea = All;
                 Caption = 'T&M Report';
-                ToolTip = 'Indicates if the quote includes devices';
                 trigger OnValidate()
                 var
                 begin
                     Rec.Project := false;
                     Rec.Device := false;
+                    Rec.License := false;
+                    CurrPage.Update();
+                end;
+            }
+            field(License_SG; Rec.License)
+            {
+                ApplicationArea = All;
+                Caption = 'License Report';
+                trigger OnValidate()
+                var
+                begin
+                    Rec.Project := false;
+                    Rec.Device := false;
+                    Rec."T&M" := false;
                     CurrPage.Update();
                 end;
             }
@@ -83,7 +85,7 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50113, true, false, Rec)
+                        Report.RunModal(50113, true, true, Rec)
                     end;
                 }
                 action("Product")
@@ -98,7 +100,7 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50114, true, false, Rec)
+                        Report.RunModal(50114, true, true, Rec)
                     end;
                 }
                 action("TM")
@@ -113,7 +115,22 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50115, true, false, Rec)
+                        Report.RunModal(50115, true, true, Rec)
+                    end;
+                }
+                action(License)
+                {
+                    Caption = 'License';
+                    ApplicationArea = all;
+                    Visible = VisibleLicenseAction;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    trigger OnAction()
+                    var
+                        SalesQuoteRec: Record "Sales Header";
+                    begin
+                        CurrPage.SetSelectionFilter(Rec);
+                        Report.RunModal(50121, true, true, Rec)
                     end;
                 }
                 action("Price Sheet")
@@ -128,7 +145,7 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
                         SalesQuoteRec: Record "Sales Header";
                     begin
                         CurrPage.SetSelectionFilter(Rec);
-                        Report.RunModal(50116, true, false, Rec)
+                        Report.RunModal(50116, true, true, Rec)
                     end;
                 }
                 action("Attach Price Sheet")
@@ -153,6 +170,7 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
         VisibleProjectAction: Boolean;
         VisibleDevicesAction: Boolean;
         VisibleTMAction: Boolean;
+        VisibleLicenseAction: Boolean;
 
     trigger OnAfterGetCurrRecord();
     var
@@ -165,21 +183,31 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
             VisibleprojectAction := true;
             VisibleTMAction := false;
             VisibleDevicesAction := false;
+            VisibleLicenseAction := false;
             CurrPage.Update();
         end else if Rec.Device then begin
             VisibleprojectAction := false;
             VisibleTMAction := false;
+            VisibleLicenseAction := false;
             VisibleDevicesAction := true;
             CurrPage.Update();
         end else if Rec."T&M" then begin
             VisibleprojectAction := false;
             VisibleTMAction := true;
             VisibleDevicesAction := false;
+            VisibleLicenseAction := false;
+            CurrPage.Update();
+        end else if Rec."License" then begin
+            VisibleprojectAction := false;
+            VisibleTMAction := false;
+            VisibleDevicesAction := false;
+            VisibleLicenseAction := true;
             CurrPage.Update();
         end else begin
             VisibleprojectAction := false;
             VisibleTMAction := false;
             VisibleDevicesAction := false;
+            VisibleLicenseAction := false;
             CurrPage.Update();
         end;
 

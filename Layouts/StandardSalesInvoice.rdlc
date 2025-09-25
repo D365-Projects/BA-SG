@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-19T15:45:26.5318041Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-22T11:37:25.5101786Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -5701,7 +5701,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!RemainingAmountText.Value</Value>
+                    <Value />
                     <Style>
                       <FontFamily>Segoe UI</FontFamily>
                       <FontSize>8pt</FontSize>
@@ -6909,6 +6909,12 @@ End Function
         </Field>
         <Field Name="Unit_PriceFormat">
           <DataField>Unit_PriceFormat</DataField>
+        </Field>
+        <Field Name="Service_Period_From">
+          <DataField>Service_Period_From</DataField>
+        </Field>
+        <Field Name="Service_Period_To">
+          <DataField>Service_Period_To</DataField>
         </Field>
       </Fields>
       <Query>

@@ -7,6 +7,16 @@ tableextension 50107 SalesInvoiceLine extends "Sales Invoice Line"
             Caption = 'SKU';
             DataClassification = ToBeClassified;
         }
+        field(50102; "Service Period From"; Date)
+        {
+            Caption = 'Service Period From';
+            DataClassification = ToBeClassified;
+        }
+        field(50103; "Service Period To"; Date)
+        {
+            Caption = 'Service Period To';
+            DataClassification = ToBeClassified;
+        }
         field(50106; "UPC_SG"; Code[20])
         {
             Caption = 'UPC';

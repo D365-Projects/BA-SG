@@ -2,6 +2,18 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
 {
     layout
     {
+        addbefore(Quantity)
+        {
+            field("Service Period From"; Rec."Service Period From")
+            {
+                ApplicationArea = all;
+            }
+            field("Service Period To"; Rec."Service Period To")
+            {
+                ApplicationArea = all;
+
+            }
+        }
         modify("Description 2")
         {
             Visible = true;

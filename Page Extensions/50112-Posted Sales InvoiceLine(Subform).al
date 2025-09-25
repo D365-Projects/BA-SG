@@ -7,6 +7,18 @@ pageextension 50112 "Posted Sales Invoice" extends "Posted Sales Invoice Subform
             Visible = true;
             Caption = 'Notes';
         }
+        addbefore(Quantity)
+        {
+            field("Service Period From"; Rec."Service Period From")
+            {
+                ApplicationArea = all;
+
+            }
+            field("Service Period To"; Rec."Service Period To")
+            {
+                ApplicationArea = all;
+            }
+        }
         addafter(Description)
         {
             field("SKU"; Rec."SKU")

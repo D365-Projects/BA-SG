@@ -32,6 +32,9 @@ reportextension 50101 PostedSalesInvoice_SG extends 1306
             {
             }
             column(Unit_Price; "Unit Price") { }
+            column(Service_Period_From; "Service Period From") { }
+            column(Service_Period_To; "Service Period To") { }
+
 
         }
 
@@ -53,6 +56,7 @@ reportextension 50101 PostedSalesInvoice_SG extends 1306
 
             LayoutFile = './Layouts/StandardSalesInvoice.rdlc';
         }
+
     }
     trigger OnPostReport()
     var

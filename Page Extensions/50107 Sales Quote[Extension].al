@@ -13,7 +13,6 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
             {
                 ApplicationArea = All;
                 Caption = 'Quote Status';
-                ToolTip = 'Status of the Sales Quote';
                 ShowMandatory = true;
                 trigger OnValidate()
                 begin
@@ -24,19 +23,18 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
             {
                 ApplicationArea = All;
                 Caption = 'Follow Up Date';
-                ToolTip = 'Date to follow up Sales Quote';
                 ShowMandatory = true;
             }
             field("Project Report"; Rec."Project")
             {
                 ApplicationArea = All;
                 Caption = 'Project Report';
-                ToolTip = 'Indicates if the quote is related to a project';
                 trigger OnValidate()
                 var
                 begin
                     Rec.Device := false;
                     Rec."T&M" := false;
+                    Rec.License := false;
                     CurrPage.Update();
                 end;
 
@@ -46,12 +44,12 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
             {
                 ApplicationArea = All;
                 Caption = 'Device Report';
-                ToolTip = 'Indicates if the quote includes devices';
                 trigger OnValidate()
                 var
                 begin
                     Rec.Project := false;
                     Rec."T&M" := false;
+                    Rec.License := false;
                     CurrPage.Update();
                 end;
             }
@@ -59,12 +57,25 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
             {
                 ApplicationArea = All;
                 Caption = 'T&M Report';
-                ToolTip = 'Indicates if the quote includes devices';
                 trigger OnValidate()
                 var
                 begin
                     Rec.Project := false;
                     Rec.Device := false;
+                    Rec.License := false;
+                    CurrPage.Update();
+                end;
+            }
+            field(License_SG; Rec.License)
+            {
+                ApplicationArea = All;
+                Caption = 'License Report';
+                trigger OnValidate()
+                var
+                begin
+                    Rec.Project := false;
+                    Rec.Device := false;
+                    Rec."T&M" := false;
                     CurrPage.Update();
                 end;
             }
@@ -141,6 +152,21 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
                         Report.RunModal(50112, true, false, Rec)
                     end;
                 }
+                action(License)
+                {
+                    Caption = 'License';
+                    ApplicationArea = all;
+                    Visible = VisibleLicenseAction;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    trigger OnAction()
+                    var
+                        SalesQuoteRec: Record "Sales Header";
+                    begin
+                        CurrPage.SetSelectionFilter(Rec);
+                        Report.RunModal(50119, true, false, Rec)
+                    end;
+                }
                 action("Price Sheet")
                 {
                     Caption = 'Price Sheet';
@@ -202,6 +228,7 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
         VisibleTMAction: Boolean;
         VisibleEMail: Boolean;
         VisibleSalesOrder: Boolean;
+        VisibleLicenseAction: Boolean;
 
     trigger OnAfterGetCurrRecord();
     var
@@ -214,21 +241,31 @@ pageextension 50107 SalesQuoteExt extends "Sales Quote"
             VisibleprojectAction := true;
             VisibleTMAction := false;
             VisibleDevicesAction := false;
+            VisibleLicenseAction := false;
             CurrPage.Update();
         end else if Rec.Device then begin
             VisibleprojectAction := false;
             VisibleTMAction := false;
+            VisibleLicenseAction := false;
             VisibleDevicesAction := true;
             CurrPage.Update();
         end else if Rec."T&M" then begin
             VisibleprojectAction := false;
             VisibleTMAction := true;
             VisibleDevicesAction := false;
+            VisibleLicenseAction := false;
+            CurrPage.Update();
+        end else if Rec."License" then begin
+            VisibleprojectAction := false;
+            VisibleTMAction := false;
+            VisibleDevicesAction := false;
+            VisibleLicenseAction := true;
             CurrPage.Update();
         end else begin
             VisibleprojectAction := false;
             VisibleTMAction := false;
             VisibleDevicesAction := false;
+            VisibleLicenseAction := false;
             CurrPage.Update();
         end;
 if Rec.Status = Rec.Status::Released then begin

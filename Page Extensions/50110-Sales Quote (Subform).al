@@ -2,6 +2,17 @@ pageextension 50110 "Sales Quote Line" extends "Sales Quote Subform"
 {
     layout
     {
+        addbefore(Quantity)
+        {
+            field("Service Period From"; Rec."Service Period From")
+            {
+                ApplicationArea = all;
+            }
+            field("Service Period To"; Rec."Service Period To")
+            {
+                ApplicationArea = All;
+            }
+        }
         modify("No.")
         {
             trigger OnAfterValidate()

@@ -2,6 +2,17 @@ pageextension 50111 "Sales Order Line" extends "Sales Order Subform"
 {
     layout
     {
+        addbefore(Quantity)
+        {
+            field("Service Period From"; Rec."Service Period From")
+            {
+                ApplicationArea = all;
+            }
+            field("Service Period To"; Rec."Service Period To")
+            {
+                ApplicationArea = all;
+            }
+        }
         modify("Description 2")
         {
             Visible = true;
