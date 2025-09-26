@@ -34,6 +34,7 @@ report 50118 "Standard Sales - InvoiceDB"
             column(Sell_to_County; "Sell-to County") { }
             column(Sell_to_Post_Code; "Sell-to Post Code") { }
             column(Sell_to_Customer_No_; "Sell-to Customer No.") { }
+column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
 
             column(Sell_to_Address; "Sell-to Address") { }
             column(Bill_to_Address; "Bill-to Address") { }
@@ -191,6 +192,8 @@ report 50118 "Standard Sales - InvoiceDB"
             {
             }
 
+            column(TotalAmount_Including_VAT; "Amount Including VAT") { }
+
             dataitem(Line; "Sales Invoice Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -223,6 +226,7 @@ report 50118 "Standard Sales - InvoiceDB"
                 column(Description_Line_Lbl; FieldCaption(Description))
                 {
                 }
+                column(Line_Discount_Amount; "Line Discount Amount") { }
                 column(LineDiscountPercent_Line; "Line Discount %")
                 {
                 }
@@ -271,13 +275,16 @@ report 50118 "Standard Sales - InvoiceDB"
                 column(VATIdentifier_Line_Lbl; FieldCaption("VAT Identifier"))
                 {
                 }
-                column(GrandTotalAmount; GrandTotalAmount) { }
+                column(GrandTotalTaxAmount; GrandTotalTaxAmount) { }
+                column(VAT_Base_Amount; "VAT Base Amount") { }
                 column(VatAmount; VatAmount) { }
                 column(TotalAmount; TotalAmount) { }
                 column(Line_Amount; "Line Amount") { }
                 column(Unit_Price; "Unit Price") { }
                 column(Amount_Including_VAT; "Amount Including VAT") { }
                 column(Item_Category_Code; "Item Category Code") { }
+                column(GetLineAmountExclVAT; GetLineAmountExclVAT) { }
+
 
                 trigger OnAfterGetRecord()
                 var
@@ -285,8 +292,10 @@ report 50118 "Standard Sales - InvoiceDB"
                 begin
 
                     TotalAmount += "Amount Including VAT";
-                    VatAmount += "Amount Including VAT" - GetLineAmountExclVAT();
-                    GrandTotalAmount += Amount - VatAmount;
+                    VatExclAMount := "Amount Including VAT" - GetLineAmountExclVAT();
+
+                    GrandTotalTaxAmount += VatExclAMount;
+
                 end;
 
             }
@@ -359,13 +368,13 @@ report 50118 "Standard Sales - InvoiceDB"
         SegManagement: Codeunit SegManagement;
         AutoFormat: Codeunit "Auto Format";
         WorkDescriptionInstream: InStream;
-        GrandTotalAmount: Decimal;
+        GrandTotalTaxAmount: Decimal;
 
         VatAmount: Decimal;
         TotalAmount: Decimal;
         BalanceDue: Decimal;
 
-
+        VatExclAMount: Decimal;
 
 }
 

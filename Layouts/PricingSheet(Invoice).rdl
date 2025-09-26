@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-16T05:52:52.6306122Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-26T13:43:02.3147216Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -421,16 +421,16 @@
                   <Width>2.11991cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.37684cm</Width>
+                  <Width>2.01701cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.98411cm</Width>
+                  <Width>2.81981cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.82839cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.07576cm</Width>
+                  <Width>3.43559cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -928,6 +928,7 @@
                                   <Value>=Fields!UnitPrice.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
+                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -961,6 +962,7 @@
                                   <Value>=Fields!UnitPrice.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
+                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -994,6 +996,7 @@
                                   <Value>=Fields!UnitPrice.Value * Fields!Quantity_Line.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
+                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1027,6 +1030,7 @@
                                   <Value>=Fields!Shipping_Cost.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
+                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1140,7 +1144,7 @@
             <Top>2.99494cm</Top>
             <Left>0cm</Left>
             <Height>1.40433cm</Height>
-            <Width>27.22727cm</Width>
+            <Width>27.06297cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>

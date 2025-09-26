@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-25T11:37:04.7407856Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-26T15:28:32.5337387Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -30,7 +30,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.57429in</Width>
+                  <Width>2.07337in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.91162in</Width>
@@ -42,13 +42,16 @@
                   <Width>0.82781in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.75263in</Width>
+                  <Width>0.67763in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.43596in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.77997in</Width>
+                  <Width>0.70497in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.65925in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.74448in</Width>
@@ -294,6 +297,42 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox13</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>#97cfdd</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox4">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>DISC %.</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox4</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -584,6 +623,39 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox22">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!LineDiscountPercent_Line.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox22</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox16">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -630,6 +702,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -643,10 +716,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>1.12222in</Top>
+            <Top>1.37222in</Top>
             <Left>0.06067in</Left>
             <Height>0.55in</Height>
-            <Width>8.07401in</Width>
+            <Width>8.08234in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -710,7 +783,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=SUM(Fields!Amount_Including_VAT.Value)</Value>
+                                  <Value>=SUM(Fields!AmountExcludingVAT_Line.Value)</Value>
                                   <Style>
                                     <Format>#,0.00;(#,0.00)</Format>
                                     <Color>Gray</Color>
@@ -784,7 +857,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=SUM(Fields!VatAmount.Value)</Value>
+                                  <Value>=Fields!GrandTotalTaxAmount.Value</Value>
                                   <Style>
                                     <Format>#,0.00;(#,0.00)</Format>
                                     <Color>Gray</Color>
@@ -826,7 +899,7 @@
                 <TablixMember />
               </TablixMembers>
             </TablixRowHierarchy>
-            <Top>4.35472cm</Top>
+            <Top>4.98972cm</Top>
             <Left>14.0644cm</Left>
             <Height>1.2291cm</Height>
             <Width>6.59769cm</Width>
@@ -838,7 +911,7 @@
             </Style>
           </Tablix>
           <Line Name="Line2">
-            <Top>4.28416cm</Top>
+            <Top>4.91916cm</Top>
             <Left>0.15411cm</Left>
             <Height>0cm</Height>
             <Width>20.52914cm</Width>
@@ -867,7 +940,7 @@
             </Style>
           </Line>
           <Line Name="Line4">
-            <Top>6.435cm</Top>
+            <Top>7.07cm</Top>
             <Left>0.15411cm</Left>
             <Height>0cm</Height>
             <Width>20.52914cm</Width>
@@ -953,10 +1026,13 @@
                                   <Value>=SUM(Fields!Amount_Including_VAT.Value)</Value>
                                   <Style>
                                     <Format>#,0.00;(#,0.00)</Format>
+                                    <Color>Gray</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox37</rd:DefaultName>
@@ -989,7 +1065,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>5.65437cm</Top>
+            <Top>6.28937cm</Top>
             <Left>14.0644cm</Left>
             <Height>0.62794cm</Height>
             <Width>6.59769cm</Width>
@@ -1004,7 +1080,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.26483cm</Width>
+                  <Width>2.55271cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>3.25967cm</Width>
@@ -1048,14 +1124,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SelltoCustomerNo">
+                        <Textbox Name="Sell_to_Customer_No_">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SelltoCustomerNo.Value</Value>
+                                  <Value>=Fields!Sell_to_Customer_No_.Value</Value>
                                   <Style>
                                     <Color>Gray</Color>
                                   </Style>
@@ -1064,7 +1140,78 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SelltoCustomerNo</rd:DefaultName>
+                          <rd:DefaultName>Sell_to_Customer_No_</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.51858cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox24">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Customer Name</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox24</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Sell_to_Customer_Name">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Sell_to_Customer_Name.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Sell_to_Customer_Name</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1094,14 +1241,12 @@
                                   <Value>=Fields!Sell_to_Address.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value xml:space="preserve"> </Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1140,7 +1285,6 @@
                                   <Value>=Fields!Sell_to_Post_Code.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1179,7 +1323,6 @@
                                   <Value>=Fields!Sell_to_County.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1217,13 +1360,14 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.67028cm</Top>
             <Left>0.17528cm</Left>
-            <Height>2.07432cm</Height>
-            <Width>5.5245cm</Width>
+            <Height>2.5929cm</Height>
+            <Width>5.81238cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -1564,7 +1708,7 @@
             </Style>
           </Tablix>
           <Line Name="Line5">
-            <Top>5.635cm</Top>
+            <Top>6.27cm</Top>
             <Left>0.15411cm</Left>
             <Height>0cm</Height>
             <Width>20.50798cm</Width>
@@ -1619,7 +1763,7 @@ THANK YOU FOR YOUR BUSINESS!</Value>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox17</rd:DefaultName>
-            <Top>6.76485cm</Top>
+            <Top>7.39985cm</Top>
             <Left>0.17528cm</Left>
             <Height>1.75683cm</Height>
             <Width>9.27082cm</Width>
@@ -1641,7 +1785,7 @@ THANK YOU FOR YOUR BUSINESS!</Value>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>INVOICE</Value>
+                    <Value>TAX INVOICE</Value>
                     <Style>
                       <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -1672,10 +1816,10 @@ THANK YOU FOR YOUR BUSINESS!</Value>
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>8.52168cm</Height>
+        <Height>9.15668cm</Height>
         <Style />
       </Body>
-      <Width>20.80351cm</Width>
+      <Width>20.73107cm</Width>
       <Page>
         <PageHeader>
           <Height>2.45535cm</Height>
@@ -1957,6 +2101,9 @@ End Function
         <Field Name="Sell_to_Customer_No_">
           <DataField>Sell_to_Customer_No_</DataField>
         </Field>
+        <Field Name="Sell_to_Customer_Name">
+          <DataField>Sell_to_Customer_Name</DataField>
+        </Field>
         <Field Name="Sell_to_Address">
           <DataField>Sell_to_Address</DataField>
         </Field>
@@ -2119,6 +2266,12 @@ End Function
         <Field Name="ExternalDocumentNo_Lbl">
           <DataField>ExternalDocumentNo_Lbl</DataField>
         </Field>
+        <Field Name="TotalAmount_Including_VAT">
+          <DataField>TotalAmount_Including_VAT</DataField>
+        </Field>
+        <Field Name="TotalAmount_Including_VATFormat">
+          <DataField>TotalAmount_Including_VATFormat</DataField>
+        </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
         </Field>
@@ -2145,6 +2298,12 @@ End Function
         </Field>
         <Field Name="Description_Line_Lbl">
           <DataField>Description_Line_Lbl</DataField>
+        </Field>
+        <Field Name="Line_Discount_Amount">
+          <DataField>Line_Discount_Amount</DataField>
+        </Field>
+        <Field Name="Line_Discount_AmountFormat">
+          <DataField>Line_Discount_AmountFormat</DataField>
         </Field>
         <Field Name="LineDiscountPercent_Line">
           <DataField>LineDiscountPercent_Line</DataField>
@@ -2200,11 +2359,17 @@ End Function
         <Field Name="VATIdentifier_Line_Lbl">
           <DataField>VATIdentifier_Line_Lbl</DataField>
         </Field>
-        <Field Name="GrandTotalAmount">
-          <DataField>GrandTotalAmount</DataField>
+        <Field Name="GrandTotalTaxAmount">
+          <DataField>GrandTotalTaxAmount</DataField>
         </Field>
-        <Field Name="GrandTotalAmountFormat">
-          <DataField>GrandTotalAmountFormat</DataField>
+        <Field Name="GrandTotalTaxAmountFormat">
+          <DataField>GrandTotalTaxAmountFormat</DataField>
+        </Field>
+        <Field Name="VAT_Base_Amount">
+          <DataField>VAT_Base_Amount</DataField>
+        </Field>
+        <Field Name="VAT_Base_AmountFormat">
+          <DataField>VAT_Base_AmountFormat</DataField>
         </Field>
         <Field Name="VatAmount">
           <DataField>VatAmount</DataField>
@@ -2238,6 +2403,12 @@ End Function
         </Field>
         <Field Name="Item_Category_Code">
           <DataField>Item_Category_Code</DataField>
+        </Field>
+        <Field Name="GetLineAmountExclVAT">
+          <DataField>GetLineAmountExclVAT</DataField>
+        </Field>
+        <Field Name="GetLineAmountExclVATFormat">
+          <DataField>GetLineAmountExclVATFormat</DataField>
         </Field>
       </Fields>
       <Query>
