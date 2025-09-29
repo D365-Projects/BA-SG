@@ -126,6 +126,7 @@ report 50119 "Sales Quote_SG"
             column(SelltoCustomerNo; "Sell-to Customer No.")
             {
             }
+            column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             column(SelltoCustomerNo_Lbl; FieldCaption("Sell-to Customer No."))
             {
             }

@@ -1,4 +1,3 @@
-
 // codeunit 50102 "DirectUnitCost Event"
 // {
 //     [EventSubscriber(ObjectType::Table, Database::"Purchase Line", 'OnAfterValidateEvent', 'Direct Unit Cost', false, false)]

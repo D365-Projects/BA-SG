@@ -24,7 +24,7 @@ pageextension 50102 PurchaseOrderSubformext extends "Purchase Order Subform"
     {
         // Add changes to page actions here
     }
-    var
-        Directcost: Codeunit "DirectUnitCost Event";
-       
+    // var
+    //     Directcost: Codeunit "DirectUnitCost Event";
+
 }
