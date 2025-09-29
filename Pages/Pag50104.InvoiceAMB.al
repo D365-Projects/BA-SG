@@ -473,6 +473,59 @@ page 50104 "Sherweb_Invoices"
     end;
 
 
+    // local procedure CreateSalesOrders()
+    // var
+    //     SalesHdr: Record "Sales Header";
+    //     CustomerRec: Record Customer;
+    //     SalesSetup: Record "Sales & Receivables Setup";
+    //     NoSeriesMgt: Codeunit "No. Series";
+    //     InvoiceAMBRec: Record "Invoice SG";
+    //     OrgList: List of [text[100]];
+    //     OrgCode: text[100];
+    // begin
+    //     InvoiceAMBRec.Reset();
+    //     if InvoiceAMBRec.FindSet() then
+    //         repeat
+    //             if not OrgList.Contains(InvoiceAMBRec.Organization) then
+    //                 OrgList.Add(InvoiceAMBRec.Organization);
+    //         until InvoiceAMBRec.Next() = 0;
+
+    //     SalesSetup.Get();
+    //     SalesSetup.TestField("Order Nos.");
+    //     foreach OrgCode in OrgList do begin
+    //         CustomerRec.SetRange(Name, OrgCode);
+    //         if not CustomerRec.FindFirst() then
+    //             Error('Customer with Organization %1 not found.', OrgCode);
+    //         SalesHdr.Reset();
+    //         SalesHdr.SetRange("Document Type", SalesHdr."Document Type"::Invoice);
+    //         SalesHdr.SetRange("Sell-to Customer No.", CustomerRec."No.");
+    //         SalesHdr.SetRange("External Document No.", InvoiceAMBRec.InvoiceNo);
+    //         if not SalesHdr.FindFirst() then begin
+    //             SalesHdr.Init();
+    //             SalesHdr."No." := NoSeriesMgt.GetNextNo(SalesSetup."Invoice Nos.", Today, true);
+    //             SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
+    //             SalesHdr.Validate("Sell-to Customer No.", CustomerRec."No.");
+    //             SalesHdr."External Document No." := Rec.InvoiceNo;
+    //             SalesHdr."Document Date" := Today();
+    //             SalesHdr.Insert();
+    //             InvoiceAMBRec.Reset();
+    //             InvoiceAMBRec.SetRange("Organization", OrgCode);
+    //             InvoiceAMBRec.SetRange("No.",InvoiceAMBRec."No.");
+    //             if InvoiceAMBRec.FindSet() then
+    //             repeat
+    //                 CreateSalesLine(SalesHdr, InvoiceAMBRec);
+    //             until InvoiceAMBRec.Next() = 0;
+
+    //             Message('Sales Order created for Organization: %1', OrgCode);
+
+    //         end
+    //         else begin
+    //             Message('Sales Invoice already exists for Customer %1 and Sherweb Invoice No. %2',
+    //                 OrgCode, InvoiceAMBRec.InvoiceNo);
+    //         end;
+    //     end;
+
+    // end;
     local procedure CreateSalesOrders()
     var
         SalesHdr: Record "Sales Header";
@@ -480,54 +533,44 @@ page 50104 "Sherweb_Invoices"
         SalesSetup: Record "Sales & Receivables Setup";
         NoSeriesMgt: Codeunit "No. Series";
         InvoiceAMBRec: Record "Invoice SG";
-        OrgList: List of [text[100]];
-        OrgCode: text[100];
+        LinesAMB: Record "Invoice SG";
+        OrgCode: Text[100];
+        CurrInvoiceNo: Code[20];
     begin
-        InvoiceAMBRec.Reset();
+        SalesSetup.Get();
+        SalesSetup.TestField("Invoice Nos.");
+
         if InvoiceAMBRec.FindSet() then
             repeat
-                if not OrgList.Contains(InvoiceAMBRec.Organization) then
-                    OrgList.Add(InvoiceAMBRec.Organization);
-            until InvoiceAMBRec.Next() = 0;
-
-        SalesSetup.Get();
-        SalesSetup.TestField("Order Nos.");
-        foreach OrgCode in OrgList do begin
-            CustomerRec.SetRange(Name, OrgCode);
-            if not CustomerRec.FindFirst() then
-                Error('Customer with Organization %1 not found.', OrgCode);
-
-            SalesHdr.Reset();
+                OrgCode := InvoiceAMBRec.Organization;
+                CurrInvoiceNo := InvoiceAMBRec.InvoiceNo;
+                CustomerRec.SetRange(Name, OrgCode);
+                if not CustomerRec.FindFirst() then
+                    Error('Customer with Organization %1 not found.', OrgCode);
+                SalesHdr.Reset();
             SalesHdr.SetRange("Document Type", SalesHdr."Document Type"::Invoice);
             SalesHdr.SetRange("Sell-to Customer No.", CustomerRec."No.");
-            SalesHdr.SetRange("External Document No.", InvoiceAMBRec.InvoiceNo);
-
-            if not SalesHdr.FindFirst() then begin
-
-                SalesHdr.Init();
+                SalesHdr.SetRange("External Document No.", CurrInvoiceNo);
+                if not SalesHdr.FindFirst() then begin
+                    SalesHdr.Init();
                 SalesHdr."No." := NoSeriesMgt.GetNextNo(SalesSetup."Invoice Nos.", Today, true);
                 SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
                 SalesHdr.Validate("Sell-to Customer No.", CustomerRec."No.");
-                SalesHdr."External Document No." := Rec.InvoiceNo;
+                    SalesHdr."External Document No." := CurrInvoiceNo;
                 SalesHdr."Document Date" := Today();
                 SalesHdr.Insert();
-                InvoiceAMBRec.Reset();
-                InvoiceAMBRec.SetRange("Organization", OrgCode);
-                if InvoiceAMBRec.FindSet() then
+                end;
+                LinesAMB.Reset();
+                LinesAMB.SetRange(Organization, OrgCode);
+                LinesAMB.SetRange(InvoiceNo, CurrInvoiceNo);
+                if LinesAMB.FindSet() then
                 repeat
-                    CreateSalesLine(SalesHdr, InvoiceAMBRec);
-                until InvoiceAMBRec.Next() = 0;
+                    CreateSalesLine(SalesHdr, LinesAMB);
+                    until LinesAMB.Next() = 0;
 
-                Message('Sales Order created for Organization: %1', OrgCode);
-
-            end
-            else begin
-                Message('Sales Invoice already exists for Customer %1 and Sherweb Invoice No. %2',
-                    OrgCode, InvoiceAMBRec.InvoiceNo);
-            end;
-        end;
-
+            until InvoiceAMBRec.Next() = 0;
     end;
+
 
 
     procedure CreateSalesLine(Saleshdr: Record "Sales Header"; Invoice_lrec: Record "Invoice SG")
