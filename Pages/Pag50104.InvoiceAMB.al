@@ -277,114 +277,279 @@ page 50104 "Sherweb_Invoices"
         TempExcelBuffer.ReadSheet();
     end;
 
+    // procedure ImportExcelData()
+    // var
+    //     SOImportBuffer: Record "Invoice SG";
+    //     RowNo: Integer;
+    //     ColNo: Integer;
+    //     LineNo: Integer;
+    //     MaxRowNo: Integer;
+    // begin
+    //     RowNo := 0;
+    //     ColNo := 0;
+    //     MaxRowNo := 0;
+    //     LineNo := 0;
+    //     SOImportBuffer.Reset();
+    //     if SOImportBuffer.FindLast() then
+    //         LineNo := SOImportBuffer."Line No";
+    //     TempExcelBuffer.Reset();
+    //     if TempExcelBuffer.FindLast() then begin
+    //         MaxRowNo := TempExcelBuffer."Row No.";
+    //     end;
+
+    //     for RowNo := 2 to MaxRowNo do begin
+    //         LineNo := LineNo + 10000;
+    //         SOImportBuffer.Init();
+    //         SOImportBuffer."Line No" := LineNo;
+    //         SOImportBuffer.InvoiceNo := GetValueAtCell(RowNo, 1);
+    //         SOImportBuffer.Organization := GetValueAtCell(RowNo, 2);
+    //         SOImportBuffer.Description := GetValueAtCell(RowNo, 3);
+    //         if not Evaluate(SOImportBuffer.InvoicingDate, GetValueAtCell(RowNo, 4)) then
+    //             SOImportBuffer.InvoicingDate := 0D;
+
+    //         if not Evaluate(SOImportBuffer.InvoicePeriodFrom, GetValueAtCell(RowNo, 5)) then
+    //             SOImportBuffer.InvoicePeriodFrom := 0D;
+
+    //         if not Evaluate(SOImportBuffer.InvoicePeriodTo, GetValueAtCell(RowNo, 6)) then
+    //             SOImportBuffer.InvoicePeriodTo := 0D;
+    //         if not Evaluate(SOImportBuffer.ServicePeriodFrom, GetValueAtCell(RowNo, 7)) then
+    //             SOImportBuffer.ServicePeriodFrom := 0D;
+    //         if not Evaluate(SOImportBuffer.ServicePeriodTo, GetValueAtCell(RowNo, 8)) then
+    //             SOImportBuffer.ServicePeriodTo := 0D;
+    //         if SOImportBuffer.ServicePeriodFrom = 0D then
+    //             Evaluate(SOImportBuffer.ServicePeriodFrom, GetValueAtCell(RowNo, 5));
+
+    //         if SOImportBuffer.ServicePeriodTo = 0D then
+    //             Evaluate(SOImportBuffer.ServicePeriodTo, GetValueAtCell(RowNo, 4));
+
+
+    //         if not Evaluate(SOImportBuffer.Qty, GetValueAtCell(RowNo, 9)) then
+    //             SOImportBuffer.Qty := 0;
+    //         if not Evaluate(SOImportBuffer.sku, GetValueAtCell(RowNo, 10)) then
+    //             SOImportBuffer.sku := '';
+
+    //         if not Evaluate(SOImportBuffer.ListPrice, GetValueAtCell(RowNo, 11)) then
+    //             SOImportBuffer.ListPrice := 0;
+    //         if not Evaluate(SOImportBuffer."Discounted Price NotProrated", GetValueAtCell(RowNo, 12)) then
+    //             SOImportBuffer."Discounted Price NotProrated" := 0;
+    //         if not Evaluate(SOImportBuffer."Unit Cost", GetValueAtCell(RowNo, 13)) then
+    //             SOImportBuffer."Unit Cost" := 0;
+    //         if not Evaluate(SOImportBuffer.LineTotal, GetValueAtCell(RowNo, 14)) then
+    //             SOImportBuffer.LineTotal := 0;
+    //         if not Evaluate(SOImportBuffer."Organization SubTotal", GetValueAtCell(RowNo, 15)) then
+    //             SOImportBuffer."Organization SubTotal" := 0;
+    //         if not Evaluate(SOImportBuffer."Reseller SubTotal", GetValueAtCell(RowNo, 16)) then
+    //             SOImportBuffer."Reseller SubTotal" := 0;
+    //         if not Evaluate(SOImportBuffer."Invoice SubTotal", GetValueAtCell(RowNo, 17)) then
+    //             SOImportBuffer."Invoice SubTotal" := 0;
+    //         if not Evaluate(SOImportBuffer.HST, GetValueAtCell(RowNo, 18)) then
+    //             SOImportBuffer.HST := 0;
+    //         if not Evaluate(SOImportBuffer.PST, GetValueAtCell(RowNo, 19)) then
+    //             SOImportBuffer.PST := 0;
+    //         if not Evaluate(SOImportBuffer.GST, GetValueAtCell(RowNo, 20)) then
+    //             SOImportBuffer.GST := 0;
+    //         if not Evaluate(SOImportBuffer."Grand Total", GetValueAtCell(RowNo, 21)) then
+    //             SOImportBuffer."Grand Total" := 0;
+    //         if not Evaluate(SOImportBuffer.Currency, GetValueAtCell(RowNo, 22)) then
+    //             SOImportBuffer.Currency := '';
+    //         if not Evaluate(SOImportBuffer."Apply tax(es)", GetValueAtCell(RowNo, 23)) then
+    //             SOImportBuffer."Apply tax(es)" := false;
+    //         if not Evaluate(SOImportBuffer."MD - STATE SALES/USE TAX", GetValueAtCell(RowNo, 24)) then
+    //             SOImportBuffer."MD - STATE SALES/USE TAX" := 0;
+    //         if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM ", GetValueAtCell(RowNo, 25)) then
+    //             SOImportBuffer."US - FEDERAL TELECOM " := 0;
+    //         if not Evaluate(SOImportBuffer."US - FEDERAL TELEPHONE EXCISE", GetValueAtCell(RowNo, 26)) then
+    //             SOImportBuffer."US - FEDERAL TELEPHONE EXCISE" := 0;
+    //         if not Evaluate(SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE", GetValueAtCell(RowNo, 27)) then
+    //             SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE" := 0;
+    //         if not Evaluate(SOImportBuffer."US - FEDERAL NUMBERING ", GetValueAtCell(RowNo, 28)) then
+    //             SOImportBuffer."US - FEDERAL NUMBERING " := 0;
+    //         if not Evaluate(SOImportBuffer."US-FEDERAL COMMUNICATIONS", GetValueAtCell(RowNo, 29)) then
+    //             SOImportBuffer."US-FEDERAL COMMUNICATIONS" := 0;
+    //         if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM RELAY", GetValueAtCell(RowNo, 30)) then
+    //             SOImportBuffer."US - FEDERAL TELECOM RELAY" := 0;
+    //         if not Evaluate(SOImportBuffer."MD - STATE E911 FEES", GetValueAtCell(RowNo, 31)) then
+    //             SOImportBuffer."MD - STATE E911 FEES" := 0;
+    //         if not Evaluate(SOImportBuffer."MD - STATE UNIVERSAL SERVICE", GetValueAtCell(RowNo, 32)) then
+    //             SOImportBuffer."MD - STATE UNIVERSAL SERVICE" := 0;
+    //         if not Evaluate(SOImportBuffer."MD - STATE PUBLIC UTILITY", GetValueAtCell(RowNo, 33)) then
+    //             SOImportBuffer."MD - STATE PUBLIC UTILITY" := 0;
+    //         if not Evaluate(SOImportBuffer."MD - STATE PUBLIC SERVICE TAX", GetValueAtCell(RowNo, 34)) then
+    //             SOImportBuffer."MD - STATE PUBLIC SERVICE TAX" := 0;
+    //         if not Evaluate(SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE", GetValueAtCell(RowNo, 35)) then
+    //             SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE" := 0;
+    //         if not Evaluate(SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE", GetValueAtCell(RowNo, 35)) then
+    //             SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE" := 0;
+    //         if SOImportBuffer."Discounted Price NotProrated" <> 0.00 then
+    //             if SOImportBuffer."Unit Cost" <> 0.00 then begin
+    //                 SOImportBuffer."Customer List Price" := (SOImportBuffer."Unit Cost" / SOImportBuffer."Discounted Price NotProrated") * SOImportBuffer.ListPrice
+    //             end
+
+    //             else
+    //                 SOImportBuffer."Customer List Price" := 0.00;
+    //         SOImportBuffer.Insert();
+    //     end;
+    //     Message('Data imported successfully from Excel.');
+    // end;
+
     procedure ImportExcelData()
     var
         SOImportBuffer: Record "Invoice SG";
         RowNo: Integer;
-        ColNo: Integer;
-        LineNo: Integer;
-        MaxRowNo: Integer;
-    begin
+    LineNo: Integer;
+    MaxRowNo: Integer;
+    InvFromVar: Date;
+    InvToVar: Date;
+    InvoicingDateVar: Date;
+    ServFromVar: Date;
+    ServToVar: Date;
+begin
         RowNo := 0;
-        ColNo := 0;
         MaxRowNo := 0;
         LineNo := 0;
+
         SOImportBuffer.Reset();
         if SOImportBuffer.FindLast() then
             LineNo := SOImportBuffer."Line No";
+
         TempExcelBuffer.Reset();
-        if TempExcelBuffer.FindLast() then begin
+        if TempExcelBuffer.FindLast() then
             MaxRowNo := TempExcelBuffer."Row No.";
-        end;
 
         for RowNo := 2 to MaxRowNo do begin
             LineNo := LineNo + 10000;
             SOImportBuffer.Init();
             SOImportBuffer."Line No" := LineNo;
+
             SOImportBuffer.InvoiceNo := GetValueAtCell(RowNo, 1);
             SOImportBuffer.Organization := GetValueAtCell(RowNo, 2);
             SOImportBuffer.Description := GetValueAtCell(RowNo, 3);
-            if not Evaluate(SOImportBuffer.InvoicingDate, GetValueAtCell(RowNo, 4)) then
-                SOImportBuffer.InvoicingDate := 0D;
 
-            if not Evaluate(SOImportBuffer.InvoicePeriodFrom, GetValueAtCell(RowNo, 5)) then
-                SOImportBuffer.InvoicePeriodFrom := 0D;
+            // Invoicing Date
+            if not Evaluate(InvoicingDateVar, GetValueAtCell(RowNo, 4)) then
+                InvoicingDateVar := 0D;
+            SOImportBuffer.InvoicingDate := InvoicingDateVar;
 
-            if not Evaluate(SOImportBuffer.InvoicePeriodTo, GetValueAtCell(RowNo, 6)) then
-                SOImportBuffer.InvoicePeriodTo := 0D;
-            if not Evaluate(SOImportBuffer.ServicePeriodFrom, GetValueAtCell(RowNo, 7)) then
-                SOImportBuffer.ServicePeriodFrom := 0D;
-            if not Evaluate(SOImportBuffer.ServicePeriodTo, GetValueAtCell(RowNo, 8)) then
-                SOImportBuffer.ServicePeriodTo := 0D;
+            // Invoice Period From
+            if not Evaluate(InvFromVar, GetValueAtCell(RowNo, 5)) then
+                InvFromVar := 0D;
+            SOImportBuffer.InvoicePeriodFrom := InvFromVar;
+
+            // Invoice Period To
+            if not Evaluate(InvToVar, GetValueAtCell(RowNo, 6)) then
+                InvToVar := 0D;
+            SOImportBuffer.InvoicePeriodTo := InvToVar;
+
+            // Service Period From
+            if not Evaluate(ServFromVar, GetValueAtCell(RowNo, 7)) then
+                ServFromVar := 0D;
+            if ServFromVar = 0D then
+                ServFromVar := InvFromVar; // <-- default to InvoicePeriodFrom
+            SOImportBuffer.ServicePeriodFrom := ServFromVar;
+
+            // Service Period To
+            if not Evaluate(ServToVar, GetValueAtCell(RowNo, 8)) then
+                ServToVar := 0D;
+            if ServToVar = 0D then
+                ServToVar := InvToVar; // <-- default to InvoicePeriodTo
+            SOImportBuffer.ServicePeriodTo := ServToVar;
+
+            // Qty
             if not Evaluate(SOImportBuffer.Qty, GetValueAtCell(RowNo, 9)) then
                 SOImportBuffer.Qty := 0;
+
+            // SKU
             if not Evaluate(SOImportBuffer.sku, GetValueAtCell(RowNo, 10)) then
                 SOImportBuffer.sku := '';
 
+            // List Price
             if not Evaluate(SOImportBuffer.ListPrice, GetValueAtCell(RowNo, 11)) then
                 SOImportBuffer.ListPrice := 0;
+
             if not Evaluate(SOImportBuffer."Discounted Price NotProrated", GetValueAtCell(RowNo, 12)) then
                 SOImportBuffer."Discounted Price NotProrated" := 0;
+
             if not Evaluate(SOImportBuffer."Unit Cost", GetValueAtCell(RowNo, 13)) then
                 SOImportBuffer."Unit Cost" := 0;
+
             if not Evaluate(SOImportBuffer.LineTotal, GetValueAtCell(RowNo, 14)) then
                 SOImportBuffer.LineTotal := 0;
+
             if not Evaluate(SOImportBuffer."Organization SubTotal", GetValueAtCell(RowNo, 15)) then
                 SOImportBuffer."Organization SubTotal" := 0;
+
             if not Evaluate(SOImportBuffer."Reseller SubTotal", GetValueAtCell(RowNo, 16)) then
                 SOImportBuffer."Reseller SubTotal" := 0;
+
             if not Evaluate(SOImportBuffer."Invoice SubTotal", GetValueAtCell(RowNo, 17)) then
                 SOImportBuffer."Invoice SubTotal" := 0;
+
             if not Evaluate(SOImportBuffer.HST, GetValueAtCell(RowNo, 18)) then
                 SOImportBuffer.HST := 0;
+
             if not Evaluate(SOImportBuffer.PST, GetValueAtCell(RowNo, 19)) then
                 SOImportBuffer.PST := 0;
+
             if not Evaluate(SOImportBuffer.GST, GetValueAtCell(RowNo, 20)) then
                 SOImportBuffer.GST := 0;
+
             if not Evaluate(SOImportBuffer."Grand Total", GetValueAtCell(RowNo, 21)) then
                 SOImportBuffer."Grand Total" := 0;
+
             if not Evaluate(SOImportBuffer.Currency, GetValueAtCell(RowNo, 22)) then
                 SOImportBuffer.Currency := '';
+
             if not Evaluate(SOImportBuffer."Apply tax(es)", GetValueAtCell(RowNo, 23)) then
                 SOImportBuffer."Apply tax(es)" := false;
+
             if not Evaluate(SOImportBuffer."MD - STATE SALES/USE TAX", GetValueAtCell(RowNo, 24)) then
                 SOImportBuffer."MD - STATE SALES/USE TAX" := 0;
+
             if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM ", GetValueAtCell(RowNo, 25)) then
                 SOImportBuffer."US - FEDERAL TELECOM " := 0;
+
             if not Evaluate(SOImportBuffer."US - FEDERAL TELEPHONE EXCISE", GetValueAtCell(RowNo, 26)) then
                 SOImportBuffer."US - FEDERAL TELEPHONE EXCISE" := 0;
+
             if not Evaluate(SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE", GetValueAtCell(RowNo, 27)) then
                 SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE" := 0;
+
             if not Evaluate(SOImportBuffer."US - FEDERAL NUMBERING ", GetValueAtCell(RowNo, 28)) then
                 SOImportBuffer."US - FEDERAL NUMBERING " := 0;
+
             if not Evaluate(SOImportBuffer."US-FEDERAL COMMUNICATIONS", GetValueAtCell(RowNo, 29)) then
                 SOImportBuffer."US-FEDERAL COMMUNICATIONS" := 0;
+
             if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM RELAY", GetValueAtCell(RowNo, 30)) then
                 SOImportBuffer."US - FEDERAL TELECOM RELAY" := 0;
+
             if not Evaluate(SOImportBuffer."MD - STATE E911 FEES", GetValueAtCell(RowNo, 31)) then
                 SOImportBuffer."MD - STATE E911 FEES" := 0;
+
             if not Evaluate(SOImportBuffer."MD - STATE UNIVERSAL SERVICE", GetValueAtCell(RowNo, 32)) then
                 SOImportBuffer."MD - STATE UNIVERSAL SERVICE" := 0;
+
             if not Evaluate(SOImportBuffer."MD - STATE PUBLIC UTILITY", GetValueAtCell(RowNo, 33)) then
                 SOImportBuffer."MD - STATE PUBLIC UTILITY" := 0;
+
             if not Evaluate(SOImportBuffer."MD - STATE PUBLIC SERVICE TAX", GetValueAtCell(RowNo, 34)) then
                 SOImportBuffer."MD - STATE PUBLIC SERVICE TAX" := 0;
-            if not Evaluate(SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE", GetValueAtCell(RowNo, 35)) then
-                SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE" := 0;
-            if not Evaluate(SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE", GetValueAtCell(RowNo, 35)) then
-                SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE" := 0;
-            if SOImportBuffer."Discounted Price NotProrated" <> 0.00 then
-                if SOImportBuffer."Unit Cost" <> 0.00 then begin
-                    SOImportBuffer."Customer List Price" := (SOImportBuffer."Unit Cost" / SOImportBuffer."Discounted Price NotProrated") * SOImportBuffer.ListPrice
-                end
 
+            if not Evaluate(SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE", GetValueAtCell(RowNo, 35)) then
+                SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE" := 0;
+
+            // Customer List Price calc
+            if SOImportBuffer."Discounted Price NotProrated" <> 0.00 then
+                if SOImportBuffer."Unit Cost" <> 0.00 then
+                    SOImportBuffer."Customer List Price" := (SOImportBuffer."Unit Cost" / SOImportBuffer."Discounted Price NotProrated") * SOImportBuffer.ListPrice
                 else
                     SOImportBuffer."Customer List Price" := 0.00;
+
             SOImportBuffer.Insert();
         end;
+
         Message('Data imported successfully from Excel.');
     end;
-
 
 
 
