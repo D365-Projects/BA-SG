@@ -1366,7 +1366,9 @@ report 50112 "Standard Sales Quote T&M"
     begin
         ReportTotalsLine.DeleteAll();
         ReportTotalsLine.Add(SubtotalLbl, TotalSubTotal, true, false, false);
+        if TotalInvDiscAmount <> 0 then begin
         ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false);
+        end;
         // ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
     end;
 

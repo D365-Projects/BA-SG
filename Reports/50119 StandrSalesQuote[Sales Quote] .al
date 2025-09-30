@@ -15,9 +15,6 @@ report 50119 "Sales Quote_SG"
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Sales Quote';
 
-
-
-
             column(CompanyPicture; DummyCompanyInfo.Picture)
             {
             }
@@ -269,15 +266,23 @@ report 50119 "Sales Quote_SG"
                 column(Unit_Price; "Unit Price") { }
                 column(Amount_Including_VAT; "Amount Including VAT") { }
                 column(Item_Category_Code; "Item Category Code") { }
+                column(CustomMonth; CustomMonth) { }
                 column(item_Category; itemCategory)
                 {
 
                 }
+
                 column(LineAmountEXVAT; LineAmount) { }
 
                 trigger OnAfterGetRecord()
+                var
+                    FromDate: Date;
+                    ToDate: Date;
+                    Result: Decimal;
                 begin
-
+                    FromDate := "Service Period From";
+                    ToDate := "Service Period To";
+                    CustomMonth := CalculateCustomMonths(FromDate, ToDate, 30);
                     LineAmount := "Unit Price" * Quantity;
                     TotalAmount += LineAmount;
                     VatAmount += "Amount Including VAT" - GetLineAmountExclVAT();
@@ -361,7 +366,20 @@ report 50119 "Sales Quote_SG"
         BalanceDue: Decimal;
         itemCategory: Text;
         LineAmount: Decimal;
+        CustomMonth: Decimal;
 
+    local procedure CalculateCustomMonths(FromDate: Date; ToDate: Date; CustomMonthLength: Decimal): Decimal
+    var
+        DaysBetween: Integer;
+        Months: Decimal;
+    begin
+        if (FromDate = 0D) or (ToDate = 0D) then
+            exit(0);
+        DaysBetween := ToDate - FromDate + 1;
+        Months := DaysBetween / CustomMonthLength;
+
+        exit(Months);
+    end;
 
 }
 

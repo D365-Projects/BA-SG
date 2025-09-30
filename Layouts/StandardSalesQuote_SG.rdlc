@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-29T14:43:24.2187341Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-30T15:54:07.5157432Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -289,7 +289,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -425,7 +425,7 @@
                                   <Value>=Fields!Service_Period_From.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>d MMM yyyy</Format>
+                                    <Format>MM/dd/yy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -459,7 +459,7 @@
                                   <Value>=Fields!Service_Period_To.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>d MMM yyyy</Format>
+                                    <Format>MM/dd/yy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -483,16 +483,17 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox10">
+                        <Textbox Name="CustomMonth">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!CustomMonth.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
+                                    <Format>0.00;(0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -501,7 +502,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <rd:DefaultName>CustomMonth</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -565,7 +566,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -2092,6 +2093,12 @@ End Function
         </Field>
         <Field Name="Item_Category_Code">
           <DataField>Item_Category_Code</DataField>
+        </Field>
+        <Field Name="CustomMonth">
+          <DataField>CustomMonth</DataField>
+        </Field>
+        <Field Name="CustomMonthFormat">
+          <DataField>CustomMonthFormat</DataField>
         </Field>
         <Field Name="item_Category">
           <DataField>item_Category</DataField>

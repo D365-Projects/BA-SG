@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-29T14:45:56.5317034Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-30T14:45:50.3052712Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -292,7 +292,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -464,7 +464,7 @@
                                   <Value>=Fields!Service_Period_From.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>d MMM yyyy</Format>
+                                    <Format>MM/dd/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -498,7 +498,7 @@
                                   <Value>=Fields!Service_Period_To.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>d MMM yyyy</Format>
+                                    <Format>MM/dd/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -604,7 +604,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>

@@ -273,12 +273,18 @@ report 50120 "Sales Order_SG"
                 {
 
                 }
+                column(CustomMonth; CustomMonth) { }
                 column(LineAmountEXVAT; LineAmount) { }
 
                 trigger OnAfterGetRecord()
-
+                var
+                    FromDate: Date;
+                    ToDate: Date;
+                    Result: Decimal;
                 begin
-
+                    FromDate := "Service Period From";
+                    ToDate := "Service Period To";
+                    CustomMonth := CalculateCustomMonths(FromDate, ToDate, 30);
                     LineAmount := "Unit Price" * Quantity;
                     TotalAmount += LineAmount;
                     VatAmount += "Amount Including VAT" - GetLineAmountExclVAT();
@@ -362,7 +368,19 @@ report 50120 "Sales Order_SG"
         BalanceDue: Decimal;
         itemCategory: Text;
         LineAmount: Decimal;
+        CustomMonth: Decimal;
 
+local procedure CalculateCustomMonths(FromDate: Date; ToDate: Date; CustomMonthLength: Decimal): Decimal
+    var
+        DaysBetween: Integer;
+        Months: Decimal;
+    begin
+        if (FromDate = 0D) or (ToDate = 0D) then
+            exit(0);
+        DaysBetween := ToDate - FromDate + 1;
+        Months := DaysBetween / CustomMonthLength;
 
+        exit(Months);
+    end;
 }
 
