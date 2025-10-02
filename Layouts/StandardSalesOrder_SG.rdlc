@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-30T15:53:56.5396566Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-02T09:16:37.2658232Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -69,7 +69,7 @@
                                 <TextRun>
                                   <Value>DESCRIPTION</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -103,13 +103,13 @@
                                 <TextRun>
                                   <Value>CATEGORY</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -139,13 +139,13 @@
                                 <TextRun>
                                   <Value>PERIOD FROM</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -175,13 +175,13 @@
                                 <TextRun>
                                   <Value>PERIOD TO</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -211,7 +211,7 @@
                                 <TextRun>
                                   <Value>NO. OF MONTHS</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -247,13 +247,13 @@
                                 <TextRun>
                                   <Value>QTY</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -283,7 +283,7 @@
                                 <TextRun>
                                   <Value>UNIT PRICE</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -319,7 +319,7 @@
                                 <TextRun>
                                   <Value>AMOUNT</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -360,7 +360,7 @@
                                 <TextRun>
                                   <Value>=Fields!Description_Line.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -391,12 +391,12 @@
                                 <TextRun>
                                   <Value>=Fields!Item_Category_Code.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -424,13 +424,13 @@
                                 <TextRun>
                                   <Value>=Fields!Service_Period_From.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <Format>MM/dd/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -458,13 +458,13 @@
                                 <TextRun>
                                   <Value>=Fields!Service_Period_To.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <Format>MM/dd/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -492,7 +492,7 @@
                                 <TextRun>
                                   <Value>=Fields!CustomMonth.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <Format>0.00;(0.00)</Format>
                                   </Style>
                                 </TextRun>
@@ -526,12 +526,12 @@
                                 <TextRun>
                                   <Value>=Fields!Quantity.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -560,7 +560,7 @@
                                 <TextRun>
                                   <Value>=Fields!Unit_Price.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
@@ -594,7 +594,7 @@
                                 <TextRun>
                                   <Value>=Fields!LineAmountEXVAT.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
@@ -644,7 +644,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>1.37222in</Top>
+            <Top>1.12222in</Top>
             <Left>0.06067in</Left>
             <Height>0.55in</Height>
             <Width>8.07401in</Width>
@@ -752,7 +752,7 @@
                 <TablixMember />
               </TablixMembers>
             </TablixRowHierarchy>
-            <Top>4.98972cm</Top>
+            <Top>4.35472cm</Top>
             <Left>14.0644cm</Left>
             <Height>0.61455cm</Height>
             <Width>6.59769cm</Width>
@@ -764,7 +764,7 @@
             </Style>
           </Tablix>
           <Line Name="Line2">
-            <Top>4.91916cm</Top>
+            <Top>4.28416cm</Top>
             <Left>0.15411cm</Left>
             <Height>0cm</Height>
             <Width>20.52914cm</Width>
@@ -818,6 +818,7 @@
                                   <Value>Customer ID</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>Gray</Color>
                                   </Style>
                                 </TextRun>
@@ -849,6 +850,7 @@
                                 <TextRun>
                                   <Value>=Fields!SelltoCustomerNo.Value</Value>
                                   <Style>
+                                    <FontSize>9pt</FontSize>
                                     <Color>Gray</Color>
                                   </Style>
                                 </TextRun>
@@ -874,7 +876,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.6cm</Height>
+                  <Height>0.51858cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -956,17 +958,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Sell_to_Address.Value</Value>
+                                  <Value>=Fields!Address1and2.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
-                                    <FontWeight>Normal</FontWeight>
-                                  </Style>
-                                </TextRun>
-                                <TextRun>
-                                  <Value xml:space="preserve"> </Value>
-                                  <Style>
-                                    <FontSize>9pt</FontSize>
-                                    <FontWeight>Normal</FontWeight>
+                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1002,10 +997,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Sell_to_Post_Code.Value</Value>
+                                  <Value>=Fields!CSZcode.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
-                                    <FontWeight>Normal</FontWeight>
+                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1013,45 +1008,6 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox47</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>2</ColSpan>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.51858cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Sell_to_County">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Sell_to_County.Value</Value>
-                                  <Style>
-                                    <FontSize>9pt</FontSize>
-                                    <FontWeight>Normal</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Sell_to_County</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1082,13 +1038,12 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.67028cm</Top>
             <Left>0.17528cm</Left>
-            <Height>2.67432cm</Height>
+            <Height>2.07432cm</Height>
             <Width>13.58351cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -1304,6 +1259,7 @@
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
+                                    <Format>MM/dd/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1377,7 +1333,7 @@
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>d MMM yyyy</Format>
+                                    <Format>MM/dd/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1430,7 +1386,7 @@
             </Style>
           </Tablix>
           <Line Name="Line5">
-            <Top>5.635cm</Top>
+            <Top>5cm</Top>
             <Left>0.15411cm</Left>
             <Height>0cm</Height>
             <Width>20.50798cm</Width>
@@ -1474,7 +1430,7 @@ THANK YOU FOR YOUR BUSINESS!</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontFamily>Times New Roman</FontFamily>
-                      <FontSize>8pt</FontSize>
+                      <FontSize>7pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>None</TextDecoration>
                       <Color>Gray</Color>
@@ -1485,7 +1441,7 @@ THANK YOU FOR YOUR BUSINESS!</Value>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox17</rd:DefaultName>
-            <Top>5.81235cm</Top>
+            <Top>5.17735cm</Top>
             <Left>0.17528cm</Left>
             <Height>1.75683cm</Height>
             <Width>9.27082cm</Width>
@@ -1597,6 +1553,7 @@ THANK YOU FOR YOUR BUSINESS!</Value>
                     <TextRun>
                       <Value>=Fields!CompanyName.Value</Value>
                       <Style>
+                        <FontSize>9pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>SteelBlue</Color>
                       </Style>
@@ -1630,6 +1587,7 @@ THANK YOU FOR YOUR BUSINESS!</Value>
                     <TextRun>
                       <Value>=Fields!CompanyEmail.Value</Value>
                       <Style>
+                        <FontSize>9pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
                     </TextRun>
@@ -1669,6 +1627,7 @@ THANK YOU FOR YOUR BUSINESS!</Value>
                         </Actions>
                       </ActionInfo>
                       <Style>
+                        <FontSize>9pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
                     </TextRun>
@@ -1811,6 +1770,12 @@ End Function
         <Field Name="Document_Date">
           <DataField>Document_Date</DataField>
         </Field>
+        <Field Name="Address1and2">
+          <DataField>Address1and2</DataField>
+        </Field>
+        <Field Name="CSZcode">
+          <DataField>CSZcode</DataField>
+        </Field>
         <Field Name="Sell_to_City">
           <DataField>Sell_to_City</DataField>
         </Field>
@@ -1822,6 +1787,12 @@ End Function
         </Field>
         <Field Name="Sell_to_Customer_No_">
           <DataField>Sell_to_Customer_No_</DataField>
+        </Field>
+        <Field Name="Sell_to_Address_2">
+          <DataField>Sell_to_Address_2</DataField>
+        </Field>
+        <Field Name="Sell_to_Country_Region_Code">
+          <DataField>Sell_to_Country_Region_Code</DataField>
         </Field>
         <Field Name="Sell_to_Address">
           <DataField>Sell_to_Address</DataField>

@@ -30,11 +30,15 @@ report 50120 "Sales Order_SG"
 
             column(Order_Date; "Order Date") { }
             column(Document_Date; "Document Date") { }
+            column(Address1and2; Address1and2) { }
+            column(CSZcode; CSZcode) { }
+
             column(Sell_to_City; "Sell-to City") { }
             column(Sell_to_County; "Sell-to County") { }
             column(Sell_to_Post_Code; "Sell-to Post Code") { }
             column(Sell_to_Customer_No_; "Sell-to Customer No.") { }
-
+            column(Sell_to_Address_2; "Sell-to Address 2") { }
+            column(Sell_to_Country_Region_Code; "Sell-to Country/Region Code") { }
             column(Sell_to_Address; "Sell-to Address") { }
             column(Bill_to_Address; "Bill-to Address") { }
             column(Bill_to_City; "Bill-to City") { }
@@ -89,13 +93,13 @@ report 50120 "Sales Order_SG"
             column(BilltoCustomerNo_Lbl; FieldCaption("Bill-to Customer No."))
             {
             }
-            column(DocumentDate; Format("Document Date", 0, 4))
+            column(DocumentDate; "Document Date")
             {
             }
             column(DocumentDate_Lbl; FieldCaption("Document Date"))
             {
             }
-            column(DueDate; Format("Due Date", 0, 4))
+            column(DueDate; "Due Date")
             {
             }
             column(DueDate_Lbl; FieldCaption("Due Date"))
@@ -234,7 +238,7 @@ report 50120 "Sales Order_SG"
                 column(ItemReferenceNo_Line_Lbl; FieldCaption("Item Reference No."))
                 {
                 }
-                column(ShipmentDate_Line; Format("Shipment Date"))
+                column(ShipmentDate_Line; "Shipment Date")
                 {
                 }
                 column(Quantity; Quantity) { }
@@ -293,9 +297,40 @@ report 50120 "Sales Order_SG"
 
             }
             trigger OnAfterGetRecord()
+            var
+                country_lrec: Record "Country/Region";
             begin
-
+                country_lrec.Reset();
+                if Header."Sell-to Country/Region Code" <> '' then begin
+                    country_lrec.SetRange(Code, Header."Sell-to Country/Region Code");
+                    if country_lrec.FindFirst() then
+                        "Sell-to Country/Reigon Dec" := country_lrec.Name;
+                end;
+                Address1and2 := "Sell-to Address";
+                if "Sell-to Address 2" <> '' then
+                    Address1and2 := "Sell-to Address" + ',' + "Sell-to Address 2";
+                if "Sell-to City" <> '' then
+                    CSZcode := "Sell-to City";
+                if CSZcode <> '' then begin
+                    if "Sell-to County" <> '' then
+                        CSZcode := CSZcode + ', ' + "Sell-to County";
+                end
+                else
+                    CSZcode := "Sell-to County";
+                if CSZcode <> '' then begin
+                    if "Sell-to Post Code" <> '' then
+                        CSZcode := CSZcode + ', ' + "Sell-to Post Code";
+                end
+                else
+                    CSZcode := "Sell-to Post Code";
+                if CSZcode <> '' then begin
+                    if "Sell-to Country/Reigon Dec" <> '' then
+                        CSZcode := CSZcode + ', ' + "Sell-to Country/Reigon Dec";
+                end
+                else
+                    CSZcode := "Sell-to Country/Reigon Dec";
             end;
+
 
 
         }
@@ -325,8 +360,8 @@ report 50120 "Sales Order_SG"
         {
             Type = RDLC;
             LayoutFile = './Layouts/StandardSalesOrder_SG.rdlc';
-            Caption = 'Standard Sales Order (RDLC)';
-            Summary = 'The Standard Sales Order (RDLC) is the most detailed layout and provides most flexible layout options.';
+            Caption = 'Standard Sales Order License (RDLC)';
+            Summary = 'The Standard Sales Order License (RDLC) is the most detailed layout and provides most flexible layout options.';
         }
 
 
@@ -369,6 +404,9 @@ report 50120 "Sales Order_SG"
         itemCategory: Text;
         LineAmount: Decimal;
         CustomMonth: Decimal;
+        Address1and2: Text;
+        CSZcode: Text;
+        "Sell-to Country/Reigon Dec": Text;
 
 local procedure CalculateCustomMonths(FromDate: Date; ToDate: Date; CustomMonthLength: Decimal): Decimal
     var

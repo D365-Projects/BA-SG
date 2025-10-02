@@ -30,6 +30,8 @@ report 50118 "Standard Sales - InvoiceDB"
 
             column(Order_Date; "Order Date") { }
             column(Document_Date; "Document Date") { }
+            column(Address1and2; Address1and2) { }
+            column(CSZcode; CSZcode) { }
             column(Sell_to_City; "Sell-to City") { }
             column(Sell_to_County; "Sell-to County") { }
             column(Sell_to_Post_Code; "Sell-to Post Code") { }
@@ -51,7 +53,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             column(Amount; Amount) { }
 
 
-            column(ShipmentDate; Format("Shipment Date", 0, 4))
+            column(ShipmentDate; "Shipment Date")
             {
             }
             column(ShipmentDate_Lbl; FieldCaption("Shipment Date"))
@@ -90,13 +92,13 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             column(BilltoCustomerNo_Lbl; FieldCaption("Bill-to Customer No."))
             {
             }
-            column(DocumentDate; Format("Document Date", 0, 4))
+            column(DocumentDate; "Document Date")
             {
             }
             column(DocumentDate_Lbl; FieldCaption("Document Date"))
             {
             }
-            column(DueDate; Format("Due Date", 0, 4))
+            column(DueDate; "Due Date")
             {
             }
             column(DueDate_Lbl; FieldCaption("Due Date"))
@@ -247,7 +249,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                 column(ItemReferenceNo_Line_Lbl; FieldCaption("Item Reference No."))
                 {
                 }
-                column(ShipmentDate_Line; Format("Shipment Date"))
+                column(ShipmentDate_Line; "Shipment Date")
                 {
                 }
                 column(Quantity; Quantity) { }
@@ -300,9 +302,40 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
 
             }
             trigger OnAfterGetRecord()
+            var
+                country_lrec: Record "Country/Region";
             begin
-
+                country_lrec.Reset();
+                if Header."Sell-to Country/Region Code" <> '' then begin
+                    country_lrec.SetRange(Code, Header."Sell-to Country/Region Code");
+                    if country_lrec.FindFirst() then
+                        "Sell-to Country/Reigon Dec" := country_lrec.Name;
+                end;
+                Address1and2 := "Sell-to Address";
+                if "Sell-to Address 2" <> '' then
+                    Address1and2 := "Sell-to Address" + ',' + "Sell-to Address 2";
+                if "Sell-to City" <> '' then
+                    CSZcode := "Sell-to City";
+                if CSZcode <> '' then begin
+                    if "Sell-to County" <> '' then
+                        CSZcode := CSZcode + ', ' + "Sell-to County";
+                end
+                else
+                    CSZcode := "Sell-to County";
+                if CSZcode <> '' then begin
+                    if "Sell-to Post Code" <> '' then
+                        CSZcode := CSZcode + ', ' + "Sell-to Post Code";
+                end
+                else
+                    CSZcode := "Sell-to Post Code";
+                if CSZcode <> '' then begin
+                    if "Sell-to Country/Reigon Dec" <> '' then
+                        CSZcode := CSZcode + ', ' + "Sell-to Country/Reigon Dec";
+                end
+                else
+                    CSZcode := "Sell-to Country/Reigon Dec";
             end;
+
 
 
         }
@@ -373,8 +406,10 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
         VatAmount: Decimal;
         TotalAmount: Decimal;
         BalanceDue: Decimal;
-
         VatExclAMount: Decimal;
+        Address1and2: Text;
+        CSZcode: Text;
+        "Sell-to Country/Reigon Dec": Text;
 
 }
 

@@ -291,7 +291,7 @@ report 50107 "Pricing Sheet Sales Quote"
             column(DocumentDate_Lbl; FieldCaption("Document Date"))
             {
             }
-            column(DueDate; Format("Due Date", 0, 4))
+            column(DueDate; "Due Date")
             {
             }
             column(DueDate_Lbl; FieldCaption("Due Date"))

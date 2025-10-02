@@ -227,7 +227,7 @@ report 50115 "Standard Sales Invoice T&M"
             column(ShipmentMethodDescription_Lbl; ShptMethodDescLbl)
             {
             }
-            column(ShipmentDate; Format("Shipment Date", 0, 4))
+            column(ShipmentDate; "Shipment Date")
             {
             }
             column(ShipmentDate_Lbl; FieldCaption("Shipment Date"))
@@ -290,13 +290,13 @@ report 50115 "Standard Sales Invoice T&M"
             column(BilltoCustomerNo_Lbl; FieldCaption("Bill-to Customer No."))
             {
             }
-            column(DocumentDate; Format("Document Date", 0, 4))
+            column(DocumentDate; "Document Date")
             {
             }
             column(DocumentDate_Lbl; FieldCaption("Document Date"))
             {
             }
-            column(DueDate; Format("Due Date", 0, 4))
+            column(DueDate; "Due Date")
             {
             }
             column(DueDate_Lbl; FieldCaption("Due Date"))
@@ -498,13 +498,13 @@ report 50115 "Standard Sales Invoice T&M"
                 column(ItemNo_Line_Lbl; FieldCaption("No."))
                 {
                 }
-                column(ShipmentDate_Line; Format("Shipment Date"))
+                column(ShipmentDate_Line; "Shipment Date")
                 {
                 }
                 column(ShipmentDate_Line_Lbl; PostedShipmentDateLbl)
                 {
                 }
-                column(PlannedShipmentDate_Line; Format("Planned Shipment Date"))
+                column(PlannedShipmentDate_Line; "Planned Shipment Date")
                 {
                 }
                 column(PlannedShipmentDate_Line_Lbl; FieldCaption("Planned Shipment Date"))

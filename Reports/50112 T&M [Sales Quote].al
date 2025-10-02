@@ -229,7 +229,7 @@ report 50112 "Standard Sales Quote T&M"
             column(ShipmentMethodDescription_Lbl; ShptMethodDescLbl)
             {
             }
-            column(ShipmentDate; Format("Shipment Date", 0, 4))
+            column(ShipmentDate; "Shipment Date")
             {
             }
             column(ShipmentDate_Lbl; FieldCaption("Shipment Date"))
@@ -292,13 +292,13 @@ report 50112 "Standard Sales Quote T&M"
             column(BilltoCustomerNo_Lbl; FieldCaption("Bill-to Customer No."))
             {
             }
-            column(DocumentDate; Format("Document Date", 0, 4))
+            column(DocumentDate; "Document Date")
             {
             }
             column(DocumentDate_Lbl; FieldCaption("Document Date"))
             {
             }
-            column(DueDate; Format("Due Date", 0, 4))
+            column(DueDate; "Due Date")
             {
             }
             column(DueDate_Lbl; FieldCaption("Due Date"))

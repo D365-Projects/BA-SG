@@ -284,19 +284,19 @@ report 50108 "Project Sales Order"
             column(BilltoCustomerNo_Lbl; FieldCaption("Bill-to Customer No."))
             {
             }
-            column(DocumentDate; Format("Document Date", 0, 4))
+            column(DocumentDate; "Document Date")
             {
             }
             column(DocumentDate_Lbl; FieldCaption("Document Date"))
             {
             }
-            column(DueDate; Format("Due Date", 0, 4))
+            column(DueDate; "Due Date")
             {
             }
             column(DueDate_Lbl; FieldCaption("Due Date"))
             {
             }
-            column(QuoteValidToDate; Format("Quote Valid Until Date", 0, 4))
+            column(QuoteValidToDate; "Quote Valid Until Date")
             {
             }
             column(QuoteValidToDate_Lbl; QuoteValidToDateLbl)
@@ -505,7 +505,7 @@ report 50108 "Project Sales Order"
                 column(ItemReferenceNo_Line_Lbl; FieldCaption("Item Reference No."))
                 {
                 }
-                column(ShipmentDate_Line; Format("Shipment Date"))
+                column(ShipmentDate_Line; "Shipment Date")
                 {
                 }
                 column(ShipmentDate_Lbl; PostedShipmentDateLbl)
