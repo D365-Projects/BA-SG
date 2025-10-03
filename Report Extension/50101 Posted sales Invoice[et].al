@@ -53,12 +53,6 @@ reportextension 50101 PostedSalesInvoice_SG extends 1306
 
     rendering
     {
-        layout("Standard-Sales-InvoiceSG(RDLC)")
-        {
-            Type = RDLC;
-
-            LayoutFile = './Layouts/StandardSalesInvoice.rdlc';
-        }
 
     }
     trigger OnPostReport()
