@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-02T09:14:39.1322088Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-03T08:28:06.4307561Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -60,21 +60,6 @@
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
-                                                  <TextRun>
-                                                    <Value>Description:-</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                  <TextRun>
-                                                    <Value xml:space="preserve"> </Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
                                                   <TextRun>
                                                     <Value>=Fields!WorkDescriptionLine.Value</Value>
                                                     <Style>
@@ -144,7 +129,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>7.57032cm</Width>
+                                    <Width>7.39148cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2.68265cm</Width>
@@ -156,10 +141,10 @@
                                     <Width>1.11029cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.63307cm</Width>
+                                    <Width>1.56199cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.42143cm</Width>
+                                    <Width>1.67135cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2.10332cm</Width>
@@ -368,7 +353,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>RATE</Value>
+                                                    <Value>UNIT PRICE</Value>
                                                     <Style>
                                                       <Color>#5392bc</Color>
                                                     </Style>
@@ -2905,7 +2890,6 @@
                                   <Value>=First(Fields!ShipToAddress_Lbl.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2967,14 +2951,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="DocumentDate_Lbl4">
+                        <Textbox Name="PaymentTermsDescription_Lbl3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Order Validity Date</Value>
+                                  <Value>=Fields!PaymentTermsDescription_Lbl.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -2983,7 +2967,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>DocumentDate_Lbl</rd:DefaultName>
+                          <rd:DefaultName>PaymentTermsDescription_Lbl</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2996,17 +2980,16 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="DueDate3">
+                        <Textbox Name="PaymentTermsDescription3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!QuoteValidToDate.Value</Value>
+                                  <Value>=Fields!PaymentTermsDescription.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>MM/dd/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -3015,7 +2998,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>DueDate</rd:DefaultName>
+                          <rd:DefaultName>PaymentTermsDescription</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3126,14 +3109,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="PaymentTermsDescription_Lbl3">
+                        <Textbox Name="ShipmentMethodDescription_Lbl3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PaymentTermsDescription_Lbl.Value</Value>
+                                  <Value>=Fields!ShipmentMethodDescription_Lbl.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -3142,7 +3125,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>PaymentTermsDescription_Lbl</rd:DefaultName>
+                          <rd:DefaultName>ShipmentMethodDescription_Lbl</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3155,14 +3138,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="PaymentTermsDescription3">
+                        <Textbox Name="ShipmentMethodDescription3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PaymentTermsDescription.Value</Value>
+                                  <Value>=Fields!ShipmentMethodDescription.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -3173,7 +3156,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>PaymentTermsDescription</rd:DefaultName>
+                          <rd:DefaultName>ShipmentMethodDescription</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3286,14 +3269,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ShipmentMethodDescription_Lbl3">
+                        <Textbox Name="Textbox29">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ShipmentMethodDescription_Lbl.Value</Value>
+                                  <Value />
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -3302,7 +3285,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ShipmentMethodDescription_Lbl</rd:DefaultName>
+                          <rd:DefaultName>Textbox29</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3315,14 +3298,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ShipmentMethodDescription3">
+                        <Textbox Name="Textbox32">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ShipmentMethodDescription.Value</Value>
+                                  <Value />
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -3333,7 +3316,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ShipmentMethodDescription</rd:DefaultName>
+                          <rd:DefaultName>Textbox32</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>

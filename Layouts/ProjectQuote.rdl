@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-02T08:54:55.3614444Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-03T08:03:31.3680457Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -228,7 +228,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>RATE</Value>
+                                                    <Value>UNIT PRICE</Value>
                                                     <Style>
                                                       <Color>#5392bc</Color>
                                                     </Style>
@@ -1566,9 +1566,10 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>Currency</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
+                                                      <FontWeight>Normal</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -1596,14 +1597,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>Currency:</Value>
-                                                    <Style>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                  <TextRun>
-                                                    <Value xml:space="preserve">     </Value>
+                                                    <Value xml:space="preserve">    </Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -1851,7 +1845,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>19.00002cm</Width>
+                                    <Width>19.4162cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -1867,7 +1861,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>Description:- </Value>
+                                                    <Value xml:space="preserve"> </Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -1930,7 +1924,7 @@
                               <Top>4.6243cm</Top>
                               <Left>0cm</Left>
                               <Height>0.4cm</Height>
-                              <Width>19.00002cm</Width>
+                              <Width>19.4162cm</Width>
                               <ZIndex>2</ZIndex>
                               <Style>
                                 <Border>
@@ -2336,9 +2330,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox20</rd:DefaultName>
             <Top>8.70141cm</Top>
-            <Left>0.1434cm</Left>
+            <Left>0.05624cm</Left>
             <Height>0.52944cm</Height>
-            <Width>18.49876cm</Width>
+            <Width>19.39292cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>

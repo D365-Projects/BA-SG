@@ -1,6 +1,6 @@
 report 50119 "Sales Quote_SG"
 {
-    Caption = 'Sales - Quote_SG';
+    Caption = 'Sales - Quote';
     EnableHyperlinks = true;
     Permissions = TableData "Sales Shipment Buffer" = rimd;
     PreviewMode = PrintLayout;
@@ -272,7 +272,7 @@ report 50119 "Sales Quote_SG"
                 column(Unit_Price; "Unit Price") { }
                 column(Amount_Including_VAT; "Amount Including VAT") { }
                 column(Item_Category_Code; "Item Category Code") { }
-                column(CustomMonth; CustomMonth) { }
+                column(CustomMonth; CustomMonth) { DecimalPlaces = 0 : 1; }
                 column(item_Category; itemCategory)
                 {
 
@@ -289,7 +289,7 @@ report 50119 "Sales Quote_SG"
 
                     FromDate := "Service Period From";
                     ToDate := "Service Period To";
-                    CustomMonth := CalculateCustomMonths(FromDate, ToDate, 30);
+                    CustomMonth := CalculateCustomMonths(FromDate, ToDate);
                     LineAmount := "Unit Price" * Quantity;
                     TotalAmount += LineAmount;
                     VatAmount += "Amount Including VAT" - GetLineAmountExclVAT();
@@ -309,7 +309,7 @@ report 50119 "Sales Quote_SG"
                 end;
                 Address1and2 := "Sell-to Address";
                 if "Sell-to Address 2" <> '' then
-                    Address1and2 := "Sell-to Address" + ',' + "Sell-to Address 2";
+                    Address1and2 := "Sell-to Address" + ', ' + "Sell-to Address 2";
                 if "Sell-to City" <> '' then
                     CSZcode := "Sell-to City";
                 if CSZcode <> '' then begin
@@ -408,18 +408,37 @@ report 50119 "Sales Quote_SG"
         CSZcode: Text;
         "Sell-to Country/Reigon Dec": Text;
 
-    local procedure CalculateCustomMonths(FromDate: Date; ToDate: Date; CustomMonthLength: Decimal): Decimal
+    local procedure CalculateCustomMonths(FromDate: Date; ToDate: Date): Decimal
+
     var
-        DaysBetween: Integer;
+        CurrentDate: Date;
+        EndOfMonth: Date;
+        DaysInMonth: Integer;
+        DaysCount: Integer;
         Months: Decimal;
+        FirstDayOfMonth: Date;
     begin
         if (FromDate = 0D) or (ToDate = 0D) then
             exit(0);
-        DaysBetween := ToDate - FromDate + 1;
-        Months := DaysBetween / CustomMonthLength;
 
-        exit(Months);
+        Months := 0;
+        CurrentDate := FromDate;
+        while CurrentDate <= ToDate do begin
+            EndOfMonth := CalcDate('<CM>', CurrentDate);
+            if EndOfMonth > ToDate then
+                EndOfMonth := ToDate;
+            FirstDayOfMonth := DMY2Date(1, Date2DMY(CurrentDate, 2), Date2DMY(CurrentDate, 3));
+            DaysInMonth := CalcDate('<CM>', CurrentDate) - FirstDayOfMonth + 1;
+            DaysCount := EndOfMonth - CurrentDate + 1;
+            Months += DaysCount / DaysInMonth;
+            CurrentDate := EndOfMonth + 1;
+        end;
+
+        exit(Round(Months, 0.1, '='));
     end;
+
+
+
 
 }
 

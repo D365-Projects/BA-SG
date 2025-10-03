@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-02T09:13:20.7827329Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-03T07:53:45.8282053Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -228,7 +228,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>RATE</Value>
+                                                    <Value>UNIT PRICE</Value>
                                                     <Style>
                                                       <Color>#5392bc</Color>
                                                     </Style>
@@ -1566,7 +1566,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>Currency</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -1596,14 +1596,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>Currency:</Value>
-                                                    <Style>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                  <TextRun>
-                                                    <Value xml:space="preserve">       </Value>
+                                                    <Value xml:space="preserve">    </Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -1852,7 +1845,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>19.29889cm</Width>
+                                    <Width>19.36117cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -1867,14 +1860,6 @@
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
-                                                  <TextRun>
-                                                    <Value>Description:- </Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
                                                   <TextRun>
                                                     <Value>=Fields!WorkDescriptionLine.Value</Value>
                                                     <Style>
@@ -1930,9 +1915,9 @@
                               </TablixRowHierarchy>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>4.6243cm</Top>
-                              <Left>0.11731cm</Left>
+                              <Left>0.05503cm</Left>
                               <Height>0.4cm</Height>
-                              <Width>19.29889cm</Width>
+                              <Width>19.36117cm</Width>
                               <ZIndex>2</ZIndex>
                               <Style>
                                 <Border>

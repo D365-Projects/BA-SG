@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-02T09:15:01.7309888Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-03T08:08:14.1958443Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -224,7 +224,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>RATE</Value>
+                                                    <Value>UNIT PRICE</Value>
                                                     <Style>
                                                       <Color>#5392bc</Color>
                                                     </Style>
@@ -574,14 +574,6 @@
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
-                                                  <TextRun>
-                                                    <Value>Description:</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
                                                   <TextRun>
                                                     <Value>=Fields!WorkDescriptionLine.Value</Value>
                                                     <Style>
@@ -2870,7 +2862,6 @@
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>

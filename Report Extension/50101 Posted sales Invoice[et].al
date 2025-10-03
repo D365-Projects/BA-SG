@@ -3,6 +3,7 @@ reportextension 50101 PostedSalesInvoice_SG extends 1306
 
     dataset
     {
+
         modify(Header)
         {
             trigger OnAfterAfterGetRecord()

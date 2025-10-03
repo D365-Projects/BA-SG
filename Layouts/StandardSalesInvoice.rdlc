@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-02T10:02:58.8423047Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-02T16:12:48.6207117Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -2045,13 +2045,13 @@
                   <Width>1.12408cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.02774cm</Width>
+                  <Width>2.1982cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.63414cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.95883cm</Width>
+                  <Width>2.78834cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -2184,7 +2184,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Left</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -2435,7 +2435,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Left</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -2674,7 +2674,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Left</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -3047,7 +3047,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Left</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -3363,7 +3363,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Left</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -3587,7 +3587,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Left</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -3825,7 +3825,7 @@
             <Top>7.63321cm</Top>
             <Left>0.01082in</Left>
             <Height>3.71113cm</Height>
-            <Width>19.35694cm</Width>
+            <Width>19.35691cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -5266,7 +5266,7 @@
         <Height>21.5265cm</Height>
         <Style />
       </Body>
-      <Width>19.5475cm</Width>
+      <Width>19.55488cm</Width>
       <Page>
         <PageHeader>
           <Height>3.83958cm</Height>
@@ -5773,6 +5773,12 @@ End Function
         <Field Name="BilltoCustumerNo">
           <DataField>BilltoCustumerNo</DataField>
         </Field>
+        <Field Name="TotalAmount_IncludingTax">
+          <DataField>TotalAmount_IncludingTax</DataField>
+        </Field>
+        <Field Name="TotalAmount_IncludingTaxFormat">
+          <DataField>TotalAmount_IncludingTaxFormat</DataField>
+        </Field>
         <Field Name="BilltoCustomerNo_Lbl">
           <DataField>BilltoCustomerNo_Lbl</DataField>
         </Field>
@@ -5817,6 +5823,9 @@ End Function
         </Field>
         <Field Name="SalesPerson_Lbl">
           <DataField>SalesPerson_Lbl</DataField>
+        </Field>
+        <Field Name="Currency_Code">
+          <DataField>Currency_Code</DataField>
         </Field>
         <Field Name="SalesPersonBlank_Lbl">
           <DataField>SalesPersonBlank_Lbl</DataField>
@@ -5983,8 +5992,47 @@ End Function
         <Field Name="DisplayAssemblyLines">
           <DataField>DisplayAssemblyLines</DataField>
         </Field>
+        <Field Name="CurrencyCode">
+          <DataField>CurrencyCode</DataField>
+        </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
+        </Field>
+        <Field Name="SKU">
+          <DataField>SKU</DataField>
+        </Field>
+        <Field Name="UPC_SG">
+          <DataField>UPC_SG</DataField>
+        </Field>
+        <Field Name="Shipping_Cost">
+          <DataField>Shipping_Cost</DataField>
+        </Field>
+        <Field Name="Shipping_CostFormat">
+          <DataField>Shipping_CostFormat</DataField>
+        </Field>
+        <Field Name="Unit_Price">
+          <DataField>Unit_Price</DataField>
+        </Field>
+        <Field Name="Unit_PriceFormat">
+          <DataField>Unit_PriceFormat</DataField>
+        </Field>
+        <Field Name="Service_Period_From">
+          <DataField>Service_Period_From</DataField>
+        </Field>
+        <Field Name="Service_Period_To">
+          <DataField>Service_Period_To</DataField>
+        </Field>
+        <Field Name="Line_Discount_Amount">
+          <DataField>Line_Discount_Amount</DataField>
+        </Field>
+        <Field Name="Line_Discount_AmountFormat">
+          <DataField>Line_Discount_AmountFormat</DataField>
+        </Field>
+        <Field Name="Line_Discount__">
+          <DataField>Line_Discount__</DataField>
+        </Field>
+        <Field Name="Line_Discount__Format">
+          <DataField>Line_Discount__Format</DataField>
         </Field>
         <Field Name="AmountExcludingVAT_Line">
           <DataField>AmountExcludingVAT_Line</DataField>
@@ -6418,50 +6466,11 @@ End Function
         <Field Name="AmountExemptFromSalesTaxLbl">
           <DataField>AmountExemptFromSalesTaxLbl</DataField>
         </Field>
-        <Field Name="CurrencyCode">
-          <DataField>CurrencyCode</DataField>
-        </Field>
-        <Field Name="CurrencySymbol">
-          <DataField>CurrencySymbol</DataField>
-        </Field>
         <Field Name="CurrCode">
           <DataField>CurrCode</DataField>
         </Field>
-        <Field Name="SKU">
-          <DataField>SKU</DataField>
-        </Field>
-        <Field Name="UPC_SG">
-          <DataField>UPC_SG</DataField>
-        </Field>
-        <Field Name="Shipping_Cost">
-          <DataField>Shipping_Cost</DataField>
-        </Field>
-        <Field Name="Shipping_CostFormat">
-          <DataField>Shipping_CostFormat</DataField>
-        </Field>
-        <Field Name="Unit_Price">
-          <DataField>Unit_Price</DataField>
-        </Field>
-        <Field Name="Unit_PriceFormat">
-          <DataField>Unit_PriceFormat</DataField>
-        </Field>
-        <Field Name="Service_Period_From">
-          <DataField>Service_Period_From</DataField>
-        </Field>
-        <Field Name="Service_Period_To">
-          <DataField>Service_Period_To</DataField>
-        </Field>
-        <Field Name="Line_Discount_Amount">
-          <DataField>Line_Discount_Amount</DataField>
-        </Field>
-        <Field Name="Line_Discount_AmountFormat">
-          <DataField>Line_Discount_AmountFormat</DataField>
-        </Field>
-        <Field Name="Line_Discount__">
-          <DataField>Line_Discount__</DataField>
-        </Field>
-        <Field Name="Line_Discount__Format">
-          <DataField>Line_Discount__Format</DataField>
+        <Field Name="CurrencySymbol">
+          <DataField>CurrencySymbol</DataField>
         </Field>
       </Fields>
       <Query>

@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-02T05:46:05.5330222Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-03T08:28:36.6650364Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -140,10 +140,10 @@
                                     <Width>1.11029cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.63307cm</Width>
+                                    <Width>1.39494cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.42143cm</Width>
+                                    <Width>1.65955cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2.10332cm</Width>
@@ -352,7 +352,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>RATE</Value>
+                                                    <Value>UNIT PRICE</Value>
                                                     <Style>
                                                       <Color>#5392bc</Color>
                                                     </Style>
@@ -936,7 +936,7 @@
                               <Top>7.54328cm</Top>
                               <Left>0cm</Left>
                               <Height>1.54545cm</Height>
-                              <Width>19.0249cm</Width>
+                              <Width>19.02489cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -2812,7 +2812,6 @@
                                   <Value>=First(Fields!ShipToAddress_Lbl.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -3734,7 +3733,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Devices Order</Value>
+                      <Value>Devices Invoice</Value>
                       <Style>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>

@@ -1,4 +1,4 @@
-report 50118 "Standard Sales - InvoiceDB"
+report 50118 "Standard Sales - Invoices_SG"
 {
     Caption = 'Sales - Invoice';
     EnableHyperlinks = true;
@@ -193,6 +193,8 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             column(ExternalDocumentNo_Lbl; FieldCaption("External Document No."))
             {
             }
+            column(totalAMount_includingTax; totalAMount_includingTax) { }
+            column(TotalaVat; TotalaVat) { }
 
             column(TotalAmount_Including_VAT; "Amount Including VAT") { }
 
@@ -232,6 +234,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                 column(LineDiscountPercent_Line; "Line Discount %")
                 {
                 }
+                column(CustomMonth; CustomMonth) { DecimalPlaces = 0 : 1; }
 
 
                 column(LineAmount_Line_Lbl; FieldCaption("Line Amount"))
@@ -277,6 +280,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                 column(VATIdentifier_Line_Lbl; FieldCaption("VAT Identifier"))
                 {
                 }
+
                 column(GrandTotalTaxAmount; GrandTotalTaxAmount) { }
                 column(VAT_Base_Amount; "VAT Base Amount") { }
                 column(VatAmount; VatAmount) { }
@@ -288,11 +292,19 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                 column(GetLineAmountExclVAT; GetLineAmountExclVAT) { }
 
 
+
                 trigger OnAfterGetRecord()
                 var
                     item_lrec: Record Item;
+                    FromDate: Date;
+                    ToDate: Date;
+                    Result: Decimal;
                 begin
-
+                    TotalaVat += VatAmount;
+                    totalAMount_includingTax += "Amount Including VAT";
+                    FromDate := "Service Period From";
+                    ToDate := "Service Period To";
+                    CustomMonth := CalculateCustomMonths(FromDate, ToDate);
                     TotalAmount += "Amount Including VAT";
                     VatExclAMount := "Amount Including VAT" - GetLineAmountExclVAT();
 
@@ -313,7 +325,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                 end;
                 Address1and2 := "Sell-to Address";
                 if "Sell-to Address 2" <> '' then
-                    Address1and2 := "Sell-to Address" + ',' + "Sell-to Address 2";
+                    Address1and2 := "Sell-to Address" + ', ' + "Sell-to Address 2";
                 if "Sell-to City" <> '' then
                     CSZcode := "Sell-to City";
                 if CSZcode <> '' then begin
@@ -365,8 +377,8 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
         {
             Type = RDLC;
             LayoutFile = './Layouts/StandardSalesInvoice(Detailed).rdlc';
-            Caption = 'Standard Sales Invoice (RDLC)';
-            Summary = 'The Standard Sales Invoice (RDLC) is the most detailed layout and provides most flexible layout options.';
+            Caption = 'Standard Sales Tax Invoice (RDLC)';
+            Summary = 'Standard Sales Tax Invoice (RDLC) is the most detailed layout and provides most flexible layout options.';
         }
 
 
@@ -387,6 +399,8 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
 
 
     var
+        TotalaVat: Decimal;
+        totalAMount_includingTax: Decimal;
 
         GLSetup: Record "General Ledger Setup";
         DummyCompanyInfo: Record "Company Information";
@@ -410,6 +424,38 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
         Address1and2: Text;
         CSZcode: Text;
         "Sell-to Country/Reigon Dec": Text;
+        CustomMonth: Decimal;
+
+
+
+    local procedure CalculateCustomMonths(FromDate: Date; ToDate: Date): Decimal
+
+    var
+        CurrentDate: Date;
+        EndOfMonth: Date;
+        DaysInMonth: Integer;
+        DaysCount: Integer;
+        Months: Decimal;
+        FirstDayOfMonth: Date;
+    begin
+        if (FromDate = 0D) or (ToDate = 0D) then
+            exit(0);
+
+        Months := 0;
+        CurrentDate := FromDate;
+        while CurrentDate <= ToDate do begin
+            EndOfMonth := CalcDate('<CM>', CurrentDate);
+            if EndOfMonth > ToDate then
+                EndOfMonth := ToDate;
+            FirstDayOfMonth := DMY2Date(1, Date2DMY(CurrentDate, 2), Date2DMY(CurrentDate, 3));
+            DaysInMonth := CalcDate('<CM>', CurrentDate) - FirstDayOfMonth + 1;
+            DaysCount := EndOfMonth - CurrentDate + 1;
+            Months += DaysCount / DaysInMonth;
+            CurrentDate := EndOfMonth + 1;
+        end;
+
+        exit(Round(Months, 0.1, '='));
+    end;
 
 }
 

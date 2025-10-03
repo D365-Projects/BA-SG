@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-02T05:44:55.8933534Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-03T08:27:22.4469978Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -128,7 +128,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>7.72939cm</Width>
+                                    <Width>7.57032cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2.50382cm</Width>
@@ -140,10 +140,10 @@
                                     <Width>1.11029cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.63307cm</Width>
+                                    <Width>1.58175cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.42143cm</Width>
+                                    <Width>1.65157cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2.10332cm</Width>
@@ -352,7 +352,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>RATE</Value>
+                                                    <Value>UNIT PRICE</Value>
                                                     <Style>
                                                       <Color>#5392bc</Color>
                                                     </Style>
@@ -597,7 +597,9 @@
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <Style />
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox91</rd:DefaultName>
@@ -936,7 +938,7 @@
                               <Top>7.92014cm</Top>
                               <Left>0cm</Left>
                               <Height>1.54545cm</Height>
-                              <Width>19.00514cm</Width>
+                              <Width>19.02489cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -2865,7 +2867,6 @@
                                   <Value>=First(Fields!ShipToAddress_Lbl.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
