@@ -212,7 +212,7 @@ page 50104 "Sherweb_Invoices"
             }
             action("Create Sales order")
             {
-                Caption = 'Sales Invoice';
+                Caption = 'Sales Order';
                 Image = Order;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -227,6 +227,33 @@ page 50104 "Sherweb_Invoices"
                 end;
 
             }
+            // action("Validate SKU")
+            // {
+            //     Caption = 'Validate SKU';
+            //     Image = Order;
+            //     Promoted = true;
+            //     PromotedCategory = Process;
+            //     ApplicationArea = All;
+            //     ToolTip = 'Create Sales Order from Invoice SG data.';
+            //     trigger OnAction()
+
+            //     var
+            //         InvoiceAMB_lrec: Record "Invoice SG";
+            //         Item_lrec: Record Item;
+            //         Item_Found: Integer;
+            //     begin
+            //         Item_lrec.Reset();
+            //         InvoiceAMB_lrec.Reset();
+            //         Item_lrec.Get();
+            //         InvoiceAMB_lrec.Get();
+            //         if InvoiceAMB_lrec.FindSet()then begin
+            //             repeat
+            //             Item_lrec.SetRange(sk);
+            //             until InvoiceAMB_lrec.Next()=0;
+            //         end;
+            //     end;
+
+            // }
 
         }
         area(Navigation)
@@ -330,60 +357,60 @@ begin
             if ServToVar = 0D then
                 ServToVar := InvToVar;
             SOImportBuffer.ServicePeriodTo := ServToVar;
-            if not Evaluate(SOImportBuffer.Qty, GetValueAtCell(RowNo, 9)) then
+            if not Evaluate(SOImportBuffer.Qty, GetValueAtCell(RowNo, 19)) then
                 SOImportBuffer.Qty := 0;
-            if not Evaluate(SOImportBuffer.sku, GetValueAtCell(RowNo, 10)) then
+            if not Evaluate(SOImportBuffer.sku, GetValueAtCell(RowNo, 20)) then
                 SOImportBuffer.sku := '';
-            if not Evaluate(SOImportBuffer.ListPrice, GetValueAtCell(RowNo, 11)) then
-                SOImportBuffer.ListPrice := 0;
-            if not Evaluate(SOImportBuffer."Discounted Price NotProrated", GetValueAtCell(RowNo, 12)) then
-                SOImportBuffer."Discounted Price NotProrated" := 0;
-            if not Evaluate(SOImportBuffer."Unit Cost", GetValueAtCell(RowNo, 13)) then
-                SOImportBuffer."Unit Cost" := 0;
-            if not Evaluate(SOImportBuffer.LineTotal, GetValueAtCell(RowNo, 14)) then
-                SOImportBuffer.LineTotal := 0;
-            if not Evaluate(SOImportBuffer."Organization SubTotal", GetValueAtCell(RowNo, 15)) then
-                SOImportBuffer."Organization SubTotal" := 0;
-            if not Evaluate(SOImportBuffer."Reseller SubTotal", GetValueAtCell(RowNo, 16)) then
-                SOImportBuffer."Reseller SubTotal" := 0;
-            if not Evaluate(SOImportBuffer."Invoice SubTotal", GetValueAtCell(RowNo, 17)) then
-                SOImportBuffer."Invoice SubTotal" := 0;
-            if not Evaluate(SOImportBuffer.HST, GetValueAtCell(RowNo, 18)) then
-                SOImportBuffer.HST := 0;
-            if not Evaluate(SOImportBuffer.PST, GetValueAtCell(RowNo, 19)) then
-                SOImportBuffer.PST := 0;
-            if not Evaluate(SOImportBuffer.GST, GetValueAtCell(RowNo, 20)) then
-                SOImportBuffer.GST := 0;
-            if not Evaluate(SOImportBuffer."Grand Total", GetValueAtCell(RowNo, 21)) then
-                SOImportBuffer."Grand Total" := 0;
-            if not Evaluate(SOImportBuffer.Currency, GetValueAtCell(RowNo, 22)) then
+            if not Evaluate(SOImportBuffer.ListPrice, GetValueAtCell(RowNo, 21)) then
+                SOImportBuffer.ListPrice := 0.00;
+            if not Evaluate(SOImportBuffer."Discounted Price NotProrated", GetValueAtCell(RowNo, 22)) then
+                SOImportBuffer."Discounted Price NotProrated" := 0.00;
+            if not Evaluate(SOImportBuffer."Unit Cost", GetValueAtCell(RowNo, 23)) then
+                SOImportBuffer."Unit Cost" := 0.00;
+            if not Evaluate(SOImportBuffer.LineTotal, GetValueAtCell(RowNo, 24)) then
+                SOImportBuffer.LineTotal := 0.00;
+            if not Evaluate(SOImportBuffer."Organization SubTotal", GetValueAtCell(RowNo, 25)) then
+                SOImportBuffer."Organization SubTotal" := 0.00;
+            if not Evaluate(SOImportBuffer."Reseller SubTotal", GetValueAtCell(RowNo, 26)) then
+                SOImportBuffer."Reseller SubTotal" := 0.00;
+            if not Evaluate(SOImportBuffer."Invoice SubTotal", GetValueAtCell(RowNo, 27)) then
+                SOImportBuffer."Invoice SubTotal" := 0.00;
+            if not Evaluate(SOImportBuffer.HST, GetValueAtCell(RowNo, 28)) then
+                SOImportBuffer.HST := 0.00;
+            if not Evaluate(SOImportBuffer.PST, GetValueAtCell(RowNo, 29)) then
+                SOImportBuffer.PST := 0.00;
+            if not Evaluate(SOImportBuffer.GST, GetValueAtCell(RowNo, 30)) then
+                SOImportBuffer.GST := 0.00;
+            if not Evaluate(SOImportBuffer."Grand Total", GetValueAtCell(RowNo, 31)) then
+                SOImportBuffer."Grand Total" := 0.00;
+            if not Evaluate(SOImportBuffer.Currency, GetValueAtCell(RowNo, 32)) then
                 SOImportBuffer.Currency := '';
-            if not Evaluate(SOImportBuffer."Apply tax(es)", GetValueAtCell(RowNo, 23)) then
+            if not Evaluate(SOImportBuffer."Apply tax(es)", GetValueAtCell(RowNo, 33)) then
                 SOImportBuffer."Apply tax(es)" := false;
-            if not Evaluate(SOImportBuffer."MD - STATE SALES/USE TAX", GetValueAtCell(RowNo, 24)) then
-                SOImportBuffer."MD - STATE SALES/USE TAX" := 0;
-            if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM ", GetValueAtCell(RowNo, 25)) then
-                SOImportBuffer."US - FEDERAL TELECOM " := 0;
-            if not Evaluate(SOImportBuffer."US - FEDERAL TELEPHONE EXCISE", GetValueAtCell(RowNo, 26)) then
-                SOImportBuffer."US - FEDERAL TELEPHONE EXCISE" := 0;
-            if not Evaluate(SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE", GetValueAtCell(RowNo, 27)) then
-                SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE" := 0;
-            if not Evaluate(SOImportBuffer."US - FEDERAL NUMBERING ", GetValueAtCell(RowNo, 28)) then
-                SOImportBuffer."US - FEDERAL NUMBERING " := 0;
-            if not Evaluate(SOImportBuffer."US-FEDERAL COMMUNICATIONS", GetValueAtCell(RowNo, 29)) then
-                SOImportBuffer."US-FEDERAL COMMUNICATIONS" := 0;
-            if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM RELAY", GetValueAtCell(RowNo, 30)) then
-                SOImportBuffer."US - FEDERAL TELECOM RELAY" := 0;
-            if not Evaluate(SOImportBuffer."MD - STATE E911 FEES", GetValueAtCell(RowNo, 31)) then
-                SOImportBuffer."MD - STATE E911 FEES" := 0;
-            if not Evaluate(SOImportBuffer."MD - STATE UNIVERSAL SERVICE", GetValueAtCell(RowNo, 32)) then
-                SOImportBuffer."MD - STATE UNIVERSAL SERVICE" := 0;
-            if not Evaluate(SOImportBuffer."MD - STATE PUBLIC UTILITY", GetValueAtCell(RowNo, 33)) then
-                SOImportBuffer."MD - STATE PUBLIC UTILITY" := 0;
-            if not Evaluate(SOImportBuffer."MD - STATE PUBLIC SERVICE TAX", GetValueAtCell(RowNo, 34)) then
-                SOImportBuffer."MD - STATE PUBLIC SERVICE TAX" := 0;
-            if not Evaluate(SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE", GetValueAtCell(RowNo, 35)) then
-                SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE" := 0;
+            if not Evaluate(SOImportBuffer."MD - STATE SALES/USE TAX", GetValueAtCell(RowNo, 34)) then
+                SOImportBuffer."MD - STATE SALES/USE TAX" := 0.00;
+            if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM ", GetValueAtCell(RowNo, 35)) then
+                SOImportBuffer."US - FEDERAL TELECOM " := 0.00;
+            if not Evaluate(SOImportBuffer."US - FEDERAL TELEPHONE EXCISE", GetValueAtCell(RowNo, 36)) then
+                SOImportBuffer."US - FEDERAL TELEPHONE EXCISE" := 0.00;
+            if not Evaluate(SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE", GetValueAtCell(RowNo, 37)) then
+                SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE" := 0.00;
+            if not Evaluate(SOImportBuffer."US - FEDERAL NUMBERING ", GetValueAtCell(RowNo, 38)) then
+                SOImportBuffer."US - FEDERAL NUMBERING " := 0.00;
+            if not Evaluate(SOImportBuffer."US-FEDERAL COMMUNICATIONS", GetValueAtCell(RowNo, 39)) then
+                SOImportBuffer."US-FEDERAL COMMUNICATIONS" := 0.00;
+            if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM RELAY", GetValueAtCell(RowNo, 40)) then
+                SOImportBuffer."US - FEDERAL TELECOM RELAY" := 0.00;
+            if not Evaluate(SOImportBuffer."MD - STATE E911 FEES", GetValueAtCell(RowNo, 41)) then
+                SOImportBuffer."MD - STATE E911 FEES" := 0.00;
+            if not Evaluate(SOImportBuffer."MD - STATE UNIVERSAL SERVICE", GetValueAtCell(RowNo, 42)) then
+                SOImportBuffer."MD - STATE UNIVERSAL SERVICE" := 0.00;
+            if not Evaluate(SOImportBuffer."MD - STATE PUBLIC UTILITY", GetValueAtCell(RowNo, 43)) then
+                SOImportBuffer."MD - STATE PUBLIC UTILITY" := 0.00;
+            if not Evaluate(SOImportBuffer."MD - STATE PUBLIC SERVICE TAX", GetValueAtCell(RowNo, 44)) then
+                SOImportBuffer."MD - STATE PUBLIC SERVICE TAX" := 0.00;
+            if not Evaluate(SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE", GetValueAtCell(RowNo, 45)) then
+                SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE" := 0.00;
             if SOImportBuffer."Discounted Price NotProrated" <> 0.00 then
                 if SOImportBuffer."Unit Cost" <> 0.00 then
                     SOImportBuffer."Customer List Price" := (SOImportBuffer."Unit Cost" / SOImportBuffer."Discounted Price NotProrated") * SOImportBuffer.ListPrice
@@ -419,12 +446,13 @@ begin
         VendorSelected: Boolean;
         vendorNo: Code[20];
     begin
-        if PAGE.RunModal(PAGE::"Vendor List", VendorRec) = ACTION::LookupOK then begin
-            vendorNo := VendorRec."No.";
+        Purchaseandrec.Reset();
+        Purchaseandrec.Get();
+        if Purchaseandrec."Sherweb Vendor Code" <> '' then begin
+            // if PAGE.RunModal(PAGE::"Vendor List", VendorRec) = ACTION::LookupOK then begin
+            vendorNo := Purchaseandrec."Sherweb Vendor Code";
             VendorSelected := true;
-        end else
-            Error('You must select a vendor.');
-        Purchasehdr_lrec.Reset();
+            Purchasehdr_lrec.Reset();
         Purchasehdr_lrec.SetRange("Document Type", Purchasehdr_lrec."Document Type"::Invoice);
         Purchasehdr_lrec.SetRange("Vendor Invoice No.", Invoice_lrec.InvoiceNo);
         if Purchasehdr_lrec.FindFirst() then
@@ -452,6 +480,10 @@ begin
 
             Page.Run(PAGE::"Purchase Order", Purchasehdr_lrec);
         end;
+        end
+        else
+            Error('Vendor code not found on Purchase & Recievable Setup');
+
     end;
 
 
@@ -476,9 +508,18 @@ begin
         Purchase_lrec."Description 2" := Invoice_lrec.Organization;
         Purchase_lrec."Service Period From" := Invoice_lrec."ServicePeriodFrom";
         Purchase_lrec."Service Period To" := Invoice_lrec."ServicePeriodTo";
-        Purchase_lrec.Validate(Quantity, Invoice_lrec.Qty);
+        if Invoice_lrec.Qty = 0 then begin
+            Purchase_lrec.Validate(Quantity, 1);
+        end
+        else begin
+            Purchase_lrec.Validate(Quantity, Invoice_lrec.Qty);
+        end;
+        if Invoice_lrec."Unit Cost" = 0 then
+            Purchase_lrec.Validate("Direct Unit Cost", Invoice_lrec."Unit Cost")
+        else
         Purchase_lrec."Direct Unit Cost" := Invoice_lrec."Unit Cost";
         Purchase_lrec."Line Amount" := Invoice_lrec."LineTotal";
+
         Purchase_lrec.Insert();
     end;
 
@@ -554,7 +595,7 @@ begin
             repeat
                 OrgCode := InvoiceAMBRec.Organization;
                 CurrInvoiceNo := InvoiceAMBRec.InvoiceNo;
-                CustomerRec.SetRange(Name, OrgCode);
+                CustomerRec.SetRange("Sherweb Customer Name", OrgCode);
                 if not CustomerRec.FindFirst() then
                     Error('Customer with Organization %1 not found.', OrgCode);
                 SalesHdr.Reset();
@@ -596,6 +637,7 @@ begin
             Nextno := salesLine_lrec."Line No." + 10000
         else
             Nextno := 10000;
+
         salesLine_lrec.Init();
 
         salesLine_lrec."Document Type" := Saleshdr."Document Type";
@@ -607,15 +649,22 @@ begin
         salesLine_lrec.Validate("No.", Invoice_lrec."SKU");
         salesLine_lrec.Validate("Service Period From", Invoice_lrec."ServicePeriodFrom");
         salesLine_lrec.Validate("Service Period To", Invoice_lrec."ServicePeriodTo");
-        salesLine_lrec.Validate(Quantity, Invoice_lrec.Qty);
-            if Invoice_lrec."Customer List Price" <> 0 then begin
-            salesLine_lrec.Validate("Unit Price", Invoice_lrec."Customer List Price")
-        end;
-        if Invoice_lrec.LineTotal <> 0 then
-            salesLine_lrec.Validate("Line Amount", Invoice_lrec.LineTotal);
-
-            salesLine_lrec.Validate("Unit Cost", Invoice_lrec."Unit Cost");
-
+            if Invoice_lrec.Qty = 0 then begin
+                salesLine_lrec.Validate(Quantity, 1);
+            end
+            else begin
+                salesLine_lrec.Validate(Quantity, Invoice_lrec.Qty);
+            end;
+            if Invoice_lrec."Customer List Price" <> 0 then
+                salesLine_lrec.Validate("Unit Price", Invoice_lrec."Customer List Price")
+            else
+                salesLine_lrec."Unit Price" := Invoice_lrec."Customer List Price";
+            if Invoice_lrec.LineTotal <> 0 then
+                salesLine_lrec.Validate("Line Amount", Invoice_lrec.LineTotal);
+            if Invoice_lrec."Unit Cost" = 0 then
+                salesLine_lrec.Validate("Unit Cost", Invoice_lrec."Unit Cost")
+            else
+                salesLine_lrec."Unit Cost" := Invoice_lrec."Unit Cost";
             salesLine_lrec.Modify();
         end;
     end;

@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-01T16:27:14.9942500Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-06T05:13:22.1941595Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -131,8 +131,9 @@
                               <Color>LightGrey</Color>
                               <Style>None</Style>
                             </Border>
-                            <PaddingLeft>5pt</PaddingLeft>kashi
-                            <PaddingRight>5pt</PaddingRight></Style>
+                            <PaddingLeft>5pt</PaddingLeft>
+                            <PaddingRight>5pt</PaddingRight>
+                          </Style>
                         </Textbox>
                       </CellContents>
                     </TablixCell>
@@ -405,7 +406,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>6.96576cm</Width>
+                  <Width>6.31702cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>3.53633cm</Width>
@@ -417,19 +418,19 @@
                   <Width>1.11029cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.11991cm</Width>
+                  <Width>1.94677cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.82134cm</Width>
+                  <Width>2.44034cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.87951cm</Width>
+                  <Width>2.81981cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.89189cm</Width>
+                  <Width>2.78606cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.93262cm</Width>
+                  <Width>3.0895cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -447,7 +448,8 @@
                                 <TextRun>
                                   <Value>DESCRIPTION</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>#5392bc</Color>
                                   </Style>
                                 </TextRun>
@@ -486,7 +488,8 @@
                                 <TextRun>
                                   <Value>PART#</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>#5392bc</Color>
                                   </Style>
                                 </TextRun>
@@ -525,7 +528,8 @@
                                 <TextRun>
                                   <Value>SKU#</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>#5392bc</Color>
                                   </Style>
                                 </TextRun>
@@ -564,7 +568,8 @@
                                 <TextRun>
                                   <Value>QTY</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>#5392bc</Color>
                                   </Style>
                                 </TextRun>
@@ -603,13 +608,14 @@
                                 <TextRun>
                                   <Value>MSRP</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>#5392bc</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -642,13 +648,14 @@
                                 <TextRun>
                                   <Value>BA PRICE</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>#5392bc</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -681,13 +688,14 @@
                                 <TextRun>
                                   <Value>BA TOTAL COST</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>#5392bc</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -720,13 +728,14 @@
                                 <TextRun>
                                   <Value>SHIPPING COST</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>#5392bc</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -759,7 +768,8 @@
                                 <TextRun>
                                   <Value>NOTES</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                     <Color>#5392bc</Color>
                                   </Style>
                                 </TextRun>
@@ -790,7 +800,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.38806cm</Height>
+                  <Height>0.635cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -803,7 +813,7 @@
                                 <TextRun>
                                   <Value>=Fields!Description_Line.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -833,7 +843,7 @@
                                 <TextRun>
                                   <Value>=Fields!UPC_SG.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -863,7 +873,7 @@
                                 <TextRun>
                                   <Value>=Fields!Line_sku.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -893,7 +903,7 @@
                                 <TextRun>
                                   <Value>=Fields!Quantity_Line.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -926,12 +936,13 @@
                                 <TextRun>
                                   <Value>=Fields!UnitPrice.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
+                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -959,13 +970,13 @@
                                 <TextRun>
                                   <Value>=Fields!UnitPrice.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -991,15 +1002,15 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!UnitPrice.Value*Fields!Quantity_Line.Value</Value>
+                                  <Value>=Fields!UnitPrice.Value * Fields!Quantity_Line.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1027,13 +1038,13 @@
                                 <TextRun>
                                   <Value>=Fields!Shipping_Cost.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1061,7 +1072,7 @@
                                 <TextRun>
                                   <Value>=Fields!Notes.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1130,14 +1141,13 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixMembers>
-                        <TablixMember>
-                          <Visibility>
-                            <Hidden>=Fields!Type_Line.Value = " "</Hidden>
-                          </Visibility>
-                        </TablixMember>
+                        <TablixMember />
                       </TablixMembers>
                     </TablixMember>
                   </TablixMembers>
+                  <Visibility>
+                    <Hidden>=IIF(Fields!ItemNo_Line.Value&lt;&gt;"",True,False)</Hidden>
+                  </Visibility>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
@@ -1145,8 +1155,8 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>2.99494cm</Top>
             <Left>0cm</Left>
-            <Height>1.15739cm</Height>
-            <Width>28.33296cm</Width>
+            <Height>1.40433cm</Height>
+            <Width>27.12143cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -1176,6 +1186,7 @@
                                 <TextRun>
                                   <Value>NOTES</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <TextDecoration>Underline</TextDecoration>
                                   </Style>
@@ -1210,8 +1221,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Pricing Sheet should be used by team members to provide finance team pricing details for sales quotes</Value>
-                                  <Style />
+                                  <Value>Pricing Sheet should be used by team members to provide finance team pricing details for sales Order</Value>
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1244,17 +1257,22 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>1. </Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value>MSRP:</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value> Provide MSRP indicated by the vendor</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -1289,17 +1307,22 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>2. </Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value>BA PRICE:</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value> Reflect price offered by vendor to BA. Check that this is a discount to MSRP.</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1332,17 +1355,22 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>3. </Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value>BA TOTAL COST:</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value> Indicate total cost to BA based on price offered to BA</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1375,17 +1403,22 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>4. </Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value>SHIPPING COST:</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value> Reflect shipping cost, if any</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1420,12 +1453,15 @@
                                 <TextRun>
                                   <Value>NOTES:</Value>
                                   <Style>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value> Provide any relevant notes or comments</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>7pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -1464,7 +1500,7 @@
                 <TablixMember />
               </TablixMembers>
             </TablixRowHierarchy>
-            <Top>1.70833in</Top>
+            <Top>1.77366in</Top>
             <Left>0.01579in</Left>
             <Height>1.53335in</Height>
             <Width>7.71214in</Width>
@@ -1479,7 +1515,7 @@
         <Height>8.27in</Height>
         <Style />
       </Body>
-      <Width>11.1944in</Width>
+      <Width>10.71107in</Width>
       <Page>
         <PageHeader>
           <Height>1.02619in</Height>
@@ -1503,7 +1539,7 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Top>0.00952in</Top>
-              <Left>22.15983cm</Left>
+              <Left>20.88983cm</Left>
               <Height>2.57123cm</Height>
               <Width>6.2316cm</Width>
               <Style>
@@ -1529,56 +1565,10 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Top>0.00952in</Top>
-              <Left>11.91635cm</Left>
+              <Left>11.28135cm</Left>
               <Height>2.46731cm</Height>
               <Width>6.06349cm</Width>
               <ZIndex>1</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Rectangle>
-            <Rectangle Name="Rectangle2">
-              <ReportItems>
-                <Image Name="Image2">
-                  <Source>Database</Source>
-                  <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
-                  <MIMEType>image/bmp</MIMEType>
-                  <Sizing>FitProportional</Sizing>
-                  <Top>0.01389in</Top>
-                  <Height>24.32029mm</Height>
-                  <Width>46.66499mm</Width>
-                  <Visibility>
-                    <Hidden>=iif(First(Fields!CompanyLogoPosition.Value, "DataSet_Result")=1,false,true)</Hidden>
-                  </Visibility>
-                  <Style>
-                    <Border>
-                      <Style>None</Style>
-                    </Border>
-                  </Style>
-                </Image>
-                <Line Name="Line1">
-                  <Left>0.10902in</Left>
-                  <Height>0cm</Height>
-                  <Width>6cm</Width>
-                  <ZIndex>1</ZIndex>
-                  <Visibility>
-                    <Hidden>true</Hidden>
-                  </Visibility>
-                  <Style>
-                    <Border>
-                      <Style>Solid</Style>
-                    </Border>
-                  </Style>
-                </Line>
-              </ReportItems>
-              <KeepTogether>true</KeepTogether>
-              <Top>0.00952in</Top>
-              <Left>0.01579in</Left>
-              <Height>2.46731cm</Height>
-              <Width>6.27691cm</Width>
-              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1590,13 +1580,10 @@
               <Value>=System.Convert.ToBase64String(Fields!CompanyPicture.Value)</Value>
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
-              <Left>8.80162in</Left>
+              <Left>8.30162in</Left>
               <Height>24.65401mm</Height>
               <Width>59.76852mm</Width>
-              <ZIndex>3</ZIndex>
-              <Visibility>
-                <Hidden>=iif(First(Fields!CompanyLogoPosition.Value, "DataSet_Result")=3,false,true)</Hidden>
-              </Visibility>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1609,10 +1596,10 @@
               <MIMEType>image/bmp</MIMEType>
               <Sizing>FitProportional</Sizing>
               <Top>0.05043in</Top>
-              <Left>5.23702in</Left>
+              <Left>4.98702in</Left>
               <Height>24.67306mm</Height>
               <Width>46.24166mm</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>3</ZIndex>
               <Visibility>
                 <Hidden>=iif(First(Fields!CompanyLogoPosition.Value, "DataSet_Result")=2,false,true)</Hidden>
               </Visibility>
@@ -1622,6 +1609,86 @@
                 </Border>
               </Style>
             </Image>
+            <Textbox Name="Textbox224">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Pricing Sheet</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox224</rd:DefaultName>
+              <Top>1.12016cm</Top>
+              <Left>0.04011cm</Left>
+              <Height>0.65243cm</Height>
+              <Width>5.9191cm</Width>
+              <ZIndex>4</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Page_Lbl">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Globals!PageNumber</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> / </Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Globals!TotalPages</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Page_Lbl</rd:DefaultName>
+              <Top>2.18129cm</Top>
+              <Left>0.04011cm</Left>
+              <Height>11.05412pt</Height>
+              <Width>5.20961cm</Width>
+              <ZIndex>5</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>5pt</PaddingLeft>
+                <PaddingRight>5pt</PaddingRight>
+              </Style>
+            </Textbox>
           </ReportItems>
           <Style>
             <Border>

@@ -473,6 +473,7 @@ report 50101 "Standard Sales - Invoice_SG"
             column(DisplayAssemblyLines; DisplayAssemblyInformation)
             {
             }
+
             column(CurrencyCode; "Currency Code") { }
             dataitem(Line; "Sales Invoice Line")
             {

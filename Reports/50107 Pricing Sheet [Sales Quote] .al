@@ -1001,7 +1001,7 @@ report 50107 "Pricing Sheet Sales Quote"
         layout("PricingSheet.rdl")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/PricingSheet.rdl';
+            LayoutFile = './Layouts/PricingSheet(Quote).rdl';
             Caption = 'Standard Pricing Sheet Quote (RDLC)';
             Summary = 'The Standard Devices Quote (RDLC) provides a detailed layout.';
         }

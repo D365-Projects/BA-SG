@@ -1286,6 +1286,9 @@ report 50112 "Standard Sales Quote T&M"
         SalespersonLbl: Label 'Sales person';
         ShptMethodDescLbl: Label 'Shipment Method';
 
+
+        TotalAmountInclVATlbl: Label 'Total Amount Incl. Tax';
+
     local procedure InitLogInteraction()
     begin
         LogInteraction := SegManagement.FindInteractionTemplateCode(Enum::"Interaction Log Entry Document Type"::"Sales Ord. Cnfrmn.") <> '';
@@ -1370,6 +1373,7 @@ report 50112 "Standard Sales Quote T&M"
         ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false);
         end;
         // ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
+        // ReportTotalsLine.Add(TotalAmountInclVATlbl, TotalAmountInclVAT, false, true, false);
     end;
 
     local procedure GetTaxSummarizedLines(var TempSalesTaxAmountLine: Record "Sales Tax Amount Line" temporary)

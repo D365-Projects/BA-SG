@@ -41,7 +41,11 @@ pageextension 50105 VendorExtension extends "Vendor Card"
             ShowMandatory = true;
         }
 
-        modify("VAT Bus. Posting Group")
+        modify("Tax Area Code")
+        {
+            ShowMandatory = true;
+        }
+        modify("Tax Liable")
         {
             ShowMandatory = true;
         }
@@ -95,7 +99,6 @@ pageextension 50105 VendorExtension extends "Vendor Card"
         myInt: Integer;
     begin
         Rec.TestField(Name);
-        Rec.TestField(Name);
         Rec.TestField("Mobile Phone No.");
         Rec.TestField("E-Mail");
         Rec.TestField("Country/Region Code");
@@ -103,16 +106,16 @@ pageextension 50105 VendorExtension extends "Vendor Card"
         Rec.TestField(City);
         Rec.TestField("Post Code");
         Rec.TestField("Phone No.");
-        Rec.TestField("Vendor Posting Group");
         Rec.TestField("VAT Registration No.");
         Rec.TestField("Payment Terms Code");
         Rec.TestField("Payment Method Code");
         Rec.TestField("Language Code");
         Rec.TestField("Gen. Bus. Posting Group");
-        Rec.TestField("VAT Bus. Posting Group");
         Rec.TestField("Address 2");
+        Rec.TestField("VAT Registration No.");
         Rec.TestField(County);
         rec.TestField("Currency Code");
-
+        rec.TestField("Tax Area Code");
+        Rec.TestField("Tax Liable");
     end;
 }

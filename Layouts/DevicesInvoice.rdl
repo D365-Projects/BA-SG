@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-03T08:28:36.6650364Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-06T05:13:11.2265065Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -35,7 +35,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>10.22153cm</Height>
+                  <Height>10.25814cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1039,7 +1039,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>Total Amount</Value>
+                                                    <Value>Total Amount Incl. Tax</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -1216,9 +1216,9 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.2316cm</Top>
+            <Top>0.19499cm</Top>
             <Left>0.0591in</Left>
-            <Height>10.22153cm</Height>
+            <Height>10.25814cm</Height>
             <Width>19.07464cm</Width>
             <Style>
               <Border>
@@ -1230,19 +1230,19 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.79832cm</Width>
+                  <Width>3.81325cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.93107cm</Width>
+                  <Width>3.946cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.34475cm</Width>
+                  <Width>2.35968cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.79016cm</Width>
+                  <Width>3.80509cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.1606cm</Width>
+                  <Width>5.17553cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -3387,10 +3387,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.06799cm</Top>
-            <Left>0.15011cm</Left>
+            <Top>0.19499cm</Top>
+            <Left>0.12523cm</Left>
             <Height>6.91902cm</Height>
-            <Width>19.0249cm</Width>
+            <Width>19.09955cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -3400,59 +3400,6 @@
               <FontSize>8pt</FontSize>
             </Style>
           </Tablix>
-          <Textbox Name="Textbox20">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Note: </Value>
-                    <Style>
-                      <FontStyle>Italic</FontStyle>
-                      <FontWeight>Bold</FontWeight>
-                      <Color>Gray</Color>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value xml:space="preserve"> </Value>
-                    <Style>
-                      <FontStyle>Italic</FontStyle>
-                      <FontWeight>Normal</FontWeight>
-                      <Color>Gray</Color>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value>This Invoice does not included tax or freight charges. Any applicable tax or freight charge will be included in the tax invoice.</Value>
-                    <Style>
-                      <FontStyle>Normal</FontStyle>
-                      <FontFamily>Times New Roman</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Normal</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>Gray</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox20</rd:DefaultName>
-            <Top>10.88352cm</Top>
-            <Left>0.15011cm</Left>
-            <Height>0.6cm</Height>
-            <Width>18.85785cm</Width>
-            <ZIndex>2</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
           <Textbox Name="Textbox21">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
@@ -3475,7 +3422,7 @@
             <Left>11.52837cm</Left>
             <Height>0.6cm</Height>
             <Width>2.96311cm</Width>
-            <ZIndex>3</ZIndex>
+            <ZIndex>2</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -3509,7 +3456,7 @@
             <Left>0.12523cm</Left>
             <Height>0.6cm</Height>
             <Width>2.68794cm</Width>
-            <ZIndex>4</ZIndex>
+            <ZIndex>3</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -3525,10 +3472,10 @@
         <Height>13.27115cm</Height>
         <Style />
       </Body>
-      <Width>19.30868cm</Width>
+      <Width>19.32985cm</Width>
       <Page>
         <PageHeader>
-          <Height>3.30149cm</Height>
+          <Height>3.25916cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -3672,20 +3619,6 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Page_Lbl.Value, "DataSet_Result")</Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value xml:space="preserve"> </Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
                       <Value>=Globals!PageNumber</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
@@ -3713,10 +3646,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Page_Lbl</rd:DefaultName>
-              <Top>2.71705cm</Top>
+              <Top>2.86522cm</Top>
               <Left>14.01258cm</Left>
-              <Height>11pt</Height>
-              <Width>5.09136cm</Width>
+              <Height>10.21473pt</Height>
+              <Width>5.21217cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -3733,7 +3666,17 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Devices Invoice</Value>
+                      <Value>Draft</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>None</TextDecoration>
+                        <Color>#000000</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> Invoice</Value>
                       <Style>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>

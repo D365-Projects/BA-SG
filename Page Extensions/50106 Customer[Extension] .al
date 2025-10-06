@@ -37,7 +37,15 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
             ShowMandatory = true;
         }
 
-        modify("VAT Bus. Posting Group")
+        modify("Tax Area Code")
+        {
+            ShowMandatory = true;
+        }
+        modify("Tax Liable")
+        {
+            ShowMandatory = true;
+        }
+        modify("Tax Exemption No.")
         {
             ShowMandatory = true;
         }
@@ -77,6 +85,14 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
         modify("Currency Code")
         {
             ShowMandatory = true;
+        }
+        addafter(Name)
+        {
+            field("Sherweb Customer Name"; Rec."Sherweb Customer Name")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specify the customer name as per the Sherweb customer account';
+            }
         }
 
         // Add changes to page layout here
@@ -119,7 +135,6 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
         myInt: Integer;
     begin
         Rec.TestField(Name);
-        Rec.TestField(Name);
         Rec.TestField("Mobile Phone No.");
         Rec.TestField("E-Mail");
         Rec.TestField("Country/Region Code");
@@ -132,10 +147,12 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
         Rec.TestField("Payment Method Code");
         Rec.TestField("Language Code");
         Rec.TestField("Gen. Bus. Posting Group");
-        Rec.TestField("VAT Bus. Posting Group");
         Rec.TestField("Address 2");
         Rec.TestField("VAT Registration No.");
         Rec.TestField(County);
         rec.TestField("Currency Code");
+        rec.TestField("Tax Area Code");
+        Rec.TestField("Tax Exemption No.");
+        Rec.TestField("Tax Liable");
     end;
 }

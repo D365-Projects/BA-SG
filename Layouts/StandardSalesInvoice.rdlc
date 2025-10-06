@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-03T15:40:04.0418554Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-06T05:13:44.6280349Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -4882,7 +4882,7 @@
             <Top>18.81101cm</Top>
             <Left>0.01373cm</Left>
             <Height>11pt</Height>
-            <Width>18cm</Width>
+            <Width>19.35695cm</Width>
             <ZIndex>8</ZIndex>
             <Visibility>
               <Hidden>=Fields!CompanyLegalStatement.Value = ""</Hidden>
@@ -4899,7 +4899,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.07938cm</Width>
+                  <Width>0.80733cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -4950,7 +4950,7 @@
                 <TablixMember>
                   <Group Name="Group1" />
                   <TablixHeader>
-                    <Size>17.80795cm</Size>
+                    <Size>18.5359cm</Size>
                     <CellContents>
                       <Textbox Name="Group1">
                         <CanGrow>true</CanGrow>
@@ -5001,7 +5001,7 @@
             <Top>18.28185cm</Top>
             <Left>0.02746cm</Left>
             <Height>0.42333cm</Height>
-            <Width>17.88733cm</Width>
+            <Width>19.34323cm</Width>
             <ZIndex>9</ZIndex>
             <Style>
               <Border>
@@ -5154,39 +5154,6 @@
               </Border>
             </Style>
           </Tablix>
-          <Textbox Name="PaidStatus2">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value />
-                    <Style>
-                      <FontFamily>Segoe UI</FontFamily>
-                      <FontSize>8pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Right</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <Top>13.72488cm</Top>
-            <Left>4.49747cm</Left>
-            <Height>0.5cm</Height>
-            <Width>14.41615cm</Width>
-            <ZIndex>11</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>5pt</PaddingLeft>
-              <PaddingRight>5pt</PaddingRight>
-            </Style>
-          </Textbox>
         </ReportItems>
         <Height>21.5265cm</Height>
         <Style />
@@ -5332,14 +5299,6 @@
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!Page_Lbl.Value, "DataSet_Result")</Value>
-                      <Style>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
                     <TextRun>
                       <Value xml:space="preserve"> </Value>
                       <Style>

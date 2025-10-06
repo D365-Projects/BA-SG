@@ -414,6 +414,8 @@ report 50115 "Standard Sales Invoice T&M"
             column(VATAmount_Lbl; VATAmtLbl)
             {
             }
+            column(TotalAmountInclVATlbl; TotalAmountInclVATlbl) { }
+            column(TotalAmountInclVAT; TotalAmountInclVAT) { }
             column(VATBase_Lbl; VATBaseLbl)
             {
             }
@@ -1229,6 +1231,7 @@ report 50115 "Standard Sales Invoice T&M"
         AmtExemptfromSalesTaxLbl: Label 'Amount Exempt from Sales Tax';
         PONumberLbl: Label 'P.O. Number';
         TotalTaxLbl: Label 'Total Tax';
+        TotalAmountInclVATlbl: Label 'Total Amount Incl. Tax';
         UnitLbl: Label 'Unit';
         UnitPriceLbl: Label 'Unit Price';
         LineAmountLbl: Label 'Line Amount';
@@ -1362,7 +1365,8 @@ report 50115 "Standard Sales Invoice T&M"
         if TotalInvDiscAmount <> 0 then begin
         ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false);
         end;
-        // ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
+        ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
+        ReportTotalsLine.Add(TotalAmountInclVATlbl, TotalAmountInclVAT, false, true, false);
     end;
 
     local procedure GetTaxSummarizedLines(var TempSalesTaxAmountLine: Record "Sales Tax Amount Line" temporary)

@@ -1185,6 +1185,8 @@ report 50109 "Devices Sales Order"
         TotalVATAmountLCY: Decimal;
         PaymentTermsDescLbl: Label 'Payment Terms';
         ShptMethodDescLbl: Label 'Shipment Method';
+        TotalTaxLbl: Label 'Total Tax';
+        TotalAmountInclVATlbl: Label 'Total Amount Incl. Tax';
 
     local procedure InitLogInteraction()
     begin
@@ -1229,11 +1231,11 @@ report 50109 "Devices Sales Order"
             if TotalAmountVAT <> 0 then
                 ReportTotalsLine.Add(TotalExclVATText, TotalAmount, true, false, false, Header."Currency Code");
         end;
-        // if TotalAmountVAT <> 0 then begin
-        //     ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
-        //     if TotalVATAmountLCY <> TotalAmountVAT then
-        //         ReportTotalsLine.Add(VATAmountLine.VATAmountText() + LCYTxt, TotalVATAmountLCY, false, true, false);
-        // end;
+        // ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
+        // ReportTotalsLine.Add(TotalAmountInclVATlbl, TotalAmountInclVAT, false, true, false);
+        // ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
+
+
     end;
 
     local procedure SetFormatRegion(FormatRegion: Text[80])

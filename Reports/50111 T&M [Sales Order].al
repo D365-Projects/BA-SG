@@ -1285,6 +1285,7 @@ report 50111 "Standard Sales Order T&M"
         SalesInvLineDiscLbl: Label 'Discount %';
         SalespersonLbl: Label 'Sales person';
         ShptMethodDescLbl: Label 'Shipment Method';
+        TotalAmountInclVATlbl: Label 'Total Amount Incl. Tax';
 
     local procedure InitLogInteraction()
     begin
@@ -1370,6 +1371,7 @@ report 50111 "Standard Sales Order T&M"
         ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false);
         end;
         // ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
+        // ReportTotalsLine.Add(TotalAmountInclVATlbl, TotalAmountInclVAT, false, true, false);
     end;
 
     local procedure GetTaxSummarizedLines(var TempSalesTaxAmountLine: Record "Sales Tax Amount Line" temporary)

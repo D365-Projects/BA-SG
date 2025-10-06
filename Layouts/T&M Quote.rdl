@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-03T07:11:42.2870752Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-06T05:13:58.9983381Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -559,7 +559,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>18.73498cm</Width>
+                                    <Width>18.95381cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -631,7 +631,7 @@
                               <Top>7.31786cm</Top>
                               <Left>0.02484cm</Left>
                               <Height>0.4cm</Height>
-                              <Width>18.73498cm</Width>
+                              <Width>18.95381cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -989,6 +989,7 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.41096cm</Top>
+            <Left>0.03592in</Left>
             <Height>10.71011cm</Height>
             <Width>18.97866cm</Width>
             <Style>
@@ -1035,8 +1036,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox20</rd:DefaultName>
-            <Top>11.45973cm</Top>
-            <Left>0.04971cm</Left>
+            <Top>11.2269cm</Top>
+            <Left>0.09124cm</Left>
             <Height>0.6cm</Height>
             <Width>18.92894cm</Width>
             <ZIndex>1</ZIndex>
@@ -1068,8 +1069,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox20</rd:DefaultName>
-            <Top>12.50479cm</Top>
-            <Left>0.02484cm</Left>
+            <Top>12.18729cm</Top>
+            <Left>0.11608cm</Left>
             <Height>0.6cm</Height>
             <Width>3.11812cm</Width>
             <ZIndex>2</ZIndex>
@@ -1102,8 +1103,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox20</rd:DefaultName>
-            <Top>12.50479cm</Top>
-            <Left>11.74548cm</Left>
+            <Top>12.18729cm</Top>
+            <Left>11.83672cm</Left>
             <Height>0.6cm</Height>
             <Width>3.39329cm</Width>
             <ZIndex>3</ZIndex>
@@ -3624,7 +3625,7 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.07955cm</Top>
-            <Left>0cm</Left>
+            <Left>0.09124cm</Left>
             <Height>7.36cm</Height>
             <Width>18.97865cm</Width>
             <ZIndex>4</ZIndex>
@@ -3640,10 +3641,10 @@
         <Height>13.10479cm</Height>
         <Style />
       </Body>
-      <Width>19.07412cm</Width>
+      <Width>19.14355cm</Width>
       <Page>
         <PageHeader>
-          <Height>2.48495cm</Height>
+          <Height>3.37395cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -3683,7 +3684,7 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Top>0.00694in</Top>
-              <Left>0.00978in</Left>
+              <Left>0.0457in</Left>
               <Height>2.46731cm</Height>
               <Width>6.27691cm</Width>
               <Style>
@@ -3727,7 +3728,7 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Top>0.00694in</Top>
-              <Left>6.30177cm</Left>
+              <Left>6.39301cm</Left>
               <Height>2.46731cm</Height>
               <Width>6cm</Width>
               <ZIndex>1</ZIndex>
@@ -3773,7 +3774,7 @@
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Top>0.00694in</Top>
-              <Left>12.61958cm</Left>
+              <Left>12.71082cm</Left>
               <Height>2.43011cm</Height>
               <Width>6.3591cm</Width>
               <ZIndex>2</ZIndex>
@@ -3783,6 +3784,95 @@
                 </Border>
               </Style>
             </Rectangle>
+            <Textbox Name="Page_Lbl">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Globals!PageNumber</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> / </Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Globals!TotalPages</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Page_Lbl</rd:DefaultName>
+              <Top>2.95062cm</Top>
+              <Left>13.91854cm</Left>
+              <Height>11pt</Height>
+              <Width>5.15135cm</Width>
+              <ZIndex>3</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>5pt</PaddingLeft>
+                <PaddingRight>5pt</PaddingRight>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox224">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Sales Quote</Value>
+                      <Style>
+                        <FontSize>14pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox224</rd:DefaultName>
+              <Top>2.69524cm</Top>
+              <Left>0.14095cm</Left>
+              <Height>0.65243cm</Height>
+              <Width>6.22187cm</Width>
+              <ZIndex>4</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
           </ReportItems>
           <Style>
             <Border>
