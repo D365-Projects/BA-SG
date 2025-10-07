@@ -40,7 +40,6 @@ report 50115 "Standard Sales Invoice T&M"
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Invoice));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Invoice';
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -443,6 +442,7 @@ report 50115 "Standard Sales Invoice T&M"
             column(ShowWorkDescription; ShowWorkDescription)
             {
             }
+            column(Amount_Including_VAT; "Amount Including VAT") { }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -1236,6 +1236,7 @@ report 50115 "Standard Sales Invoice T&M"
         UnitPriceLbl: Label 'Unit Price';
         LineAmountLbl: Label 'Line Amount';
         SalespersonLbl2: Label 'Salesperson';
+        TotalExclVATTextSG: Label 'Total Amount Excl. Tax';
         LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl : Text;
 
     protected var
@@ -1358,15 +1359,22 @@ report 50115 "Standard Sales Invoice T&M"
         end;
     end;
 
+
+
     local procedure CreateUSReportTotalLines()
     begin
         ReportTotalsLine.DeleteAll();
-        ReportTotalsLine.Add(SubtotalLbl, TotalSubTotal, true, false, false);
+        if (TotalInvDiscAmount <> 0) or (TotalAmountVAT <> 0) then
+            ReportTotalsLine.Add(SubtotalLbl, TotalSubTotal, true, false, false, Header."Currency Code");
         if TotalInvDiscAmount <> 0 then begin
-        ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false);
+            ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false, Header."Currency Code");
+            if TotalAmountVAT <> 0 then
+                ReportTotalsLine.Add(TotalExclVATTextSG, TotalAmount, true, false, false, Header."Currency Code");
         end;
-        ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false);
-        // ReportTotalsLine.Add(TotalAmountInclVATlbl, TotalAmountInclVAT, false, true, false);
+
+        ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false, Header."Currency Code");
+        if TotalVATAmountLCY <> TotalAmountVAT then
+            ReportTotalsLine.Add(TotalTaxLbl, TotalVATAmountLCY, false, true, false);
     end;
 
     local procedure GetTaxSummarizedLines(var TempSalesTaxAmountLine: Record "Sales Tax Amount Line" temporary)

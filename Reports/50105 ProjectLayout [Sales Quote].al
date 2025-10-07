@@ -37,7 +37,7 @@ report 50105 "Project Sales Quote"
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Quote));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Quote';
+
             column(CompanyAddress1; CompanyAddr[1])
             {
             }

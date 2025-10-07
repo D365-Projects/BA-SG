@@ -37,7 +37,7 @@ report 50113 "Project Sales Invoice"
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Invoice));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Invoice';
+
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -449,6 +449,7 @@ report 50113 "Project Sales Invoice"
             column(VATClause_Lbl; VATClause.TableCaption())
             {
             }
+            column(Amount_Including_VAT; "Amount Including VAT") { }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -1133,6 +1134,7 @@ report 50113 "Project Sales Invoice"
         BillToContactEmailLbl: Label 'Bill-to Contact E-Mail';
         LCYTxt: label ' (LCY)';
         LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl : Text;
+        TotalExclVATTextSG: Label 'Toal Amount Excl. Tax';
 
     protected var
         GLSetup: Record "General Ledger Setup";
@@ -1177,6 +1179,8 @@ report 50113 "Project Sales Invoice"
         PaymentTermsDescLbl: Label 'Payment Terms';
         ShptMethodDescLbl: Label 'Shipment Method';
 
+        TotalTaxLbl: Label 'Total Tax';
+
     local procedure InitLogInteraction()
     begin
         LogInteraction := SegManagement.FindInteractionTemplateCode(Enum::"Interaction Log Entry Document Type"::"Sales Qte.") <> '';
@@ -1218,12 +1222,12 @@ report 50113 "Project Sales Invoice"
         if TotalInvDiscAmount <> 0 then begin
             ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false, Header."Currency Code");
 
-            ReportTotalsLine.Add(TotalExclVATText, TotalAmount, true, false, false, Header."Currency Code");
+            ReportTotalsLine.Add(TotalExclVATTextSG, TotalAmount, true, false, false, Header."Currency Code");
         end;
 
-        ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
+        ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false, Header."Currency Code");
         if TotalVATAmountLCY <> TotalAmountVAT then
-            ReportTotalsLine.Add(VATAmountLine.VATAmountText() + LCYTxt, TotalVATAmountLCY, false, true, false);
+            ReportTotalsLine.Add(TotalTaxLbl, TotalVATAmountLCY, false, true, false);
 
     end;
 

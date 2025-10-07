@@ -37,8 +37,7 @@ report 50116 "Pricing Sheet Sales Invoice"
         dataitem(Header; "Sales Header")
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Invoice));
-            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Invoice';
+
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -237,6 +236,7 @@ report 50116 "Pricing Sheet Sales Invoice"
             column(SellToContactEmailLbl; SellToContactEmailLbl)
             {
             }
+            column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             column(BillToContactPhoneNoLbl; BillToContactPhoneNoLbl)
             {
             }
@@ -446,6 +446,7 @@ report 50116 "Pricing Sheet Sales Invoice"
             column(VATClause_Lbl; VATClause.TableCaption())
             {
             }
+            column(Amount_Including_VAT; "Amount Including VAT") { }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -554,6 +555,7 @@ report 50116 "Pricing Sheet Sales Invoice"
                 column(VATPct_Line; FormattedVATPct)
                 {
                 }
+                column(BatotalPrice; BatotalPrice) { }
                 column(VATPct_Line_Lbl; FieldCaption("VAT %"))
                 {
                 }
@@ -587,7 +589,7 @@ report 50116 "Pricing Sheet Sales Invoice"
                         LineDiscountPctText := ''
                     else
                         LineDiscountPctText := StrSubstNo('%1%', -Round("Line Discount %", 0.1));
-
+BatotalPrice := "Unit Price" * Quantity;
                     TransHeaderAmount += PrevLineAmount;
                     PrevLineAmount := "Line Amount";
                     TotalSubTotal += "Line Amount";
@@ -1015,8 +1017,9 @@ report 50116 "Pricing Sheet Sales Invoice"
         IsHandled: Boolean;
     begin
         GLSetup.Get();
-        CompanyInfo.SetAutoCalcFields(Picture);
         CompanyInfo.Get();
+        CompanyInfo.SetAutoCalcFields(Picture);
+
         SalesSetup.Get();
         CompanyInfo.VerifyAndSetPaymentInfo();
 
@@ -1084,6 +1087,7 @@ report 50116 "Pricing Sheet Sales Invoice"
         ExchangeRateText: Text;
         PrevLineAmount: Decimal;
         PmtDiscText: Text;
+        BatotalPrice: Decimal;
         SalesConfirmationLbl: Label 'Sales Order';
         YourEstimateLbl: Label 'Your Estimate';
         EstimateLbl: Label 'Estimate';
@@ -1139,6 +1143,8 @@ report 50116 "Pricing Sheet Sales Invoice"
         BillToContactMobilePhoneNoLbl: Label 'Bill-to Contact Mobile Phone No.';
         BillToContactEmailLbl: Label 'Bill-to Contact E-Mail';
         LCYTxt: label ' (LCY)';
+
+        TotalTaxLbl: Label 'Total Tax';
         LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl : Text;
 
     protected var
@@ -1228,9 +1234,9 @@ report 50116 "Pricing Sheet Sales Invoice"
                 ReportTotalsLine.Add(TotalExclVATText, TotalAmount, true, false, false, Header."Currency Code");
         end;
         if TotalAmountVAT <> 0 then begin
-            ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
+            ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false, Header."Currency Code");
             if TotalVATAmountLCY <> TotalAmountVAT then
-                ReportTotalsLine.Add(VATAmountLine.VATAmountText() + LCYTxt, TotalVATAmountLCY, false, true, false);
+                ReportTotalsLine.Add(TotalTaxLbl, TotalVATAmountLCY, false, true, false);
         end;
     end;
 

@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-06T05:13:44.6280349Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-06T15:12:08.6981438Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -1958,13 +1958,6 @@
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
-                                <TextRun>
-                                  <Value>Description: </Value>
-                                  <Style>
-                                    <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
                                 <TextRun>
                                   <Value>=Fields!WorkDescriptionLine.Value</Value>
                                   <Style>

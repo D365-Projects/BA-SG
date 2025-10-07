@@ -37,8 +37,7 @@ report 50107 "Pricing Sheet Sales Quote"
         dataitem(Header; "Sales Header")
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Quote));
-            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Quote';
+
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -237,6 +236,7 @@ report 50107 "Pricing Sheet Sales Quote"
             column(SellToContactEmailLbl; SellToContactEmailLbl)
             {
             }
+            column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             column(BillToContactPhoneNoLbl; BillToContactPhoneNoLbl)
             {
             }
@@ -513,6 +513,7 @@ report 50107 "Pricing Sheet Sales Quote"
                 column(ItemNo_Line_Lbl; FieldCaption("No."))
                 {
                 }
+                column(BatotalPrice; BatotalPrice) { DecimalPlaces = 0 : 2; }
                 column(ItemReferenceNo_Line; "Item Reference No.")
                 {
                 }
@@ -592,6 +593,7 @@ report 50107 "Pricing Sheet Sales Quote"
                         LineDiscountPctText := StrSubstNo('%1%', -Round("Line Discount %", 0.1));
 
                     TransHeaderAmount += PrevLineAmount;
+                    BatotalPrice := "Unit Price" * Quantity;
                     PrevLineAmount := "Line Amount";
                     TotalSubTotal += "Line Amount";
                     TotalInvDiscAmount -= "Inv. Discount Amount";
@@ -1018,8 +1020,8 @@ report 50107 "Pricing Sheet Sales Quote"
         IsHandled: Boolean;
     begin
         GLSetup.Get();
-        CompanyInfo.SetAutoCalcFields(Picture);
         CompanyInfo.Get();
+        CompanyInfo.SetAutoCalcFields(Picture);
         SalesSetup.Get();
         CompanyInfo.VerifyAndSetPaymentInfo();
 
@@ -1080,6 +1082,7 @@ report 50107 "Pricing Sheet Sales Quote"
         MoreLines: Boolean;
         ShowWorkDescription: Boolean;
         CopyText: Text[30];
+        BtotalPrice: Decimal;
         ShowShippingAddr: Boolean;
         LogInteractionEnable: Boolean;
         CompanyLogoPosition: Integer;
@@ -1142,6 +1145,7 @@ report 50107 "Pricing Sheet Sales Quote"
         BillToContactMobilePhoneNoLbl: Label 'Bill-to Contact Mobile Phone No.';
         BillToContactEmailLbl: Label 'Bill-to Contact E-Mail';
         LCYTxt: label ' (LCY)';
+        BatotalPrice: Decimal;
         LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl : Text;
 
     protected var

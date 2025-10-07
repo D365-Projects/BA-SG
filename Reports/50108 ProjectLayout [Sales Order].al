@@ -37,7 +37,7 @@ report 50108 "Project Sales Order"
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Order';
+
             column(CompanyAddress1; CompanyAddr[1])
             {
             }

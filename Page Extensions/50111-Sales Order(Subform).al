@@ -24,6 +24,7 @@ pageextension 50111 "Sales Order Line" extends "Sales Order Subform"
             var
                 Item_lrec: Record Item;
             begin
+                if Rec.Type = rec.Type::Item then begin
                 if rec.Quantity <> 0 then begin
                     Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
                     Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
@@ -35,7 +36,7 @@ pageextension 50111 "Sales Order Line" extends "Sales Order Subform"
                     rec.SKU := Item_lrec."Vendor Item No.";
                     Rec."UPC_SG" := Item_lrec.GTIN;
                 end;
-
+end;
             end;
         }
 

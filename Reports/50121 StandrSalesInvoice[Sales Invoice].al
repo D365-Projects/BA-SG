@@ -13,10 +13,6 @@ report 50121 "Sales Invoice_SG"
         {
             DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Invoice';
-
-
-
 
             column(CompanyPicture; DummyCompanyInfo.Picture)
             {
@@ -184,6 +180,9 @@ report 50121 "Sales Invoice_SG"
             column(ExternalDocumentNo_Lbl; FieldCaption("External Document No."))
             {
             }
+            column(Invoice_Discount_Amount; "Invoice Discount Amount") { }
+            column(Currency_Code; "Currency Code") { }
+            column(Amount_Including_VAT_Head; "Amount Including VAT") { }
 
             dataitem(Line; "Sales Line")
             {
@@ -275,6 +274,9 @@ report 50121 "Sales Invoice_SG"
                 column(item_Category; itemCategory) { }
                 column(LineAmountEXVAT; LineAmount) { }
                 column(CustomMonth; CustomMonth) { DecimalPlaces = 0 : 1; }
+                column(Amount_Excl_VAT; GetLineAmountExclVAT()) { }
+                column(VATAmountCalc; VATAmountCalc) { }
+
 
                 trigger OnAfterGetRecord()
                 Var
@@ -288,15 +290,19 @@ report 50121 "Sales Invoice_SG"
                     LineAmount := "Unit Price" * Quantity;
                     TotalAmount += LineAmount;
                     VatAmount += "Amount Including VAT" - GetLineAmountExclVAT();
+                    VATAmountCalc += Round("VAT Base Amount" * "VAT %" / 100, 0.01);
                     GrandTotalAmount += Amount - VatAmount;
                 end;
 
             }
+
+
             trigger OnAfterGetRecord()
             var
                 country_lrec: Record "Country/Region";
+
             begin
-                country_lrec.Reset();
+
                 if Header."Sell-to Country/Region Code" <> '' then begin
                     country_lrec.SetRange(Code, Header."Sell-to Country/Region Code");
                     if country_lrec.FindFirst() then
@@ -328,9 +334,10 @@ report 50121 "Sales Invoice_SG"
             end;
 
 
-
         }
+
     }
+
 
     requestpage
     {
@@ -402,6 +409,119 @@ report 50121 "Sales Invoice_SG"
         Address1and2: Text;
         CSZcode: Text;
         "Sell-to Country/Reigon Dec": Text;
+        CurrencyCode_SG: Text;
+        VATAmountCalc: Decimal;
+        MoreLines: Boolean;
+        CopyText: Text[30];
+        TransHeaderAmount: Decimal;
+        LogInteractionEnable: Boolean;
+        AsmInfoExistsForLine: Boolean;
+        CompanyLogoPosition: Integer;
+        CalculatedExchRate: Decimal;
+        ExchangeRateText: Text;
+        VATClauseText: Text;
+        PrevLineAmount: Decimal;
+        PmtDiscText: Text;
+        ShowWorkDescription: Boolean;
+        WorkDescriptionLine: Text;
+        CompanyInfoBankAccNoLbl: Label 'Account No.';
+        CompanyInfoBankNameLbl: Label 'Bank';
+        CompanyInfoGiroNoLbl: Label 'Giro No.';
+        CompanyInfoPhoneNoLbl: Label 'Phone No.';
+        CopyLbl: Label 'Copy';
+        EMailLbl: Label 'Email';
+        HomePageLbl: Label 'Home Page';
+        InvDiscBaseAmtLbl: Label 'Invoice Discount Base Amount';
+        InvDiscountAmtLbl: Label 'Invoice Discount';
+        InvNoLbl: Label 'Quote No.';
+        LineAmtAfterInvDiscLbl: Label 'Payment Discount on VAT';
+        LocalCurrencyLbl: Label 'Local Currency';
+        PageLbl: Label 'Page';
+        PostedShipmentDateLbl: Label 'Shipment Date';
+        ShipmentLbl: Label 'Shipment';
+        ShiptoAddrLbl: Label 'Ship-to Address';
+        SubtotalLbl: Label 'Subtotal';
+        TotalLbl: Label 'Total';
+        VATAmtSpecificationLbl: Label 'VAT Amount Specification';
+        VATAmtLbl: Label 'VAT Amount';
+        VATAmountLCYLbl: Label 'VAT Amount (LCY)';
+        VATBaseLbl: Label 'VAT Base';
+        VATBaseLCYLbl: Label 'VAT Base (LCY)';
+        VATClausesLbl: Label 'VAT Clause';
+        VATIdentifierLbl: Label 'VAT Identifier';
+        VATPercentageLbl: Label 'VAT %';
+        ExchangeRateTxt: Label 'Exchange rate: %1/%2', Comment = '%1 and %2 are both amounts.';
+        NoFilterSetErr: Label 'You must specify one or more filters to avoid accidently printing all documents.';
+        GreetingLbl: Label 'Hello';
+        ClosingLbl: Label 'Sincerely';
+        PmtDiscTxt: Label 'If we receive the payment before %1, you are eligible for a %2% payment discount.', Comment = '%1 Discount Due Date %2 = value of Payment Discount % ';
+        BodyLbl: Label 'Thank you for your business. Your Quote confirmation is attached to this message.';
+        SellToContactPhoneNoLbl: Label 'Sell-to Contact Phone No.';
+        SellToContactMobilePhoneNoLbl: Label 'Sell-to Contact Mobile Phone No.';
+        SellToContactEmailLbl: Label 'Sell-to Contact E-Mail';
+        BillToContactPhoneNoLbl: Label 'Bill-to Contact Phone No.';
+        BillToContactMobilePhoneNoLbl: Label 'Bill-to Contact Mobile Phone No.';
+        BillToContactEmailLbl: Label 'Bill-to Contact E-Mail';
+        AmtSubjecttoSalesTaxLbl: Label 'Amount Subject to Sales Tax';
+        AmtExemptfromSalesTaxLbl: Label 'Amount Exempt from Sales Tax';
+        PONumberLbl: Label 'P.O. Number';
+        TotalTaxLbl: Label 'Total Tax';
+        UnitLbl: Label 'Unit';
+        UnitPriceLbl: Label 'Unit Price';
+        LineAmountLbl: Label 'Line Amount';
+        SalespersonLbl2: Label 'Salesperson';
+        LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl : Text;
+
+
+    protected var
+        CompanyInfo: Record "Company Information";
+        PaymentTerms: Record "Payment Terms";
+        PaymentMethod: Record "Payment Method";
+        SalespersonPurchaser: Record "Salesperson/Purchaser";
+        ShipmentMethod: Record "Shipment Method";
+        CompanyBankAccount: Record "Bank Account";
+        CustAddr: array[8] of Text[100];
+        ShipToAddr: array[8] of Text[100];
+        CompanyAddr: array[8] of Text[100];
+        ArchiveDocument: Boolean;
+        DisplayAssemblyInformation: Boolean;
+        LogInteraction: Boolean;
+        TotalSubTotal: Decimal;
+        TotalAmountInclVAT: Decimal;
+        TotalAmountVAT: Decimal;
+        TotalInvDiscAmount: Decimal;
+        TotalPaymentDiscOnVAT: Decimal;
+        FirstLineHasBeenOutput: Boolean;
+        TotalExclVATText: Text[50];
+        TotalInclVATText: Text[50];
+        TotalText: Text[50];
+        CurrCode: Text[10];
+        CurrSymbol: Text[10];
+        FormattedLineAmount: Text;
+        FormattedQuantity: Text;
+        FormattedUnitPrice: Text;
+        FormattedVATPct: Text;
+        LineDiscountPctText: Text;
+        SalesPersonText: Text[50];
+        ShowShippingAddr: Boolean;
+        VATBaseLCY: Decimal;
+        VATAmountLCY: Decimal;
+        TotalVATBaseLCY: Decimal;
+        TotalVATAmountLCY: Decimal;
+        PaymentTermsDescLbl: Label 'Payment Terms';
+        PaymentMethodDescLbl: Label 'Payment Method';
+        SalesConfirmationLbl: Label 'Order Confirmation';
+        SalesInvLineDiscLbl: Label 'Discount %';
+        SalespersonLbl: Label 'Sales person';
+        ShptMethodDescLbl: Label 'Shipment Method';
+
+
+        TotalAmountInclVATlbl: Label 'Total Amount Incl. Tax';
+
+
+
+
+
 
     local procedure CalculateCustomMonths(FromDate: Date; ToDate: Date): Decimal
 
@@ -431,6 +551,5 @@ begin
 
         exit(Round(Months, 0.1, '='));
     end;
-
 
 }

@@ -40,7 +40,7 @@ report 50111 "Standard Sales Order T&M"
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Order';
+
             column(CurrencyCode_SG; "Currency Code") { }
             column(CompanyAddress1; CompanyAddr[1])
             {

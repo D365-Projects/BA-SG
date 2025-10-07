@@ -40,7 +40,7 @@ report 50112 "Standard Sales Quote T&M"
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Quote));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Quote';
+
             column(Quote_Valid_Date; "Quote Valid Until Date") { }
             column(CompanyAddress1; CompanyAddr[1])
             {

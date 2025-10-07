@@ -13,7 +13,6 @@ report 50120 "Sales Order_SG"
         {
             DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Order';
 
 
 
@@ -185,6 +184,10 @@ report 50120 "Sales Order_SG"
             column(ExternalDocumentNo_Lbl; FieldCaption("External Document No."))
             {
             }
+            column(Invoice_Discount_Amount; "Invoice Discount Amount") { }
+            column(Currency_Code; "Currency Code") { }
+            column(Amount_Including_VAT_Head; "Amount Including VAT") { }
+            column(VATAmountCalc; VATAmountCalc) { }
 
             dataitem(Line; "Sales Line")
             {
@@ -212,12 +215,14 @@ report 50120 "Sales Order_SG"
 
                     AutoFormatType = 1;
                 }
+
                 column(Description_Line; Description)
                 {
                 }
                 column(Description_Line_Lbl; FieldCaption(Description))
                 {
                 }
+                column(VAT_Base_Amount; "VAT Base Amount") { }
                 column(LineDiscountPercent_Line; "Line Discount %")
                 {
                 }
@@ -273,12 +278,11 @@ report 50120 "Sales Order_SG"
                 column(Unit_Price; "Unit Price") { }
                 column(Amount_Including_VAT; "Amount Including VAT") { }
                 column(Item_Category_Code; "Item Category Code") { }
-                column(item_Category; itemCategory)
-                {
-
-                }
+                column(item_Category; itemCategory) { }
                 column(CustomMonth; CustomMonth) { DecimalPlaces = 0 : 1; }
                 column(LineAmountEXVAT; LineAmount) { }
+                column(Amount_Excl_VAT; GetLineAmountExclVAT()) { }
+
 
                 trigger OnAfterGetRecord()
                 var
@@ -291,6 +295,8 @@ report 50120 "Sales Order_SG"
                     CustomMonth := CalculateCustomMonths(FromDate, ToDate);
                     LineAmount := "Unit Price" * Quantity;
                     TotalAmount += LineAmount;
+                    VATAmountCalc += Round("VAT Base Amount" * "VAT %" / 100, 0.01);
+
                     VatAmount += "Amount Including VAT" - GetLineAmountExclVAT();
                     GrandTotalAmount += Amount - VatAmount;
                 end;
@@ -407,6 +413,7 @@ report 50120 "Sales Order_SG"
         Address1and2: Text;
         CSZcode: Text;
         "Sell-to Country/Reigon Dec": Text;
+        VATAmountCalc: Decimal;
 
     local procedure CalculateCustomMonths(FromDate: Date; ToDate: Date): Decimal
 

@@ -38,7 +38,6 @@ report 50114 "Devices Sales Invoice"
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Invoice));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Invoice';
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -1145,7 +1144,9 @@ report 50114 "Devices Sales Invoice"
         BillToContactMobilePhoneNoLbl: Label 'Bill-to Contact Mobile Phone No.';
         BillToContactEmailLbl: Label 'Bill-to Contact E-Mail';
         LCYTxt: label ' (LCY)';
+        TotalTaxLbl: Label 'Total Tax';
         LegalOfficeTxt, LegalOfficeLbl, CustomGiroTxt, CustomGiroLbl, LegalStatementLbl : Text;
+        TotalExclVATTextSG: Label 'Toal Amount Excl. tax';
 
     protected var
         GLSetup: Record "General Ledger Setup";
@@ -1190,6 +1191,7 @@ report 50114 "Devices Sales Invoice"
         PaymentTermsDescLbl: Label 'Payment Terms';
         ShptMethodDescLbl: Label 'Shipment Method';
 
+
     local procedure InitLogInteraction()
     begin
         LogInteraction := SegManagement.FindInteractionTemplateCode(Enum::"Interaction Log Entry Document Type"::"Sales Qte.") <> '';
@@ -1231,12 +1233,12 @@ report 50114 "Devices Sales Invoice"
         if TotalInvDiscAmount <> 0 then begin
             ReportTotalsLine.Add(InvDiscountAmtLbl, TotalInvDiscAmount, false, false, false, Header."Currency Code");
             if TotalAmountVAT <> 0 then
-                ReportTotalsLine.Add(TotalExclVATText, TotalAmount, true, false, false, Header."Currency Code");
+                ReportTotalsLine.Add(TotalExclVATTextSG, TotalAmount, true, false, false, Header."Currency Code");
         end;
 
-        ReportTotalsLine.Add(VATAmountLine.VATAmountText(), TotalAmountVAT, false, true, false, Header."Currency Code");
+        ReportTotalsLine.Add(TotalTaxLbl, TotalAmountVAT, false, true, false, Header."Currency Code");
         if TotalVATAmountLCY <> TotalAmountVAT then
-            ReportTotalsLine.Add(VATAmountLine.VATAmountText() + LCYTxt, TotalVATAmountLCY, false, true, false);
+            ReportTotalsLine.Add(TotalTaxLbl, TotalVATAmountLCY, false, true, false);
 
     end;
 

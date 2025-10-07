@@ -13,7 +13,6 @@ report 50119 "Sales Quote_SG"
         {
             DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Sales Quote';
 
             column(CompanyPicture; DummyCompanyInfo.Picture)
             {
@@ -183,7 +182,9 @@ report 50119 "Sales Quote_SG"
             column(ExternalDocumentNo_Lbl; FieldCaption("External Document No."))
             {
             }
-
+            column(Currency_Code; "Currency Code") { }
+            column(Invoice_Discount_Amount; "Invoice Discount Amount") { }
+            column(Amount_Including_VAT_Head; "Amount Including VAT") { }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = field("No.");
@@ -273,12 +274,11 @@ report 50119 "Sales Quote_SG"
                 column(Amount_Including_VAT; "Amount Including VAT") { }
                 column(Item_Category_Code; "Item Category Code") { }
                 column(CustomMonth; CustomMonth) { DecimalPlaces = 0 : 1; }
-                column(item_Category; itemCategory)
-                {
-
-                }
+                column(item_Category; itemCategory) { }
+                column(VATAmountCalc; VATAmountCalc) { }
 
                 column(LineAmountEXVAT; LineAmount) { }
+                column(Amount_Excl_VAT; GetLineAmountExclVAT()) { }
 
                 trigger OnAfterGetRecord()
                 var
@@ -291,8 +291,9 @@ report 50119 "Sales Quote_SG"
                     ToDate := "Service Period To";
                     CustomMonth := CalculateCustomMonths(FromDate, ToDate);
                     LineAmount := "Unit Price" * Quantity;
-                    TotalAmount += LineAmount;
-                    VatAmount += "Amount Including VAT" - GetLineAmountExclVAT();
+                    TotalAmount += LineAmount - "Inv. Discount Amount";
+                    VatAmount += TotalAmount - GetLineAmountExclVAT();
+                    VATAmountCalc += Round("VAT Base Amount" * "VAT %" / 100, 0.01);
                     GrandTotalAmount += Amount - VatAmount;
                 end;
 
@@ -407,6 +408,7 @@ report 50119 "Sales Quote_SG"
         Address1and2: Text;
         CSZcode: Text;
         "Sell-to Country/Reigon Dec": Text;
+        VATAmountCalc: Decimal;
 
     local procedure CalculateCustomMonths(FromDate: Date; ToDate: Date): Decimal
 

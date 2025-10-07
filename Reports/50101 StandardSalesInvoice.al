@@ -15,7 +15,7 @@ report 50101 "Standard Sales - Invoice_SG"
         {
             DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Posted Sales Invoice';
+
 
             column(CompanyAddress1; CompanyAddr[1])
             {

@@ -37,8 +37,7 @@ report 50110 "Pricing Sheet Sales Order"
         dataitem(Header; "Sales Header")
         {
             DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Order));
-            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Devices Sales Order';
+
             column(CompanyAddress1; CompanyAddr[1])
             {
             }
@@ -252,6 +251,7 @@ report 50110 "Pricing Sheet Sales Order"
             column(SellToContactMobilePhoneNo; SellToContact."Mobile Phone No.")
             {
             }
+            column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             column(SellToContactEmail; SellToContact."E-Mail")
             {
             }
@@ -466,6 +466,7 @@ report 50110 "Pricing Sheet Sales Order"
                 column(Shipping_Cost; "Shipping Cost") { }
                 column(itemSalesPrice; itemSalesPrice) { }
                 column(Item_Type; Type) { }
+                column(BatotalPrice; BatotalPrice) { }
                 column(AmountExcludingVAT_Line; Amount)
                 {
                     AutoFormatExpression = "Currency Code";
@@ -587,7 +588,7 @@ report 50110 "Pricing Sheet Sales Order"
                         LineDiscountPctText := ''
                     else
                         LineDiscountPctText := StrSubstNo('%1%', -Round("Line Discount %", 0.1));
-
+                    BatotalPrice := "Unit Price" * Quantity;
                     TransHeaderAmount += PrevLineAmount;
                     PrevLineAmount := "Line Amount";
                     TotalSubTotal += "Line Amount";
@@ -1015,8 +1016,9 @@ report 50110 "Pricing Sheet Sales Order"
         IsHandled: Boolean;
     begin
         GLSetup.Get();
-        CompanyInfo.SetAutoCalcFields(Picture);
         CompanyInfo.Get();
+        CompanyInfo.SetAutoCalcFields(Picture);
+
         SalesSetup.Get();
         CompanyInfo.VerifyAndSetPaymentInfo();
 
@@ -1084,6 +1086,7 @@ report 50110 "Pricing Sheet Sales Order"
         ExchangeRateText: Text;
         PrevLineAmount: Decimal;
         PmtDiscText: Text;
+        BatotalPrice: Decimal;
         SalesConfirmationLbl: Label 'Sales Order';
         YourEstimateLbl: Label 'Your Estimate';
         EstimateLbl: Label 'Estimate';

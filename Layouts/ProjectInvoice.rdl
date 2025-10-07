@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-06T05:13:27.4904833Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-06T15:45:01.1823238Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -51,10 +51,10 @@
                                     <Width>8.30074cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.86838cm</Width>
+                                    <Width>1.60751cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.24832cm</Width>
+                                    <Width>1.50919cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2.15342cm</Width>
@@ -2047,7 +2047,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Last(Fields!TotalSubTotalMinusInvoiceDiscount.Value)</Value>
+                                                    <Value>=Last(Fields!TotalAmountIncludingVAT.Value)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -2962,6 +2962,12 @@ End Function
         </Field>
         <Field Name="VATClause_Lbl">
           <DataField>VATClause_Lbl</DataField>
+        </Field>
+        <Field Name="Amount_Including_VAT">
+          <DataField>Amount_Including_VAT</DataField>
+        </Field>
+        <Field Name="Amount_Including_VATFormat">
+          <DataField>Amount_Including_VATFormat</DataField>
         </Field>
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>

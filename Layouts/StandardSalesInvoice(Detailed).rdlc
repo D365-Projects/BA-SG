@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-06T05:13:46.2680564Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-06T15:39:46.2033046Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -664,7 +664,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Amount_Including_VAT.Value</Value>
+                                  <Value>=Fields!AmountIncludingVAT_Line.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
@@ -784,7 +784,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!AmountExcludingVAT_Line.Value)</Value>
+                                  <Value>=Sum(Fields!AmountExcludingVat_line.Value)</Value>
                                   <Style>
                                     <FontStyle>Normal</FontStyle>
                                     <FontSize>9pt</FontSize>
@@ -862,7 +862,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!GrandTotalTaxAmount.Value</Value>
+                                  <Value>=SUM(Fields!AmountExcludingVat_line.Value)-Last(Fields!TotalAmount_Including_VAT.Value)</Value>
                                   <Style>
                                     <Format>#,0.00;(#,0.00)</Format>
                                     <Color>Gray</Color>
@@ -1028,7 +1028,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!AmountExcludingVAT_Line.Value)-Fields!GrandTotalTaxAmount.Value</Value>
+                                  <Value>=Last(Fields!TotalAmount_Including_VAT.Value)</Value>
                                   <Style>
                                     <Format>#,0.00;(#,0.00)</Format>
                                     <Color>Gray</Color>
@@ -2320,12 +2320,6 @@ End Function
         <Field Name="LineNo_Line">
           <DataField>LineNo_Line</DataField>
         </Field>
-        <Field Name="AmountExcludingVAT_Line">
-          <DataField>AmountExcludingVAT_Line</DataField>
-        </Field>
-        <Field Name="AmountExcludingVAT_LineFormat">
-          <DataField>AmountExcludingVAT_LineFormat</DataField>
-        </Field>
         <Field Name="AmountExcludingVAT_Line_Lbl">
           <DataField>AmountExcludingVAT_Line_Lbl</DataField>
         </Field>
@@ -2391,6 +2385,12 @@ End Function
         </Field>
         <Field Name="Service_Period_To">
           <DataField>Service_Period_To</DataField>
+        </Field>
+        <Field Name="AmountExcludingVat_line">
+          <DataField>AmountExcludingVat_line</DataField>
+        </Field>
+        <Field Name="AmountExcludingVat_lineFormat">
+          <DataField>AmountExcludingVat_lineFormat</DataField>
         </Field>
         <Field Name="Quantity_Line_Lbl">
           <DataField>Quantity_Line_Lbl</DataField>

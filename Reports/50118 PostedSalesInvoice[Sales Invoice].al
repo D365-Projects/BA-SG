@@ -13,7 +13,6 @@ report 50118 "Standard Sales - Invoices_SG"
         {
             DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Posted Sales Invoice';
 
 
 
@@ -194,9 +193,11 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             {
             }
             column(totalAMount_includingTax; totalAMount_includingTax) { }
+
             column(TotalaVat; TotalaVat) { }
 
             column(TotalAmount_Including_VAT; "Amount Including VAT") { }
+
 
             dataitem(Line; "Sales Invoice Line")
             {
@@ -206,11 +207,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                 column(LineNo_Line; "Line No.")
                 {
                 }
-                column(AmountExcludingVAT_Line; Amount)
-                {
-                    AutoFormatExpression = GetCurrencyCode();
-                    AutoFormatType = 1;
-                }
+
                 column(AmountExcludingVAT_Line_Lbl; FieldCaption(Amount))
                 {
                 }
@@ -224,6 +221,9 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                     AutoFormatExpression = GetCurrencyCode();
                     AutoFormatType = 1;
                 }
+
+
+
                 column(Description_Line; Description)
                 {
                 }
@@ -258,7 +258,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                 column(Quantity; Quantity) { }
                 column(Service_Period_From; "Service Period From") { }
                 column(Service_Period_To; "Service Period To") { }
-
+                column(AmountExcludingVat_line; GetLineAmountExclVAT()) { }
                 column(Quantity_Line_Lbl; FieldCaption(Quantity))
                 {
                 }
@@ -283,7 +283,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
 
                 column(GrandTotalTaxAmount; GrandTotalTaxAmount) { }
                 column(VAT_Base_Amount; "VAT Base Amount") { }
-                column(VatAmount; VatAmount) { }
+                column(VatAmount; TotalaVat) { }
                 column(TotalAmount; TotalAmount) { }
                 column(Line_Amount; "Line Amount") { }
                 column(Unit_Price; "Unit Price") { }
@@ -300,14 +300,13 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                     ToDate: Date;
                     Result: Decimal;
                 begin
-                    TotalaVat += VatAmount;
                     totalAMount_includingTax += "Amount Including VAT";
                     FromDate := "Service Period From";
                     ToDate := "Service Period To";
                     CustomMonth := CalculateCustomMonths(FromDate, ToDate);
                     TotalAmount += "Amount Including VAT";
-                    VatExclAMount := "Amount Including VAT" - GetLineAmountExclVAT();
-
+                    VatExclAMount := GetLineAmountExclVAT();
+                    TotalaVat += "Amount Including VAT" - Amount;
                     GrandTotalTaxAmount += VatExclAMount;
 
                 end;
