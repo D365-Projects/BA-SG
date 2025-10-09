@@ -197,6 +197,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             column(TotalaVat; TotalaVat) { }
 
             column(TotalAmount_Including_VAT; "Amount Including VAT") { }
+            column(Invoice_Discount_Amount; "Invoice Discount Amount") { }
 
 
             dataitem(Line; "Sales Invoice Line")
