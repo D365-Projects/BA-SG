@@ -262,9 +262,6 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                 column(Quantity_Line_Lbl; FieldCaption(Quantity))
                 {
                 }
-
-
-
                 column(UnitPrice_Lbl; FieldCaption("Unit Price"))
                 {
                 }
@@ -285,13 +282,12 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                 column(VAT_Base_Amount; "VAT Base Amount") { }
                 column(VatAmount; TotalaVat) { }
                 column(TotalAmount; TotalAmount) { }
-                column(Line_Amount; "Line Amount") { }
+                column(Line_Amount; Amount) { }
                 column(Unit_Price; "Unit Price") { }
                 column(Amount_Including_VAT; "Amount Including VAT") { }
                 column(Item_Category_Code; "Item Category Code") { }
-                column(GetLineAmountExclVAT; GetLineAmountExclVAT) { }
-
-
+                column(LineAmountExclVAT; GetLineAmountExclVAT) { }
+                column(VATAmountCalc; VATAmountCalc) { }
 
                 trigger OnAfterGetRecord()
                 var
@@ -303,6 +299,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
                     totalAMount_includingTax += "Amount Including VAT";
                     FromDate := "Service Period From";
                     ToDate := "Service Period To";
+                    VATAmountCalc += Round("VAT Base Amount" * "VAT %" / 100, 0.01);
                     CustomMonth := CalculateCustomMonths(FromDate, ToDate);
                     TotalAmount += "Amount Including VAT";
                     VatExclAMount := GetLineAmountExclVAT();
@@ -424,6 +421,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
         CSZcode: Text;
         "Sell-to Country/Reigon Dec": Text;
         CustomMonth: Decimal;
+        VATAmountCalc: Decimal;
 
 
 

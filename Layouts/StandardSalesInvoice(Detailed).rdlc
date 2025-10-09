@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-07T10:02:56.7910418Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-09T04:04:54.9410591Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -671,7 +671,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!AmountIncludingVAT_Line.Value</Value>
+                                  <Value>=Fields!Line_Amount.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
@@ -758,14 +758,14 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>GRAND TOTAL</Value>
+                                  <Value>Subtotal</Value>
                                   <Style>
-                                    <Color>Gray</Color>
+                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -792,14 +792,13 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!AmountExcludingVat_line.Value)</Value>
+                                  <Value>=Sum(Fields!Line_Amount.Value)</Value>
                                   <Style>
                                     <FontStyle>Normal</FontStyle>
                                     <FontSize>9pt</FontSize>
-                                    <FontWeight>Normal</FontWeight>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0.00;(#,0.00)</Format>
                                     <TextDecoration>None</TextDecoration>
-                                    <Color>Gray</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -836,14 +835,12 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>TAX DUE</Value>
-                                  <Style>
-                                    <Color>Gray</Color>
-                                  </Style>
+                                  <Value>Total Tax</Value>
+                                  <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -870,10 +867,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=SUM(Fields!AmountExcludingVat_line.Value)-Last(Fields!TotalAmount_Including_VAT.Value)</Value>
+                                  <Value>=Last(Fields!VATAmountCalc.Value)</Value>
                                   <Style>
                                     <Format>#,0.00;(#,0.00)</Format>
-                                    <Color>Gray</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -954,7 +950,7 @@
           </Line>
           <Line Name="Line4">
             <Top>6.435cm</Top>
-            <Left>0.15411cm</Left>
+            <Left>0.20193cm</Left>
             <Height>0cm</Height>
             <Width>20.52914cm</Width>
             <ZIndex>3</ZIndex>
@@ -985,15 +981,15 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.00214cm</Width>
+                  <Width>4.007cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.59555cm</Width>
+                  <Width>3.60585cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.62794cm</Height>
+                  <Height>0.61455cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1004,7 +1000,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>BALANCE DUE</Value>
+                                  <Value>Total Amount Incl. Tax</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1036,10 +1032,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Last(Fields!TotalAmount_Including_VAT.Value)</Value>
+                                  <Value>=Sum(Fields!Amount_Including_VAT.Value)</Value>
                                   <Style>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>#,0.00;(#,0.00)</Format>
-                                    <Color>Gray</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1053,6 +1049,16 @@
                             <Border>
                               <Style>None</Style>
                             </Border>
+                            <TopBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>1pt</Width>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>1pt</Width>
+                            </BottomBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1078,10 +1084,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>5.65437cm</Top>
-            <Left>14.0644cm</Left>
-            <Height>0.62794cm</Height>
-            <Width>6.59769cm</Width>
+            <Top>5.74083cm</Top>
+            <Left>13.04896cm</Left>
+            <Height>0.61455cm</Height>
+            <Width>7.61285cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -1797,7 +1803,7 @@ THANK YOU FOR YOUR BUSINESS!</Value>
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>9.15668cm</Height>
+        <Height>8.90268cm</Height>
         <Style />
       </Body>
       <Width>20.73107cm</Width>
@@ -2463,11 +2469,17 @@ End Function
         <Field Name="Item_Category_Code">
           <DataField>Item_Category_Code</DataField>
         </Field>
-        <Field Name="GetLineAmountExclVAT">
-          <DataField>GetLineAmountExclVAT</DataField>
+        <Field Name="LineAmountExclVAT">
+          <DataField>LineAmountExclVAT</DataField>
         </Field>
-        <Field Name="GetLineAmountExclVATFormat">
-          <DataField>GetLineAmountExclVATFormat</DataField>
+        <Field Name="LineAmountExclVATFormat">
+          <DataField>LineAmountExclVATFormat</DataField>
+        </Field>
+        <Field Name="VATAmountCalc">
+          <DataField>VATAmountCalc</DataField>
+        </Field>
+        <Field Name="VATAmountCalcFormat">
+          <DataField>VATAmountCalcFormat</DataField>
         </Field>
       </Fields>
       <Query>
