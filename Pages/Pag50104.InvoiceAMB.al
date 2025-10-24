@@ -10,8 +10,8 @@ page 50104 "Sherweb_Invoices"
     CardPageId = "Sherweb Invoices";
     AutoSplitKey = true;
     DelayedInsert = true;
-    InsertAllowed = false;
-    ModifyAllowed = false;
+    // InsertAllowed = false;
+    // ModifyAllowed = false;
     SaveValues = true;
     SourceTableView = sorting(InvoiceNo);
     UsageCategory = Tasks;
@@ -64,6 +64,7 @@ page 50104 "Sherweb_Invoices"
                 field("Customer List Price"; Rec."Customer List Price")
                 {
                     ToolTip = 'Specifies the value of the Customer List Price field.', Comment = '%';
+                    Editable = true;
                 }
                 field(ListPrice; Rec.ListPrice)
                 {
@@ -210,14 +211,13 @@ page 50104 "Sherweb_Invoices"
                 end;
 
             }
-            action("Create Sales order")
+            action("Create Sales Invoice")
             {
-                Caption = 'Sales Order';
+                Caption = 'Sales Invoice';
                 Image = Order;
                 Promoted = true;
                 PromotedCategory = Process;
                 ApplicationArea = All;
-                ToolTip = 'Create Sales Order from Invoice SG data.';
                 trigger OnAction()
 
                 var
@@ -456,7 +456,7 @@ begin
         Purchasehdr_lrec.SetRange("Document Type", Purchasehdr_lrec."Document Type"::Invoice);
         Purchasehdr_lrec.SetRange("Vendor Invoice No.", Invoice_lrec.InvoiceNo);
         if Purchasehdr_lrec.FindFirst() then
-            Error('Purchase Order with Vendor Invoice No. %1 already exists.', Invoice_lrec.InvoiceNo);
+                Error('Purchase Invoice with Vendor Invoice No. %1 already exists.', Invoice_lrec.InvoiceNo);
         Purchaseandrec.Get();
         Purchaseandrec.TestField("Order Nos.");
         Purchasehdr_lrec.Init();
@@ -475,14 +475,14 @@ begin
         end else
             Error('No invoice lines found for Invoice No. %1.', Invoice_lrec.InvoiceNo);
 
-        Message('Purchase Order %1 created successfully.', Purchasehdr_lrec."No.");
-        if Dialog.Confirm('Purchase order has been created successfully. Do you want to open it?', true) then begin
+            Message('Purchase Invoice %1 created successfully.', Purchasehdr_lrec."No.");
+            if Dialog.Confirm('Purchase Invoice has been created successfully. Do you want to open it?', true) then begin
 
-            Page.Run(PAGE::"Purchase Order", Purchasehdr_lrec);
+                Page.Run(PAGE::"Purchase Invoice", Purchasehdr_lrec);
         end;
         end
         else
-            Error('Vendor code not found on Purchase & Recievable Setup');
+            Error('Vendor code not found on Purchases & Payables Setup.');
 
     end;
 
@@ -587,40 +587,50 @@ begin
         LinesAMB: Record "Invoice SG";
         OrgCode: Text[100];
         CurrInvoiceNo: Code[20];
-    begin
+        LastInvoiceNo: Code[20];
+        LastOrgCode: Text[100];
+begin
         SalesSetup.Get();
         SalesSetup.TestField("Invoice Nos.");
 
-        if InvoiceAMBRec.FindSet() then
+        if InvoiceAMBRec.FindSet() then begin
             repeat
                 OrgCode := InvoiceAMBRec.Organization;
                 CurrInvoiceNo := InvoiceAMBRec.InvoiceNo;
-                CustomerRec.SetRange("Sherweb Customer Name", OrgCode);
+
+                if (OrgCode <> LastOrgCode) or (CurrInvoiceNo <> LastInvoiceNo) then begin
+                    LastOrgCode := OrgCode;
+                    LastInvoiceNo := CurrInvoiceNo;
+
+                    CustomerRec.SetRange("Sherweb Customer Name", OrgCode);
                 if not CustomerRec.FindFirst() then
                     Error('Customer with Organization %1 not found.', OrgCode);
                 SalesHdr.Reset();
-            SalesHdr.SetRange("Document Type", SalesHdr."Document Type"::Invoice);
-            SalesHdr.SetRange("Sell-to Customer No.", CustomerRec."No.");
+                    SalesHdr.SetRange("Document Type", SalesHdr."Document Type"::Invoice);
+                    SalesHdr.SetRange("Sell-to Customer No.", CustomerRec."No.");
                 SalesHdr.SetRange("External Document No.", CurrInvoiceNo);
                 if not SalesHdr.FindFirst() then begin
                     SalesHdr.Init();
-                SalesHdr."No." := NoSeriesMgt.GetNextNo(SalesSetup."Invoice Nos.", Today, true);
-                SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
-                SalesHdr.Validate("Sell-to Customer No.", CustomerRec."No.");
+                        SalesHdr."No." := NoSeriesMgt.GetNextNo(SalesSetup."Invoice Nos.", Today, true);
+                        SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
+                        SalesHdr.Validate("Sell-to Customer No.", CustomerRec."No.");
                     SalesHdr."External Document No." := CurrInvoiceNo;
-                SalesHdr."Document Date" := Today();
-                SalesHdr.Insert();
+                        SalesHdr."Document Date" := Today();
+                        SalesHdr.Insert();
                 end;
+
                 LinesAMB.Reset();
                 LinesAMB.SetRange(Organization, OrgCode);
                 LinesAMB.SetRange(InvoiceNo, CurrInvoiceNo);
                 if LinesAMB.FindSet() then
-                repeat
-                    CreateSalesLine(SalesHdr, LinesAMB);
+                        repeat
+                            CreateSalesLine(SalesHdr, LinesAMB);
                     until LinesAMB.Next() = 0;
-
+                end;
             until InvoiceAMBRec.Next() = 0;
     end;
+end;
+
 
 
 

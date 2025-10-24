@@ -190,25 +190,21 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
             VisibleTMAction := false;
             VisibleLicenseAction := false;
             VisibleDevicesAction := true;
-            CurrPage.Update();
         end else if Rec."T&M" then begin
             VisibleprojectAction := false;
             VisibleTMAction := true;
             VisibleDevicesAction := false;
             VisibleLicenseAction := false;
-            CurrPage.Update();
         end else if Rec."License" then begin
             VisibleprojectAction := false;
             VisibleTMAction := false;
             VisibleDevicesAction := false;
             VisibleLicenseAction := true;
-            CurrPage.Update();
         end else begin
             VisibleprojectAction := false;
             VisibleTMAction := false;
             VisibleDevicesAction := false;
             VisibleLicenseAction := false;
-            CurrPage.Update();
         end;
 
 
