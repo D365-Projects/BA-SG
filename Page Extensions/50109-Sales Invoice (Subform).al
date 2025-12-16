@@ -13,6 +13,22 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
                 ApplicationArea = all;
 
             }
+            field(Details_DBS; Rec.Details)
+            {
+                ApplicationArea = all;
+            }
+            field("Contract Price_DBS"; Rec."Contract Price")
+            {
+                ApplicationArea = all;
+            }
+            field("Milestone_DBS"; Rec."Milestone")
+            {
+                ApplicationArea = all;
+            }
+            field("Milestone %_DBS"; Rec."Milestone %")
+            {
+                ApplicationArea = all;
+            }
         }
         modify("Description 2")
         {

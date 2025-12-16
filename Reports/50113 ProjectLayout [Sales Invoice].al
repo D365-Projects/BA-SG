@@ -1,28 +1,3 @@
-namespace Microsoft.Sales.Document;
-
-using Microsoft.Bank.BankAccount;
-using Microsoft.CRM.Contact;
-using Microsoft.CRM.Interaction;
-using Microsoft.CRM.Segment;
-using Microsoft.CRM.Team;
-using Microsoft.Finance.Currency;
-using Microsoft.Finance.GeneralLedger.Setup;
-using Microsoft.Finance.VAT.Calculation;
-using Microsoft.Finance.VAT.Clause;
-using Microsoft.Foundation.Address;
-using Microsoft.Foundation.Company;
-using Microsoft.Foundation.PaymentTerms;
-using Microsoft.Foundation.Reporting;
-using Microsoft.Foundation.Shipping;
-using Microsoft.Inventory.Location;
-using Microsoft.Sales.Customer;
-using Microsoft.Sales.Posting;
-using Microsoft.Sales.Setup;
-using Microsoft.Utilities;
-using System.Email;
-using System.Globalization;
-using System.Text;
-using System.Utilities;
 
 report 50113 "Project Sales Invoice"
 {
@@ -500,6 +475,11 @@ report 50113 "Project Sales Invoice"
                 column(ItemNo_Line; "No.")
                 {
                 }
+                column(Description; Description) { }
+                column(Details_DBS; Details) { }
+                column(Milestone_DBS; Milestone) { }
+                column(Milestone___DBS; _Milstone) { }
+                column(Contract_Price_DBS; "Contract Price") { }
                 column(ItemNo_Line_Lbl; FieldCaption("No."))
                 {
                 }
@@ -572,6 +552,9 @@ report 50113 "Project Sales Invoice"
                 var
                     genledset: Record "General Ledger Setup";
                 begin
+                    Clear(_Milstone);
+                    if "Milestone %" <> 0 then
+                        _Milstone := Format("Milestone %") + ' ' + '%';
                     if Header."Currency Code" = '' then begin
                         if genledset.get() then
                             CurrencyCode_SG := genledset."LCY Code";
@@ -602,6 +585,7 @@ report 50113 "Project Sales Invoice"
 
                 trigger OnPreDataItem()
                 begin
+                    Line.SetFilter(Type, '%1|%2|%3|%4', Type::"G/L Account", Type::Item, Type::Resource, Type::" ");
                     MoreLines := Find('+');
                     while MoreLines and (Description = '') and ("No." = '') and (Quantity = 0) and (Amount = 0) do
                         MoreLines := Next(-1) <> 0;
@@ -1078,6 +1062,7 @@ report 50113 "Project Sales Invoice"
         ExchangeRateText: Text;
         PrevLineAmount: Decimal;
         PmtDiscText: Text;
+        _Milstone: Text[30];
         SalesConfirmationLbl: Label 'Sales Quote';
         YourEstimateLbl: Label 'Your Estimate';
         EstimateLbl: Label 'Estimate';

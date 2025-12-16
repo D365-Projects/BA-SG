@@ -16,4 +16,19 @@ codeunit 50105 GenralSubscriber
         SalesLine.Validate("Service Period To", TempSalesLine."Service Period To");
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Create-Invoice", OnBeforeInsertSalesHeader, '', true, true)]
+    local procedure OnBeforeInsertSalesHeader(var SalesHeader: Record "Sales Header"; JobPlanningLine: Record "Job Planning Line")
+    begin
+        SalesHeader.Project := true;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Create-Invoice", OnBeforeInsertSalesLine, '', true, true)]
+    local procedure OnBeforeInsertSalesLine(var SalesLine: Record "Sales Line"; JobPlanningLine: Record "Job Planning Line")
+    begin
+        SalesLine.Details := JobPlanningLine.Details;
+        SalesLine."Contract Price" := JobPlanningLine."Contract Price";
+        SalesLine."Milestone" := JobPlanningLine."Milestone";
+        SalesLine."Milestone %" := JobPlanningLine."Milestone %";
+    end;
+
 }
