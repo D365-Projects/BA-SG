@@ -66,7 +66,7 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
             Caption = 'Details';
             DataClassification = ToBeClassified;
         }
-        field(50111; "Contract Price"; Integer)
+        field(50111; "Contract Price"; Decimal)
         {
             Caption = 'Contract Price';
             DataClassification = ToBeClassified;

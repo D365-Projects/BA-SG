@@ -7,7 +7,7 @@ tableextension 50111 "JobPlanningLine EXT" extends "Job Planning Line"
             Caption = 'Details';
             DataClassification = ToBeClassified;
         }
-        field(50101; "Contract Price"; Integer)
+        field(50101; "Contract Price"; Decimal)
         {
             Caption = 'Contract Price';
             DataClassification = ToBeClassified;

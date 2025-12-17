@@ -33,7 +33,7 @@ tableextension 50107 SalesInvoiceLine extends "Sales Invoice Line"
             Caption = 'Details';
             DataClassification = ToBeClassified;
         }
-        field(50111; "Contract Price"; Integer)
+        field(50111; "Contract Price"; Decimal)
         {
             Caption = 'Contract Price';
             DataClassification = ToBeClassified;

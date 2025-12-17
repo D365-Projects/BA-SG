@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-12-17T12:27:01.3578928Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-12-17T12:26:57.1074020Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -2277,7 +2277,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Draft Invoice</Value>
+                      <Value>Tax Invoice</Value>
                       <Style>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -2625,9 +2625,6 @@ End Function
         </Field>
         <Field Name="DueDate_Lbl">
           <DataField>DueDate_Lbl</DataField>
-        </Field>
-        <Field Name="QuoteValidToDate">
-          <DataField>QuoteValidToDate</DataField>
         </Field>
         <Field Name="QuoteValidToDate_Lbl">
           <DataField>QuoteValidToDate_Lbl</DataField>
