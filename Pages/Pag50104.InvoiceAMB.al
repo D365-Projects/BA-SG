@@ -191,6 +191,23 @@ page 50104 "Sherweb_Invoices"
                     ImportExcelData();
                 end;
             }
+            action("&Import CSV")
+            {
+                Caption = '&Import CSV';
+                Image = ImportExcel;
+                Promoted = true;
+                PromotedCategory = Process;
+                ApplicationArea = All;
+                ToolTip = 'Import data from excel.';
+
+                trigger OnAction()
+                var
+                    instream: InStream;
+                begin
+                    // ReadCSVFile(instream);
+                    ImportCSVData();
+                end;
+            }
             action("Create Purchase order")
             {
                 Caption = 'Purchase Invoice';
@@ -285,6 +302,270 @@ page 50104 "Sherweb_Invoices"
         NoFileFoundMsg: Label 'No file found', MaxLength = 50;
         ExcelImportSuccess: Label 'Excel data imported successfully', MaxLength = 50;
 
+    local procedure ReadCSVFile(var InStr: InStream)
+    var
+        FromFile: Text;
+    begin
+        UploadIntoStream(
+            'Upload CSV File',
+            '',
+            'CSV files (*.csv)|*.csv',
+            FromFile,
+            InStr
+        );
+
+        if FromFile = '' then
+            Error('No file selected');
+    end;
+
+
+    local procedure UploadCSV(var InStr: InStream)
+    var
+        FromFile: Text;
+    begin
+        UploadIntoStream(
+            'Upload CSV File',
+            '',
+            'CSV files (*.csv)|*.csv',
+            FromFile,
+            InStr
+        );
+
+        if FromFile = '' then
+            Error('No file selected.');
+    end;
+
+
+
+
+    local procedure ParseCSVDate(DateTxt: Text): Date
+    var
+        Parts: List of [Text];
+        M: Integer;
+        D: Integer;
+        Y: Integer;
+    begin
+        DateTxt := DelChr(DateTxt, '=', '"');
+
+        if DateTxt = '' then
+            exit(0D);
+        Parts := DateTxt.Split('/');
+
+        if Parts.Count <> 3 then
+            exit(0D);
+        if not Evaluate(M, Parts.Get(1)) then exit(0D);
+        if not Evaluate(D, Parts.Get(2)) then exit(0D);
+        if not Evaluate(Y, Parts.Get(3)) then exit(0D);
+        exit(DMY2Date(D, M, Y));
+    end;
+
+    local procedure ParseCSVDecimal(ValueTxt: Text): Decimal
+    var
+        Result: Decimal;
+    begin
+        ValueTxt := DelChr(ValueTxt, '=', '"');
+
+        if ValueTxt = '' then
+            exit(0);
+
+        if not Evaluate(Result, ValueTxt) then
+            exit(0);
+
+        exit(Result);
+    end;
+
+    local procedure GetCSVColumn(Line: Text; ColNo: Integer): Text
+    var
+        i: Integer;
+        CurrCol: Integer;
+        InQuotes: Boolean;
+        Ch: Char;
+        Value: Text;
+    begin
+        CurrCol := 1;
+        InQuotes := false;
+        Value := '';
+
+        for i := 1 to StrLen(Line) do begin
+            Ch := Line[i];
+
+            case Ch of
+                '"':
+                    InQuotes := not InQuotes; // toggle quotes
+
+                ',':
+                    if not InQuotes then begin
+                        if CurrCol = ColNo then
+                            exit(DelChr(Value, '=', '"')); // remove quotes
+                        CurrCol += 1;
+                        Value := '';
+                    end else
+                        Value += Ch; // comma inside quotes
+                else
+                    Value += Ch;
+            end;
+        end;
+
+        // last column
+        if CurrCol = ColNo then
+            exit(DelChr(Value, '=', '"'));
+
+        exit('');
+    end;
+
+
+
+    procedure ImportCSVData()
+    var
+        InStr: InStream;
+        Line: Text;
+        LineNo: Integer;
+        SOImportBuffer: Record "Invoice SG";
+
+        InvoicingDateVar: Date;
+        InvFromVar: Date;
+        InvToVar: Date;
+        ServFromVar: Date;
+        ServToVar: Date;
+    begin
+        UploadCSV(InStr);
+
+        if SOImportBuffer.FindLast() then
+            LineNo := SOImportBuffer."Line No"
+        else
+            LineNo := 0;
+
+        // Skip header
+        InStr.ReadText(Line);
+
+        while not InStr.EOS do begin
+            InStr.ReadText(Line);
+
+            LineNo += 10000;
+            SOImportBuffer.Init();
+            SOImportBuffer."Line No" := LineNo;
+
+            // ===== BASIC INFO =====
+            SOImportBuffer.InvoiceNo := GetCSVColumn(Line, 1);
+
+            SOImportBuffer.InvoicingDate :=
+                ParseCSVDate(GetCSVColumn(Line, 2));
+
+            SOImportBuffer.InvoicePeriodFrom :=
+                ParseCSVDate(GetCSVColumn(Line, 3));
+
+            SOImportBuffer.InvoicePeriodTo :=
+                ParseCSVDate(GetCSVColumn(Line, 4));
+
+            SOImportBuffer.ServicePeriodFrom :=
+                ParseCSVDate(GetCSVColumn(Line, 5));
+
+            SOImportBuffer.ServicePeriodTo :=
+                ParseCSVDate(GetCSVColumn(Line, 6));
+
+            SOImportBuffer.Qty :=
+                ParseCSVDecimal(GetCSVColumn(Line, 17));
+
+            SOImportBuffer.Organization :=
+                GetCSVColumn(Line, 18);
+
+            SOImportBuffer.Description :=
+                GetCSVColumn(Line, 19);
+
+            SOImportBuffer.sku :=
+                GetCSVColumn(Line, 20);
+
+            SOImportBuffer."Discounted Price NotProrated" :=
+                ParseCSVDecimal(GetCSVColumn(Line, 21));
+
+            SOImportBuffer.ListPrice :=
+                ParseCSVDecimal(GetCSVColumn(Line, 22));
+
+            SOImportBuffer."Unit Cost" :=
+                ParseCSVDecimal(GetCSVColumn(Line, 23));
+
+            SOImportBuffer.LineTotal :=
+                ParseCSVDecimal(GetCSVColumn(Line, 24));
+
+            SOImportBuffer."Organization SubTotal" :=
+                ParseCSVDecimal(GetCSVColumn(Line, 25));
+
+            SOImportBuffer."Reseller SubTotal" :=
+                ParseCSVDecimal(GetCSVColumn(Line, 26));
+
+            SOImportBuffer."Invoice SubTotal" :=
+                ParseCSVDecimal(GetCSVColumn(Line, 27));
+
+            SOImportBuffer.HST :=
+                ParseCSVDecimal(GetCSVColumn(Line, 28));
+
+            SOImportBuffer.PST :=
+                ParseCSVDecimal(GetCSVColumn(Line, 29));
+
+            SOImportBuffer.GST :=
+                ParseCSVDecimal(GetCSVColumn(Line, 30));
+
+            SOImportBuffer."Grand Total" :=
+                ParseCSVDecimal(GetCSVColumn(Line, 31));
+
+            SOImportBuffer.Currency :=
+                GetCSVColumn(Line, 32);
+
+            Evaluate(
+                SOImportBuffer."Apply tax(es)",
+                GetCSVColumn(Line, 33)
+            );
+
+            SOImportBuffer."MD - STATE SALES/USE TAX" :=
+                ParseCSVDecimal(GetCSVColumn(Line, 34));
+
+
+            // ===== DERIVED PRICE =====
+            if SOImportBuffer."Discounted Price NotProrated" <> 0 then
+                if SOImportBuffer."Unit Cost" <> 0 then
+                    SOImportBuffer."Customer List Price" :=
+                        (SOImportBuffer."Unit Cost" / SOImportBuffer."Discounted Price NotProrated") * SOImportBuffer.ListPrice;
+
+            SOImportBuffer.Insert();
+        end;
+
+        Message('CSV data imported successfully.');
+    end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //Excel importer procedures
     local procedure ReadExcelSheet()
     var
         FileMgt: Codeunit "File Management";
