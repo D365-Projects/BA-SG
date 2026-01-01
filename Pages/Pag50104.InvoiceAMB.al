@@ -335,8 +335,8 @@ begin
             SOImportBuffer."Line No" := LineNo;
 
             SOImportBuffer.InvoiceNo := GetValueAtCell(RowNo, 1);
-            SOImportBuffer.Organization := GetValueAtCell(RowNo, 2);
-            SOImportBuffer.Description := GetValueAtCell(RowNo, 3);
+            SOImportBuffer.Organization := GetValueAtCell(RowNo, 18);
+            SOImportBuffer.Description := GetValueAtCell(RowNo, 19);
 
             if not Evaluate(InvoicingDateVar, GetValueAtCell(RowNo, 4)) then
                 InvoicingDateVar := 0D;
@@ -357,7 +357,7 @@ begin
             if ServToVar = 0D then
                 ServToVar := InvToVar;
             SOImportBuffer.ServicePeriodTo := ServToVar;
-            if not Evaluate(SOImportBuffer.Qty, GetValueAtCell(RowNo, 19)) then
+            if not Evaluate(SOImportBuffer.Qty, GetValueAtCell(RowNo, 17)) then
                 SOImportBuffer.Qty := 0;
             if not Evaluate(SOImportBuffer.sku, GetValueAtCell(RowNo, 20)) then
                 SOImportBuffer.sku := '';

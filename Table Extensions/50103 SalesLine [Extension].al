@@ -61,6 +61,27 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
             DataClassification = ToBeClassified;
 
         }
+        field(50110; "Details"; Text[500])
+        {
+            Caption = 'Details';
+            DataClassification = ToBeClassified;
+        }
+        field(50111; "Contract Price"; Decimal)
+        {
+            Caption = 'Contract Price';
+            DataClassification = ToBeClassified;
+        }
+        field(50112; "Milestone"; Text[50])
+        {
+            Caption = 'Milestone';
+            DataClassification = ToBeClassified;
+        }
+        field(50113; "Milestone %"; Decimal)
+        {
+            Caption = 'Milestone %';
+            DataClassification = ToBeClassified;
+        }
+
     }
 
     keys

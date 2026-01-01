@@ -18,6 +18,20 @@ pageextension 50112 "Posted Sales Invoice" extends "Posted Sales Invoice Subform
             {
                 ApplicationArea = all;
             }
+            field(Details; Rec.Details)
+            {
+                ApplicationArea = all;
+            }
+            field("Contract Price"; Rec."Contract Price")
+            {
+                ApplicationArea = all;
+            }
+            field(Milestone; Rec.Milestone)
+            { ApplicationArea = all; }
+            field("Milestone %"; Rec."Milestone %")
+            {
+                ApplicationArea = all;
+            }
         }
         addafter(Description)
         {

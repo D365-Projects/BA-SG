@@ -1,5 +1,5 @@
 
-report 50113 "Project Sales Invoice"
+report 50122 "Project Posted Sales Invoice"
 {
     Caption = 'Project Sales Invoice';
     DefaultRenderingLayout = "ProjectInvoice.rdl";
@@ -8,9 +8,8 @@ report 50113 "Project Sales Invoice"
 
     dataset
     {
-        dataitem(Header; "Sales Header")
+        dataitem(Header; "Sales Invoice Header")
         {
-            DataItemTableView = sorting("Document Type", "No.") where("Document Type" = const(Invoice));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
 
             column(CompanyAddress1; CompanyAddr[1])
@@ -275,9 +274,6 @@ report 50113 "Project Sales Invoice"
             column(DueDate_Lbl; FieldCaption("Due Date"))
             {
             }
-            column(QuoteValidToDate; "Quote Valid Until Date")
-            {
-            }
             column(QuoteValidToDate_Lbl; QuoteValidToDateLbl)
             {
             }
@@ -425,18 +421,16 @@ report 50113 "Project Sales Invoice"
             {
             }
             column(Amount_Including_VAT; "Amount Including VAT") { }
-            dataitem(Line; "Sales Line")
+            dataitem(Line; "Sales Invoice Line")
             {
                 DataItemLink = "Document No." = field("No.");
                 DataItemLinkReference = Header;
                 DataItemTableView = sorting("Document No.", "Line No.");
-                UseTemporary = true;
                 column(LineNo_Line; "Line No.")
                 {
                 }
                 column(AmountExcludingVAT_Line; Amount)
                 {
-                    AutoFormatExpression = "Currency Code";
                     AutoFormatType = 1;
                 }
                 column(AmountExcludingVAT_Line_Lbl; FieldCaption(Amount))
@@ -466,7 +460,6 @@ report 50113 "Project Sales Invoice"
                 }
                 column(LineAmount_Line; FormattedLineAmount)
                 {
-                    AutoFormatExpression = "Currency Code";
                     AutoFormatType = 1;
                 }
                 column(LineAmount_Line_Lbl; FieldCaption("Line Amount"))
@@ -506,7 +499,6 @@ report 50113 "Project Sales Invoice"
                 }
                 column(UnitPrice; FormattedUnitPrice)
                 {
-                    AutoFormatExpression = "Currency Code";
                     AutoFormatType = 2;
                 }
                 column(UnitPrice_Lbl; FieldCaption("Unit Price"))
@@ -532,7 +524,6 @@ report 50113 "Project Sales Invoice"
                 }
                 column(TransHeaderAmount; TransHeaderAmount)
                 {
-                    AutoFormatExpression = "Currency Code";
                     AutoFormatType = 1;
                 }
                 column(Unit_Lbl; UnitLbl)
@@ -576,7 +567,7 @@ report 50113 "Project Sales Invoice"
                     TotalAmountInclVAT += "Amount Including VAT";
                     TotalPaymentDiscOnVAT += -("Line Amount" - "Inv. Discount Amount" - "Amount Including VAT");
 
-                    FormatDocument.SetSalesLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
+                    FormatDocument.SetSalesInvoiceLine(Line, FormattedQuantity, FormattedUnitPrice, FormattedVATPct, FormattedLineAmount);
 
                     if FirstLineHasBeenOutput then
                         Clear(DummyCompanyInfo.Picture);
@@ -843,20 +834,10 @@ report 50113 "Project Sales Invoice"
                 SalesPost: Codeunit "Sales-Post";
             begin
                 FirstLineHasBeenOutput := false;
-                Clear(Line);
                 Clear(SalesPost);
                 VATAmountLine.DeleteAll();
-                Line.DeleteAll();
-                SalesPost.GetSalesLines(Header, Line, 0);
-                OnBeforeCalcVATAmountLines(Header, Line);
-                Line.CalcVATAmountLines(0, Header, Line, VATAmountLine);
-                Line.UpdateVATOnLines(0, Header, Line, VATAmountLine);
-                OnLineOnAfterGetRecordOnAfterUpdateVATOnLines(Header, Line);
-
                 if not IsReportInPreviewMode() then
                     CODEUNIT.Run(CODEUNIT::"Sales-Printed", Header);
-
-                OnHeaderOnAfterGetRecordOnAfterUpdateNoPrinted(IsReportInPreviewMode(), Header);
 
                 SetFormatRegion("Format Region");
                 SetLanguage("Language Code");
@@ -866,8 +847,8 @@ report 50113 "Project Sales Invoice"
                 ShowWorkDescription := "Work Description".HasValue;
 
                 FormatAddr.GetCompanyAddr("Responsibility Center", RespCenter, CompanyInfo, CompanyAddr);
-                FormatAddr.SalesHeaderBillTo(CustAddr, Header);
-                ShowShippingAddr := FormatAddr.SalesHeaderShipTo(ShipToAddr, CustAddr, Header);
+                FormatAddr.SalesInvBillTo(CustAddr, Header);
+                ShowShippingAddr := FormatAddr.SalesinvShipTo(ShipToAddr, CustAddr, Header);
 
                 if not CompanyBankAccount.Get(Header."Company Bank Account Code") then
                     CompanyBankAccount.CopyBankFieldsFromCompanyInfo(CompanyInfo);
@@ -889,24 +870,23 @@ report 50113 "Project Sales Invoice"
                         CurrSymbol := GeneralLedgerSetup.GetCurrencySymbol();
                     end;
 
-                FormatDocumentFields(Header);
                 if SellToContact.Get("Sell-to Contact No.") then;
                 if BillToContact.Get("Bill-to Contact No.") then;
 
-                if not IsReportInPreviewMode() and
-                   (CurrReport.UseRequestPage and ArchiveDocument or
-                    not CurrReport.UseRequestPage and (SalesSetup."Archive Quotes" <> SalesSetup."Archive Quotes"::Never))
-                then
-                    case SalesSetup."Archive Quotes" of
-                        SalesSetup."Archive Quotes"::Always:
-                            ArchiveManagement.ArchSalesDocumentNoConfirm(Header);
-                        SalesSetup."Archive Quotes"::Question:
-                            begin
-                                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault(LanguageMgt.GetUserLanguageCode());
-                                ArchiveManagement.ArchiveSalesDocument(Header);
-                                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
-                            end;
-                    end;
+                // if not IsReportInPreviewMode() and
+                //    (CurrReport.UseRequestPage and ArchiveDocument or
+                //     not CurrReport.UseRequestPage and (SalesSetup."Archive Quotes" <> SalesSetup."Archive Quotes"::Never))
+                // then
+                //     case SalesSetup."Archive Quotes" of
+                //         SalesSetup."Archive Quotes"::Always:
+                //             ArchiveManagement.ArchSalesDocumentNoConfirm(Header);
+                //         SalesSetup."Archive Quotes"::Question:
+                //             begin
+                //                 CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault(LanguageMgt.GetUserLanguageCode());
+                //                 ArchiveManagement.ArchiveSalesDocument(Header);
+                //                 CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
+                //             end;
+                //     end;
 
                 TotalSubTotal := 0;
                 TotalInvDiscAmount := 0;
@@ -978,7 +958,7 @@ report 50113 "Project Sales Invoice"
         layout("ProjectInvoice.rdl")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/ProjectInvoice.rdl';
+            LayoutFile = './Layouts/PostedProjectInvoice.rdl';
             Caption = 'Standard Project Invoice (RDLC)';
             Summary = 'The Standard Sales Invoice (RDLC) provides a detailed layout.';
         }
@@ -1012,21 +992,21 @@ report 50113 "Project Sales Invoice"
 
     trigger OnPostReport()
     begin
-        if LogInteraction and not IsReportInPreviewMode() then
-            if Header.FindSet() then
-                repeat
-                    Header.CalcFields("No. of Archived Versions");
-                    if Header."Bill-to Contact No." <> '' then
-                        SegManagement.LogDocument(
-                          1, Header."No.", Header."Doc. No. Occurrence",
-                          Header."No. of Archived Versions", Database::Contact, Header."Bill-to Contact No.",
-                          Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.")
-                    else
-                        SegManagement.LogDocument(
-                          1, Header."No.", Header."Doc. No. Occurrence",
-                          Header."No. of Archived Versions", Database::Customer, Header."Bill-to Customer No.",
-                          Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.");
-                until Header.Next() = 0;
+        // if LogInteraction and not IsReportInPreviewMode() then
+        //     if Header.FindSet() then
+        //         repeat
+        //             Header.CalcFields("No. of Archived Versions");
+        //             if Header."Bill-to Contact No." <> '' then
+        //                 SegManagement.LogDocument(
+        //                   1, Header."No.", Header."Doc. No. Occurrence",
+        //                   Header."No. of Archived Versions", Database::Contact, Header."Bill-to Contact No.",
+        //                   Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.")
+        //             else
+        //                 SegManagement.LogDocument(
+        //                   1, Header."No.", Header."Doc. No. Occurrence",
+        //                   Header."No. of Archived Versions", Database::Customer, Header."Bill-to Customer No.",
+        //                   Header."Salesperson Code", Header."Campaign No.", Header."Posting Description", Header."Opportunity No.");
+        //         until Header.Next() = 0;
     end;
 
     trigger OnPreReport()

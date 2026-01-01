@@ -52,6 +52,21 @@ pageextension 50117 POstedSalesInvocie_SG extends "Posted Sales Invoice"
                     Report.RunModal(50118, true, true, Rec);
                 end;
             }
+            action("Project")
+            {
+                Caption = 'Project';
+                ApplicationArea = All;
+                Visible = VisibleProjectAction;
+                Promoted = true;
+                PromotedCategory = Process;
+                trigger OnAction()
+                var
+                    SalesQuoteRec: Record "Sales Header";
+                begin
+                    CurrPage.SetSelectionFilter(Rec);
+                    Report.RunModal(50122, true, false, Rec)
+                end;
+            }
 
         }
         // Add changes to page actions here
@@ -59,7 +74,16 @@ pageextension 50117 POstedSalesInvocie_SG extends "Posted Sales Invoice"
 
     var
         Isvisible: Boolean;
+        VisibleProjectAction: Boolean;
 
+    trigger OnAfterGetCurrRecord();
+    var
+    begin
+        if Rec.Project then
+            VisibleprojectAction := true
+        else
+            VisibleProjectAction := false;
+    end;
     //     trigger OnAfterGetRecord()
 
     //     begin

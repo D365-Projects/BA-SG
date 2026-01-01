@@ -6,7 +6,7 @@
             "request": "launch",
             "type": "al",
             "environmentType": "Sandbox",
-            "environmentName": "SNB-USA",
+            "environmentName": "DEV",
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": "All",
