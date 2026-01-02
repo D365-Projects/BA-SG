@@ -175,22 +175,23 @@ page 50104 "Sherweb_Invoices"
     {
         area(processing)
         {
-            action("&Import")
-            {
-                Caption = '&Import';
-                Image = ImportExcel;
-                Promoted = true;
-                PromotedCategory = Process;
-                ApplicationArea = All;
-                ToolTip = 'Import data from excel.';
+            // action("&Import")
+            // {
+            //     Caption = '&Import';
+            //     Image = ImportExcel;
+            //     Promoted = true;
+            //     PromotedCategory = Process;
+            //     ApplicationArea = All;
+            //     ToolTip = 'Import data from excel.';
 
-                trigger OnAction()
-                var
-                begin
-                    ReadExcelSheet();
-                    ImportExcelData();
-                end;
-            }
+            //     trigger OnAction()
+            //     var
+            //     begin
+            //         // ReadExcelSheet();
+            //         // ImportExcelData();
+            //         ImportFile();
+            //     end;
+            // }
             action("&Import CSV")
             {
                 Caption = '&Import CSV';
@@ -302,6 +303,18 @@ page 50104 "Sherweb_Invoices"
         NoFileFoundMsg: Label 'No file found', MaxLength = 50;
         ExcelImportSuccess: Label 'Excel data imported successfully', MaxLength = 50;
 
+
+
+
+
+
+
+
+
+
+
+
+
     local procedure ReadCSVFile(var InStr: InStream)
     var
         FromFile: Text;
@@ -391,22 +404,22 @@ page 50104 "Sherweb_Invoices"
 
             case Ch of
                 '"':
-                    InQuotes := not InQuotes; // toggle quotes
+                    InQuotes := not InQuotes;
 
                 ',':
                     if not InQuotes then begin
                         if CurrCol = ColNo then
-                            exit(DelChr(Value, '=', '"')); // remove quotes
+                            exit(DelChr(Value, '=', '"'));
                         CurrCol += 1;
                         Value := '';
                     end else
-                        Value += Ch; // comma inside quotes
+                        Value += Ch;
                 else
                     Value += Ch;
             end;
         end;
 
-        // last column
+
         if CurrCol = ColNo then
             exit(DelChr(Value, '=', '"'));
 
@@ -435,7 +448,6 @@ page 50104 "Sherweb_Invoices"
         else
             LineNo := 0;
 
-        // Skip header
         InStr.ReadText(Line);
 
         while not InStr.EOS do begin
@@ -444,12 +456,9 @@ page 50104 "Sherweb_Invoices"
             LineNo += 10000;
             SOImportBuffer.Init();
             SOImportBuffer."Line No" := LineNo;
-
-            // ===== BASIC INFO =====
             SOImportBuffer.InvoiceNo := GetCSVColumn(Line, 1);
 
-            SOImportBuffer.InvoicingDate :=
-                ParseCSVDate(GetCSVColumn(Line, 2));
+            SOImportBuffer.InvoicingDate := ParseCSVDate(GetCSVColumn(Line, 2));
 
             SOImportBuffer.InvoicePeriodFrom :=
                 ParseCSVDate(GetCSVColumn(Line, 3));
@@ -462,6 +471,7 @@ page 50104 "Sherweb_Invoices"
 
             SOImportBuffer.ServicePeriodTo :=
                 ParseCSVDate(GetCSVColumn(Line, 6));
+
 
             SOImportBuffer.Qty :=
                 ParseCSVDecimal(GetCSVColumn(Line, 17));
@@ -518,9 +528,6 @@ page 50104 "Sherweb_Invoices"
 
             SOImportBuffer."MD - STATE SALES/USE TAX" :=
                 ParseCSVDecimal(GetCSVColumn(Line, 34));
-
-
-            // ===== DERIVED PRICE =====
             if SOImportBuffer."Discounted Price NotProrated" <> 0 then
                 if SOImportBuffer."Unit Cost" <> 0 then
                     SOImportBuffer."Customer List Price" :=

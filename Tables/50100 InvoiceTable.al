@@ -7,7 +7,7 @@ table 50100 "Invoice SG"
     {
         field(1; "InvoiceNo"; Code[20]) { DataClassification = ToBeClassified; }
         field(2; "Organization"; Text[100]) { DataClassification = ToBeClassified; }
-        field(3; "Description"; Text[150]) { DataClassification = ToBeClassified; }
+        field(3; "Description"; Text[500]) { DataClassification = ToBeClassified; }
         field(4; "InvoicingDate"; Date) { DataClassification = ToBeClassified; }
         field(5; "InvoicePeriodFrom"; Date) { DataClassification = ToBeClassified; }
         field(6; "InvoicePeriodTo"; Date) { DataClassification = ToBeClassified; }
