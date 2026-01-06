@@ -76,10 +76,12 @@ pageextension 50110 "Sales Quote Line" extends "Sales Quote Subform"
             var
                 myInt: Integer;
             begin
+                if rec.Quantity <> 0 then begin
                 Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
                 Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
                 Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
                 rec.Modify();
+                end;
             end;
         }
         modify("Unit Cost (LCY)")
@@ -105,10 +107,12 @@ pageextension 50110 "Sales Quote Line" extends "Sales Quote Subform"
             var
                 myInt: Integer;
             begin
+                if rec.Quantity <> 0 then begin
                 Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
                 Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
                 Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
                 rec.Modify();
+                end;
             end;
         }
         modify("Line Discount Amount")
@@ -117,10 +121,12 @@ pageextension 50110 "Sales Quote Line" extends "Sales Quote Subform"
             var
                 myInt: Integer;
             begin
+                if rec.Quantity <> 0 then begin
                 Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
                 Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
                 Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
                 rec.Modify();
+                end;
             end;
         }
 
@@ -133,10 +139,12 @@ pageextension 50110 "Sales Quote Line" extends "Sales Quote Subform"
                 Notification_IRec: Notification;
                 NotificationLifecycleMgt: Codeunit "Notification Lifecycle Mgt.";
             begin
+                if rec.Quantity <> 0 then begin
                 Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
                 Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
                 Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
                 rec.Modify();
+                end;
             end;
         }
         modify(Quantity)
@@ -160,10 +168,12 @@ pageextension 50110 "Sales Quote Line" extends "Sales Quote Subform"
             var
                 myInt: Integer;
             begin
+                if rec.Quantity <> 0 then begin
                 Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
                 Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
                 Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
                 Rec.Modify();
+                end;
             end;
         }
         modify("Invoice Discount Amount")
@@ -177,10 +187,12 @@ pageextension 50110 "Sales Quote Line" extends "Sales Quote Subform"
                 Rec.SetAscending("Line No.", true);
                 if Rec.FindSet() then
                     repeat
+                        if rec.Quantity <> 0 then begin
                         Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
                         Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
                         Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
                         Rec.Modify();
+                        end;
                     until Rec.Next() = 0;
             end;
         }
@@ -195,10 +207,12 @@ pageextension 50110 "Sales Quote Line" extends "Sales Quote Subform"
                 Rec.SetAscending("Line No.", true);
                 if Rec.FindSet() then
                     repeat
+                        if rec.Quantity <> 0 then begin
                         Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
                         Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
                         Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
                         Rec.Modify();
+                        end;
                     until Rec.Next() = 0;
             end;
         }

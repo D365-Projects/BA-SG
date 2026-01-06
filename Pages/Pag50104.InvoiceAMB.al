@@ -225,7 +225,6 @@ page 50104 "Sherweb_Invoices"
                 begin
                     InvoiceRec.Copy(Rec);
                     CreatePurchaseOrder(InvoiceRec);
-
                 end;
 
             }
@@ -245,6 +244,20 @@ page 50104 "Sherweb_Invoices"
                 end;
 
             }
+            action(CreateMissingItems)
+            {
+                Caption = 'Create Missing Items';
+                ApplicationArea = All;
+                Image = NewItem;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                begin
+                    CreateMissingItemsFromSherweb();
+                end;
+            }
+
             // action("Validate SKU")
             // {
             //     Caption = 'Validate SKU';
@@ -307,9 +320,70 @@ page 50104 "Sherweb_Invoices"
 
 
 
+    //CReate Items
+    local procedure CreateMissingItemsFromSherweb()
+    var
+        InvoiceSG: Record "Invoice SG";
+        Item: Record Item;
+        CreatedCount: Integer;
+    begin
+        if not Confirm('Create missing items using subscription template?', false) then
+            exit;
 
+        CreatedCount := 0;
 
+        InvoiceSG.Reset();
+        InvoiceSG.SetFilter(sku, '<>%1', '');
 
+        if InvoiceSG.FindSet() then
+            repeat
+                if InvoiceSG.sku <> '' then begin
+                    if not Item.Get(InvoiceSG.sku) then begin
+                        CreateItemFromTemplate(InvoiceSG.sku, InvoiceSG.Description, InvoiceSG."Unit Cost", InvoiceSG.ListPrice);
+                        CreatedCount += 1;
+                    end;
+                end;
+            until InvoiceSG.Next() = 0;
+
+        Message('%1 new item(s) created successfully.', CreatedCount);
+    end;
+
+    local procedure CreateItemFromTemplate(ItemNo: Code[20]; Description: Text; UnitCost: Decimal;
+        UnitPrice: Decimal
+    ): Code[20]
+    var
+        Item: Record Item;
+        ItemTemplate: Record "Item Templ.";
+        ItemTemplateMgt: Codeunit "Item Templ. Mgt.";
+        GLSetup: Record "General Ledger Setup";
+        ishandled: Boolean;
+    begin
+        ishandled := false;
+        if ItemNo = '' then
+            exit('');
+
+        if Item.Get(ItemNo) then
+            exit(Item."No.");
+
+        GLSetup.Get();
+
+        if GLSetup."Subscription Item Template" = '' then
+            Error('Subscription Item Template is not set in General Ledger Setup.');
+
+        ItemTemplate.Get(GLSetup."Subscription Item Template");
+
+        Item.Init();
+        Item."No." := ItemNo;
+        ItemTemplateMgt.CreateItemFromTemplate(Item, ishandled, ItemTemplate.Code);
+
+        Item.Description := CopyStr(Description, 1, MaxStrLen(Item.Description));
+        Item."Unit Cost" := UnitCost;
+        Item."Unit Price" := UnitPrice;
+
+        Item.Modify(true);
+
+        exit(Item."No.");
+    end;
 
 
 
@@ -319,13 +393,7 @@ page 50104 "Sherweb_Invoices"
     var
         FromFile: Text;
     begin
-        UploadIntoStream(
-            'Upload CSV File',
-            '',
-            'CSV files (*.csv)|*.csv',
-            FromFile,
-            InStr
-        );
+        UploadIntoStream('Upload CSV File', '', 'CSV files (*.csv)|*.csv', FromFile, InStr);
 
         if FromFile = '' then
             Error('No file selected');
@@ -336,13 +404,7 @@ page 50104 "Sherweb_Invoices"
     var
         FromFile: Text;
     begin
-        UploadIntoStream(
-            'Upload CSV File',
-            '',
-            'CSV files (*.csv)|*.csv',
-            FromFile,
-            InStr
-        );
+        UploadIntoStream('Upload CSV File', '', 'CSV files (*.csv)|*.csv', FromFile, InStr);
 
         if FromFile = '' then
             Error('No file selected.');
@@ -542,36 +604,6 @@ page 50104 "Sherweb_Invoices"
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //Excel importer procedures
     local procedure ReadExcelSheet()
     var
@@ -646,7 +678,7 @@ begin
                 ServToVar := InvToVar;
             SOImportBuffer.ServicePeriodTo := ServToVar;
             if not Evaluate(SOImportBuffer.Qty, GetValueAtCell(RowNo, 17)) then
-                SOImportBuffer.Qty := 0;
+                SOImportBuffer.Qty := 1;
             if not Evaluate(SOImportBuffer.sku, GetValueAtCell(RowNo, 20)) then
                 SOImportBuffer.sku := '';
             if not Evaluate(SOImportBuffer.ListPrice, GetValueAtCell(RowNo, 21)) then
@@ -794,6 +826,7 @@ begin
         Purchase_lrec.Validate("Type", Purchase_lrec."Type"::Item);
         Purchase_lrec.Validate("No.", Invoice_lrec."SKU");
         Purchase_lrec."Description 2" := Invoice_lrec.Organization;
+        Purchase_lrec.Description := CopyStr(Invoice_lrec.Description, 1, MaxStrLen(Purchase_lrec.Description));
         Purchase_lrec."Service Period From" := Invoice_lrec."ServicePeriodFrom";
         Purchase_lrec."Service Period To" := Invoice_lrec."ServicePeriodTo";
         if Invoice_lrec.Qty = 0 then begin
@@ -810,64 +843,10 @@ begin
 
         Purchase_lrec.Insert();
     end;
-
-
-    // local procedure CreateSalesOrders()
-    // var
-    //     SalesHdr: Record "Sales Header";
-    //     CustomerRec: Record Customer;
-    //     SalesSetup: Record "Sales & Receivables Setup";
-    //     NoSeriesMgt: Codeunit "No. Series";
-    //     InvoiceAMBRec: Record "Invoice SG";
-    //     OrgList: List of [text[100]];
-    //     OrgCode: text[100];
-    // begin
-    //     InvoiceAMBRec.Reset();
-    //     if InvoiceAMBRec.FindSet() then
-    //         repeat
-    //             if not OrgList.Contains(InvoiceAMBRec.Organization) then
-    //                 OrgList.Add(InvoiceAMBRec.Organization);
-    //         until InvoiceAMBRec.Next() = 0;
-
-    //     SalesSetup.Get();
-    //     SalesSetup.TestField("Order Nos.");
-    //     foreach OrgCode in OrgList do begin
-    //         CustomerRec.SetRange(Name, OrgCode);
-    //         if not CustomerRec.FindFirst() then
-    //             Error('Customer with Organization %1 not found.', OrgCode);
-    //         SalesHdr.Reset();
-    //         SalesHdr.SetRange("Document Type", SalesHdr."Document Type"::Invoice);
-    //         SalesHdr.SetRange("Sell-to Customer No.", CustomerRec."No.");
-    //         SalesHdr.SetRange("External Document No.", InvoiceAMBRec.InvoiceNo);
-    //         if not SalesHdr.FindFirst() then begin
-    //             SalesHdr.Init();
-    //             SalesHdr."No." := NoSeriesMgt.GetNextNo(SalesSetup."Invoice Nos.", Today, true);
-    //             SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
-    //             SalesHdr.Validate("Sell-to Customer No.", CustomerRec."No.");
-    //             SalesHdr."External Document No." := Rec.InvoiceNo;
-    //             SalesHdr."Document Date" := Today();
-    //             SalesHdr.Insert();
-    //             InvoiceAMBRec.Reset();
-    //             InvoiceAMBRec.SetRange("Organization", OrgCode);
-    //             InvoiceAMBRec.SetRange("No.",InvoiceAMBRec."No.");
-    //             if InvoiceAMBRec.FindSet() then
-    //             repeat
-    //                 CreateSalesLine(SalesHdr, InvoiceAMBRec);
-    //             until InvoiceAMBRec.Next() = 0;
-
-    //             Message('Sales Order created for Organization: %1', OrgCode);
-
-    //         end
-    //         else begin
-    //             Message('Sales Invoice already exists for Customer %1 and Sherweb Invoice No. %2',
-    //                 OrgCode, InvoiceAMBRec.InvoiceNo);
-    //         end;
-    //     end;
-
-    // end;
-    local procedure CreateSalesOrders()
+local procedure CreateSalesOrders()
     var
         SalesHdr: Record "Sales Header";
+        PostedSalesHdr: Record "Sales Invoice Header";
         CustomerRec: Record Customer;
         SalesSetup: Record "Sales & Receivables Setup";
         NoSeriesMgt: Codeunit "No. Series";
@@ -875,38 +854,49 @@ begin
         LinesAMB: Record "Invoice SG";
         OrgCode: Text[100];
         CurrInvoiceNo: Code[20];
-        LastInvoiceNo: Code[20];
-        LastOrgCode: Text[100];
+        CreatedCount: Integer;
+        SkippedCount: Integer;
+        AlreadyExists: Boolean;
 begin
         SalesSetup.Get();
         SalesSetup.TestField("Invoice Nos.");
 
-        if InvoiceAMBRec.FindSet() then begin
+        CreatedCount := 0;
+        SkippedCount := 0;
+
+        if InvoiceAMBRec.FindSet() then
             repeat
                 OrgCode := InvoiceAMBRec.Organization;
                 CurrInvoiceNo := InvoiceAMBRec.InvoiceNo;
 
-                if (OrgCode <> LastOrgCode) or (CurrInvoiceNo <> LastInvoiceNo) then begin
-                    LastOrgCode := OrgCode;
-                    LastInvoiceNo := CurrInvoiceNo;
-
-                    CustomerRec.SetRange("Sherweb Customer Name", OrgCode);
+                CustomerRec.SetRange("Sherweb Customer Name", OrgCode);
                 if not CustomerRec.FindFirst() then
                     Error('Customer with Organization %1 not found.', OrgCode);
-                SalesHdr.Reset();
-                    SalesHdr.SetRange("Document Type", SalesHdr."Document Type"::Invoice);
-                    SalesHdr.SetRange("Sell-to Customer No.", CustomerRec."No.");
-                SalesHdr.SetRange("External Document No.", CurrInvoiceNo);
-                if not SalesHdr.FindFirst() then begin
-                    SalesHdr.Init();
-                        SalesHdr."No." := NoSeriesMgt.GetNextNo(SalesSetup."Invoice Nos.", Today, true);
-                        SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
-                        SalesHdr.Validate("Sell-to Customer No.", CustomerRec."No.");
-                    SalesHdr."External Document No." := CurrInvoiceNo;
-                        SalesHdr."Document Date" := Today();
-                        SalesHdr.Insert();
-                end;
 
+                AlreadyExists := false;
+
+                SalesHdr.Reset();
+                SalesHdr.SetRange("Document Type", SalesHdr."Document Type"::Invoice);
+                SalesHdr.SetRange("Sell-to Customer No.", CustomerRec."No.");
+                SalesHdr.SetRange("External Document No.", CurrInvoiceNo);
+                if SalesHdr.FindFirst() then
+                    AlreadyExists := true;
+                PostedSalesHdr.Reset();
+                PostedSalesHdr.SetRange("Sell-to Customer No.", CustomerRec."No.");
+                PostedSalesHdr.SetRange("External Document No.", CurrInvoiceNo);
+                if PostedSalesHdr.FindFirst() then
+                    AlreadyExists := true;
+
+                if AlreadyExists then begin
+                    SkippedCount += 1;
+                end else begin
+                    SalesHdr.Init();
+                    SalesHdr."No." := NoSeriesMgt.GetNextNo(SalesSetup."Invoice Nos.", Today, true);
+                    SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
+                    SalesHdr.Validate("Sell-to Customer No.", CustomerRec."No.");
+                    SalesHdr."External Document No." := CurrInvoiceNo;
+                    SalesHdr."Document Date" := Today();
+                    SalesHdr.Insert();
                 LinesAMB.Reset();
                 LinesAMB.SetRange(Organization, OrgCode);
                 LinesAMB.SetRange(InvoiceNo, CurrInvoiceNo);
@@ -914,10 +904,15 @@ begin
                         repeat
                             CreateSalesLine(SalesHdr, LinesAMB);
                     until LinesAMB.Next() = 0;
+
+                    CreatedCount += 1;
                 end;
+
             until InvoiceAMBRec.Next() = 0;
-    end;
+        Message('Sales Orders Processing Complete.' + 'Invoices Created: %1 ', CreatedCount, SkippedCount);
 end;
+
+
 
 
 
@@ -947,6 +942,8 @@ end;
         salesLine_lrec.Validate("No.", Invoice_lrec."SKU");
         salesLine_lrec.Validate("Service Period From", Invoice_lrec."ServicePeriodFrom");
         salesLine_lrec.Validate("Service Period To", Invoice_lrec."ServicePeriodTo");
+            salesLine_lrec.Description := CopyStr(Invoice_lrec.Description, 1, MaxStrLen(salesLine_lrec.Description));
+            salesLine_lrec.Details := Invoice_lrec.Description;
             if Invoice_lrec.Qty = 0 then begin
                 salesLine_lrec.Validate(Quantity, 1);
             end

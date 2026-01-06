@@ -61,7 +61,7 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
             DataClassification = ToBeClassified;
 
         }
-        field(50110; "Details"; Text[500])
+        field(50110; "Details"; Text[1000])
         {
             Caption = 'Details';
             DataClassification = ToBeClassified;
