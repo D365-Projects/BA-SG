@@ -211,7 +211,7 @@ report 50119 "Sales Quote_SG"
 
                     AutoFormatType = 1;
                 }
-                column(Description_Line; Description)
+                column(Description_Line; Details)
                 {
                 }
                 column(Description_Line_Lbl; FieldCaption(Description))

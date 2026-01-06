@@ -210,7 +210,7 @@ report 50121 "Sales Invoice_SG"
 
                     AutoFormatType = 1;
                 }
-                column(Description_Line; Description)
+                column(Description_Line; Details)
                 {
                 }
                 column(Description_Line_Lbl; FieldCaption(Description))
