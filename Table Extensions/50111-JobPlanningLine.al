@@ -2,7 +2,7 @@ tableextension 50111 "JobPlanningLine EXT" extends "Job Planning Line"
 {
     fields
     {
-        field(50100; "Details"; Text[500])
+        field(50100; "Details"; Text[1000])
         {
             Caption = 'Details';
             DataClassification = ToBeClassified;

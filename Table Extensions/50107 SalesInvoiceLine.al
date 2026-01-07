@@ -28,7 +28,7 @@ tableextension 50107 SalesInvoiceLine extends "Sales Invoice Line"
             DataClassification = ToBeClassified;
 
         }
-        field(50110; "Details"; Text[500])
+        field(50110; "Details"; Text[1000])
         {
             Caption = 'Details';
             DataClassification = ToBeClassified;

@@ -56,6 +56,7 @@ page 50104 "Sherweb_Invoices"
                 field(Qty; Rec.Qty)
                 {
                     ToolTip = 'Specifies the value of the Qty field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field(SKU; Rec.SKU)
                 {
@@ -65,50 +66,63 @@ page 50104 "Sherweb_Invoices"
                 {
                     ToolTip = 'Specifies the value of the Customer List Price field.', Comment = '%';
                     Editable = true;
+                    DecimalPlaces = 0 : 4;
                 }
                 field(ListPrice; Rec.ListPrice)
                 {
                     ToolTip = 'Specifies the value of the ListPrice field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field("Discounted Price NotProrated"; Rec."Discounted Price NotProrated")
                 {
                     ToolTip = 'Specifies the value of the Discounted Price NotProrated field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field("Unit Cost"; Rec."Unit Cost")
                 {
                     ToolTip = 'Specifies the value of the UnitPrice field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field(LineTotal; Rec.LineTotal)
                 {
                     ToolTip = 'Specifies the value of the LineTotal field.', Comment = '%';
+
+
                 }
                 field("Organization SubTotal"; Rec."Organization SubTotal")
                 {
                     ToolTip = 'Specifies the value of the Organization SubTotal field.', Comment = '%';
+
                 }
                 field("Reseller SubTotal"; Rec."Reseller SubTotal")
                 {
                     ToolTip = 'Specifies the value of the Reseller SubTotal field.', Comment = '%';
+
                 }
                 field("Invoice SubTotal"; Rec."Invoice SubTotal")
                 {
                     ToolTip = 'Specifies the value of the Invoice SubTotal field.', Comment = '%';
+
                 }
                 field(HST; Rec.HST)
                 {
                     ToolTip = 'Specifies the value of the HST field.', Comment = '%';
+
                 }
                 field(PST; Rec.PST)
                 {
                     ToolTip = 'Specifies the value of the PST field.', Comment = '%';
+
                 }
                 field(GST; Rec.GST)
                 {
                     ToolTip = 'Specifies the value of the GST field.', Comment = '%';
+
                 }
                 field("Grand Total"; Rec."Grand Total")
                 {
                     ToolTip = 'Specifies the value of the Grand Total field.', Comment = '%';
+
                 }
                 field(Currency; Rec.Currency)
                 {
@@ -121,26 +135,32 @@ page 50104 "Sherweb_Invoices"
                 field("MD - STATE SALES/USE TAX"; Rec."MD - STATE SALES/USE TAX")
                 {
                     ToolTip = 'Specifies the value of the MD - STATE SALES/USE TAX field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field("US - FEDERAL TELECOM "; Rec."US - FEDERAL TELECOM ")
                 {
                     ToolTip = 'Specifies the value of the US - FEDERAL TELECOM RELAY SERVICE SURCHARGE field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field("US - FEDERAL TELEPHONE EXCISE"; Rec."US - FEDERAL TELEPHONE EXCISE")
                 {
                     ToolTip = 'Specifies the value of the US - FEDERAL TELEPHONE EXCISE TAX field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field("US - FEDERAL UNIVERSAL SERVICE"; Rec."US - FEDERAL UNIVERSAL SERVICE")
                 {
                     ToolTip = 'Specifies the value of the US - FEDERAL UNIVERSAL SERVICE FUND SURCHARGE field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field("US - FEDERAL NUMBERING "; Rec."US - FEDERAL NUMBERING ")
                 {
                     ToolTip = 'Specifies the value of the US - FEDERAL NUMBERING PLAN SURCHARGE field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field("US-FEDERAL COMMUNICATIONS"; Rec."US-FEDERAL COMMUNICATIONS")
                 {
                     ToolTip = 'Specifies the value of the US - FEDERAL COMMUNICATIONS COMMISSION REGULATORY FEE field.', Comment = '%';
+                    DecimalPlaces = 0 : 4;
                 }
                 field("US - FEDERAL TELECOM RELAY"; Rec."US - FEDERAL TELECOM RELAY")
                 {
@@ -522,8 +542,7 @@ page 50104 "Sherweb_Invoices"
 
             SOImportBuffer.InvoicingDate := ParseCSVDate(GetCSVColumn(Line, 2));
 
-            SOImportBuffer.InvoicePeriodFrom :=
-                ParseCSVDate(GetCSVColumn(Line, 3));
+            SOImportBuffer.InvoicePeriodFrom := ParseCSVDate(GetCSVColumn(Line, 3));
 
             SOImportBuffer.InvoicePeriodTo :=
                 ParseCSVDate(GetCSVColumn(Line, 4));
@@ -535,8 +554,7 @@ page 50104 "Sherweb_Invoices"
                 ParseCSVDate(GetCSVColumn(Line, 6));
 
 
-            SOImportBuffer.Qty :=
-                ParseCSVDecimal(GetCSVColumn(Line, 17));
+            SOImportBuffer.Qty := ParseCSVDecimal(GetCSVColumn(Line, 17));
 
             SOImportBuffer.Organization :=
                 GetCSVColumn(Line, 18);
@@ -839,7 +857,7 @@ begin
             Purchase_lrec.Validate("Direct Unit Cost", Invoice_lrec."Unit Cost")
         else
         Purchase_lrec."Direct Unit Cost" := Invoice_lrec."Unit Cost";
-        Purchase_lrec."Line Amount" := Invoice_lrec."LineTotal";
+        Purchase_lrec.Validate("Line Amount", Invoice_lrec."LineTotal");
 
         Purchase_lrec.Insert();
     end;

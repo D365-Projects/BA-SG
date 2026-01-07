@@ -516,7 +516,7 @@ report 50101 "Standard Sales - Invoice_SG"
                     AutoFormatExpression = GetCurrencyCode();
                     AutoFormatType = 1;
                 }
-                column(Description_Line; Description)
+                column(Description_Line; Details)
                 {
                 }
                 column(Description_Line_Lbl; FieldCaption(Description))
