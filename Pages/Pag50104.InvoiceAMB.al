@@ -186,6 +186,22 @@ page 50104 "Sherweb_Invoices"
                 {
                     ToolTip = 'Specifies the value of the MD - MONTGOMERY COUNTY, TELEPHONE TAX field.', Comment = '%';
                 }
+                field(SI; Rec.SI)
+                {
+                    ToolTip = 'Specifies whether the SI field is selected.', Comment = '%';
+                }
+                field(PSI; Rec.PSI)
+                {
+                    ToolTip = 'Specifies whether the PSI field is selected.', Comment = '%';
+                }
+                field(PI; Rec.PI)
+                {
+                    ToolTip = 'Specifies whether the PI field is selected.', Comment = '%';
+                }
+                field(PPI; Rec.PPI)
+                {
+                    ToolTip = 'Specifies whether the PPI field is selected.', Comment = '%';
+                }
 
             }
         }
@@ -275,6 +291,19 @@ page 50104 "Sherweb_Invoices"
                 trigger OnAction()
                 begin
                     CreateMissingItemsFromSherweb();
+                end;
+            }
+            action(UpdateSTatus)
+            {
+                Caption = 'Update Status';
+                ApplicationArea = All;
+                Image = NewItem;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                begin
+                    UpdateSherwebInvoiceStatus_SingleFlow();
                 end;
             }
 
@@ -853,11 +882,11 @@ begin
         else begin
             Purchase_lrec.Validate(Quantity, Invoice_lrec.Qty);
         end;
-        if Invoice_lrec."Unit Cost" = 0 then
-            Purchase_lrec.Validate("Direct Unit Cost", Invoice_lrec."Unit Cost")
+        if Invoice_lrec."Unit Cost" <= 0 then
+            Purchase_lrec.Validate("Direct Unit Cost", Invoice_lrec."LineTotal" / Purchase_lrec.Quantity)
         else
-        Purchase_lrec."Direct Unit Cost" := Invoice_lrec."Unit Cost";
-        Purchase_lrec.Validate("Line Amount", Invoice_lrec."LineTotal");
+            Purchase_lrec.Validate("Direct Unit Cost", Invoice_lrec."Unit Cost");
+        // Purchase_lrec.Validate("Line Amount", Invoice_lrec."LineTotal");
 
         Purchase_lrec.Insert();
     end;
@@ -927,7 +956,7 @@ begin
                 end;
 
             until InvoiceAMBRec.Next() = 0;
-        Message('Sales Orders Processing Complete.' + 'Invoices Created: %1 ', CreatedCount, SkippedCount);
+        Message('Sales Orders Processing Complete by ' + 'Invoices Created: %1 ', CreatedCount, SkippedCount);
 end;
 
 
@@ -962,18 +991,19 @@ end;
         salesLine_lrec.Validate("Service Period To", Invoice_lrec."ServicePeriodTo");
             salesLine_lrec.Description := CopyStr(Invoice_lrec.Description, 1, MaxStrLen(salesLine_lrec.Description));
             salesLine_lrec.Details := Invoice_lrec.Description;
+            if Invoice_lrec."Customer List Price" <> 0 then
+                salesLine_lrec.Validate("Unit Price", Invoice_lrec."Customer List Price")
+            else
+                salesLine_lrec."Unit Price" := Invoice_lrec."Customer List Price";
             if Invoice_lrec.Qty = 0 then begin
                 salesLine_lrec.Validate(Quantity, 1);
             end
             else begin
                 salesLine_lrec.Validate(Quantity, Invoice_lrec.Qty);
             end;
-            if Invoice_lrec."Customer List Price" <> 0 then
-                salesLine_lrec.Validate("Unit Price", Invoice_lrec."Customer List Price")
-            else
-                salesLine_lrec."Unit Price" := Invoice_lrec."Customer List Price";
-            if Invoice_lrec.LineTotal <> 0 then
-                salesLine_lrec.Validate("Line Amount", Invoice_lrec.LineTotal);
+
+            // if Invoice_lrec.LineTotal <> 0 then
+            //     salesLine_lrec.Validate("Line Amount", Invoice_lrec.LineTotal);
             if Invoice_lrec."Unit Cost" = 0 then
                 salesLine_lrec.Validate("Unit Cost", Invoice_lrec."Unit Cost")
             else
@@ -981,5 +1011,102 @@ end;
             salesLine_lrec.Modify();
         end;
     end;
+
+
+
+
+
+
+
+    //Read All Data from PSI/PPI and create PI/ SI status
+    procedure UpdateSherwebInvoiceStatus_SingleFlow()
+    var
+        InvoiceSG: Record "Invoice SG";
+    begin
+        InvoiceSG.Reset();
+        if InvoiceSG.FindSet() then
+            repeat
+                if ProcessSalesSide(InvoiceSG) then begin
+                    InvoiceSG.Modify();
+                end
+                else begin
+                    ProcessPurchaseSide(InvoiceSG);
+                    InvoiceSG.Modify();
+                end;
+            until InvoiceSG.Next() = 0;
+    end;
+
+
+    local procedure ProcessSalesSide(var InvoiceSG: Record "Invoice SG"): Boolean
+    var
+        SalesHdr: Record "Sales Header";
+        PostedSI: Record "Sales Invoice Header";
+        PostedSILine: Record "Sales Invoice Line";
+    begin
+
+        PostedSI.Reset();
+        PostedSI.SetRange("External Document No.", InvoiceSG."InvoiceNo");
+        PostedSI.SetRange("Sell-to Customer Name", InvoiceSG.Organization);
+
+        if PostedSI.FindSet() then
+            repeat
+                PostedSILine.Reset();
+                PostedSILine.SetRange("Document No.", PostedSI."No.");
+                PostedSILine.SetRange(Type, PostedSILine.Type::Item);
+                PostedSILine.SetRange("No.", InvoiceSG.SKU);
+
+                if PostedSILine.FindFirst() then begin
+                    InvoiceSG.PSI := true;
+                    InvoiceSG.SI := true;
+                    exit(true);
+                end;
+            until PostedSI.Next() = 0;
+
+        SalesHdr.Reset();
+        SalesHdr.SetRange("Document Type", SalesHdr."Document Type"::Invoice);
+        SalesHdr.SetRange("External Document No.", InvoiceSG."InvoiceNo");
+        SalesHdr.SetRange("Sell-to Customer Name", InvoiceSG.Organization);
+
+        if SalesHdr.FindFirst() then begin
+            InvoiceSG.SI := true;
+            exit(true);
+        end;
+
+        exit(false);
+    end;
+
+    local procedure ProcessPurchaseSide(var InvoiceSG: Record "Invoice SG")
+    var
+        PurchHdr: Record "Purchase Header";
+        PostedPI: Record "Purch. Inv. Header";
+        PostedPILine: Record "Purch. Inv. Line";
+    begin
+        PostedPI.Reset();
+        PostedPI.SetRange("Vendor Invoice No.", InvoiceSG."InvoiceNo");
+
+        if PostedPI.FindSet() then
+            repeat
+                PostedPILine.Reset();
+                PostedPILine.SetRange("Document No.", PostedPI."No.");
+                PostedPILine.SetRange(Type, PostedPILine.Type::Item);
+                PostedPILine.SetRange("No.", InvoiceSG.SKU);
+
+                if PostedPILine.FindFirst() then begin
+                    InvoiceSG.PPI := true;
+                    InvoiceSG.PI := true;
+                    exit;
+                end;
+            until PostedPI.Next() = 0;
+
+        PurchHdr.Reset();
+        PurchHdr.SetRange("Document Type", PurchHdr."Document Type"::Invoice);
+        PurchHdr.SetRange("Vendor Invoice No.", InvoiceSG."InvoiceNo");
+
+        if PurchHdr.FindFirst() then
+            InvoiceSG.PI := true;
+    end;
+
+
+
 }
 

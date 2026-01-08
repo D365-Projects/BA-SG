@@ -43,8 +43,12 @@ table 50100 "Invoice SG"
         field(36; "Line No"; Integer) { DataClassification = ToBeClassified; }
         field(37; "No."; Integer) { DataClassification = ToBeClassified; AutoIncrement = true; }
         field(38; "Customer List Price"; Decimal) { DataClassification = ToBeClassified; }
-    }
+        field(39; "SI"; Boolean) { DataClassification = ToBeClassified; }
+        field(40; "PSI"; Boolean) { DataClassification = ToBeClassified; }
 
+        field(41; "PI"; Boolean) { DataClassification = ToBeClassified; }
+        field(42; "PPI"; Boolean) { DataClassification = ToBeClassified; }
+    }
     keys
     {
         key(PK; "No.", "InvoiceNo", "Line No")
