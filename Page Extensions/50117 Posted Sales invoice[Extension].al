@@ -29,6 +29,7 @@ pageextension 50117 POstedSalesInvocie_SG extends "Posted Sales Invoice"
                 Caption = 'License Report';
             }
         }
+
     }
 
     actions

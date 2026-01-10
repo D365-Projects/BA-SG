@@ -168,13 +168,14 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
         {
             trigger OnAfterValidate()
             var
-                myInt: Integer;
-                MyNotification: Notification;
-                Notification_IRec: Notification;
-                NotificationLifecycleMgt: Codeunit "Notification Lifecycle Mgt.";
+
             begin
                 if Rec.Type = Rec.Type::Item then
-                    if rec.Quantity <> 0 then begin
+                    if Rec."Unit Price" = 0 then begin
+                        Rec."Margin %" := -100;
+                        rec."Sales Margin_SG" := -Rec."Unit Cost";
+                    end
+                    else if rec.Quantity <> 0 then begin
 
                         Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
                 Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
