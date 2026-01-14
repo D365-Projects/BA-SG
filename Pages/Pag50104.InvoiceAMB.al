@@ -368,7 +368,7 @@ page 50104 "Sherweb_Invoices"
         NoFileFoundMsg: Label 'No file found', MaxLength = 50;
         ExcelImportSuccess: Label 'Excel data imported successfully', MaxLength = 50;
 
-        DataMgt: Codeunit "Data Managment";
+        DataMgt: Codeunit "Data Management";
 
 
 
