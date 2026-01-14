@@ -263,6 +263,7 @@ page 50104 "Sherweb_Invoices"
                     InvoiceRec.Copy(Rec);
                     CreatePurchaseOrder(InvoiceRec);
                     DataMgt.UpdateSherwebInvoiceStatus_SingleFlow();
+                    ArchiveSherwebInvoiceLines();
                 end;
 
             }
@@ -279,7 +280,11 @@ page 50104 "Sherweb_Invoices"
                     SalesHeader: Record "Sales Header";
                 begin
                     CreateSalesOrders();
+
                     DataMgt.UpdateSherwebInvoiceStatus_SingleFlow();
+                    ArchiveSherwebInvoiceLines();
+
+
                 end;
 
             }
@@ -310,33 +315,7 @@ page 50104 "Sherweb_Invoices"
                 end;
             }
 
-            // action("Validate SKU")
-            // {
-            //     Caption = 'Validate SKU';
-            //     Image = Order;
-            //     Promoted = true;
-            //     PromotedCategory = Process;
-            //     ApplicationArea = All;
-            //     ToolTip = 'Create Sales Order from Invoice SG data.';
-            //     trigger OnAction()
 
-            //     var
-            //         InvoiceAMB_lrec: Record "Invoice SG";
-            //         Item_lrec: Record Item;
-            //         Item_Found: Integer;
-            //     begin
-            //         Item_lrec.Reset();
-            //         InvoiceAMB_lrec.Reset();
-            //         Item_lrec.Get();
-            //         InvoiceAMB_lrec.Get();
-            //         if InvoiceAMB_lrec.FindSet()then begin
-            //             repeat
-            //             Item_lrec.SetRange(sk);
-            //             until InvoiceAMB_lrec.Next()=0;
-            //         end;
-            //     end;
-
-            // }
 
         }
         area(Navigation)
@@ -370,6 +349,72 @@ page 50104 "Sherweb_Invoices"
 
         DataMgt: Codeunit "Data Management";
 
+
+
+
+    local procedure ArchiveSherwebInvoiceLines()
+    var
+        InvoiceRec: Record "Invoice SG";
+        InvoiceArchive: Record "Invoice SG(Archived)";
+    begin
+        InvoiceRec.Reset();
+        InvoiceRec.SetRange(PSI, true);
+        InvoiceRec.SetRange(PPI, true);
+
+        if InvoiceRec.FindSet() then
+            repeat
+                InvoiceArchive.Init();
+                InvoiceArchive."Line No" := InvoiceRec."Line No";
+                InvoiceArchive."InvoiceNo" := InvoiceRec."InvoiceNo";
+                InvoiceArchive."Organization" := InvoiceRec."Organization";
+                InvoiceArchive."Description" := InvoiceRec."Description";
+                InvoiceArchive."InvoicingDate" := InvoiceRec."InvoicingDate";
+                InvoiceArchive."InvoicePeriodFrom" := InvoiceRec."InvoicePeriodFrom";
+                InvoiceArchive."InvoicePeriodTo" := InvoiceRec."InvoicePeriodTo";
+                InvoiceArchive."ServicePeriodFrom" := InvoiceRec."ServicePeriodFrom";
+                InvoiceArchive."ServicePeriodTo" := InvoiceRec."ServicePeriodTo";
+                InvoiceArchive."Qty" := InvoiceRec."Qty";
+                InvoiceArchive."SKU" := InvoiceRec."SKU";
+                InvoiceArchive."Customer List Price" := InvoiceRec."Customer List Price";
+                InvoiceArchive."ListPrice" := InvoiceRec."ListPrice";
+                InvoiceArchive."Discounted Price NotProrated" := InvoiceRec."Discounted Price NotProrated";
+                InvoiceArchive."Unit Cost" := InvoiceRec."Unit Cost";
+                InvoiceArchive."LineTotal" := InvoiceRec."LineTotal";
+                InvoiceArchive."Organization SubTotal" := InvoiceRec."Organization SubTotal";
+                InvoiceArchive."Reseller SubTotal" := InvoiceRec."Reseller SubTotal";
+                InvoiceArchive."Invoice SubTotal" := InvoiceRec."Invoice SubTotal";
+                InvoiceArchive."HST" := InvoiceRec."HST";
+                InvoiceArchive."PST" := InvoiceRec."PST";
+                InvoiceArchive."GST" := InvoiceRec."GST";
+                InvoiceArchive."Grand Total" := InvoiceRec."Grand Total";
+                InvoiceArchive."Currency" := InvoiceRec."Currency";
+                InvoiceArchive."Apply tax(es)" := InvoiceRec."Apply tax(es)";
+                InvoiceArchive."MD - STATE SALES/USE TAX" := InvoiceRec."MD - STATE SALES/USE TAX";
+                InvoiceArchive."US - FEDERAL TELECOM " := InvoiceRec."US - FEDERAL TELECOM ";
+                InvoiceArchive."US - FEDERAL TELEPHONE EXCISE" := InvoiceRec."US - FEDERAL TELEPHONE EXCISE";
+                InvoiceArchive."US - FEDERAL UNIVERSAL SERVICE" := InvoiceRec."US - FEDERAL UNIVERSAL SERVICE";
+                InvoiceArchive."US - FEDERAL NUMBERING " := InvoiceRec."US - FEDERAL NUMBERING ";
+                InvoiceArchive."US-FEDERAL COMMUNICATIONS" := InvoiceRec."US-FEDERAL COMMUNICATIONS";
+                InvoiceArchive."US - FEDERAL TELECOM RELAY" := InvoiceRec."US - FEDERAL TELECOM RELAY";
+                InvoiceArchive."MD - STATE E911 FEES" := InvoiceRec."MD - STATE E911 FEES";
+                InvoiceArchive."MD - STATE UNIVERSAL SERVICE" := InvoiceRec."MD - STATE UNIVERSAL SERVICE";
+                InvoiceArchive."MD - STATE PUBLIC UTILITY" := InvoiceRec."MD - STATE PUBLIC UTILITY";
+                InvoiceArchive."MD - STATE PUBLIC SERVICE TAX" := InvoiceRec."MD - STATE PUBLIC SERVICE TAX";
+                InvoiceArchive."MD-MONTGOMERY COUNTY,TELEPHONE" := InvoiceRec."MD-MONTGOMERY COUNTY,TELEPHONE";
+                InvoiceArchive."SI" := InvoiceRec."SI";
+                InvoiceArchive."PSI" := InvoiceRec."PSI";
+                InvoiceArchive."PI" := InvoiceRec."PI";
+                InvoiceArchive."PPI" := InvoiceRec."PPI";
+
+                // Insert into archive
+                InvoiceArchive.Insert();
+
+                // Delete the original record
+                InvoiceRec.Delete();
+            until InvoiceRec.Next() = 0;
+
+        Message('All PSI/PPI Sherweb invoice lines archived successfully.');
+    end;
 
 
 
@@ -676,188 +721,6 @@ page 50104 "Sherweb_Invoices"
         TempExcelBuffer.ReadSheet();
     end;
 
-
-    //     procedure ImportExcelData()
-    //     var
-    //         SOImportBuffer: Record "Invoice SG";
-    //         RowNo: Integer;
-    //     LineNo: Integer;
-    //     MaxRowNo: Integer;
-    //     InvFromVar: Date;
-    //     InvToVar: Date;
-    //     InvoicingDateVar: Date;
-    //     ServFromVar: Date;
-    //     ServToVar: Date;
-    // begin
-    //         RowNo := 0;
-    //         MaxRowNo := 0;
-    //         LineNo := 0;
-
-    //         SOImportBuffer.Reset();
-    //         if SOImportBuffer.FindLast() then
-    //             LineNo := SOImportBuffer."Line No";
-
-    //         TempExcelBuffer.Reset();
-    //         if TempExcelBuffer.FindLast() then
-    //             MaxRowNo := TempExcelBuffer."Row No.";
-
-    //         for RowNo := 2 to MaxRowNo do begin
-    //             LineNo := LineNo + 10000;
-    //             SOImportBuffer.Init();
-    //             SOImportBuffer."Line No" := LineNo;
-
-    //             SOImportBuffer.InvoiceNo := GetValueAtCell(RowNo, 1);
-    //             SOImportBuffer.Organization := GetValueAtCell(RowNo, 18);
-    //             SOImportBuffer.Description := GetValueAtCell(RowNo, 19);
-
-    //             if not Evaluate(InvoicingDateVar, GetValueAtCell(RowNo, 4)) then
-    //                 InvoicingDateVar := 0D;
-    //             SOImportBuffer.InvoicingDate := InvoicingDateVar;
-    //             if not Evaluate(InvFromVar, GetValueAtCell(RowNo, 5)) then
-    //                 InvFromVar := 0D;
-    //             SOImportBuffer.InvoicePeriodFrom := InvFromVar;
-    //             if not Evaluate(InvToVar, GetValueAtCell(RowNo, 6)) then
-    //                 InvToVar := 0D;
-    //             SOImportBuffer.InvoicePeriodTo := InvToVar;
-    //             if not Evaluate(ServFromVar, GetValueAtCell(RowNo, 7)) then
-    //                 ServFromVar := 0D;
-    //             if ServFromVar = 0D then
-    //                 ServFromVar := InvFromVar;
-    //             SOImportBuffer.ServicePeriodFrom := ServFromVar;
-    //             if not Evaluate(ServToVar, GetValueAtCell(RowNo, 8)) then
-    //                 ServToVar := 0D;
-    //             if ServToVar = 0D then
-    //                 ServToVar := InvToVar;
-    //             SOImportBuffer.ServicePeriodTo := ServToVar;
-    //             if not Evaluate(SOImportBuffer.Qty, GetValueAtCell(RowNo, 17)) then
-    //                 SOImportBuffer.Qty := 1;
-    //             if not Evaluate(SOImportBuffer.sku, GetValueAtCell(RowNo, 20)) then
-    //                 SOImportBuffer.sku := '';
-    //             if not Evaluate(SOImportBuffer.ListPrice, GetValueAtCell(RowNo, 21)) then
-    //                 SOImportBuffer.ListPrice := 0.00;
-    //             if not Evaluate(SOImportBuffer."Discounted Price NotProrated", GetValueAtCell(RowNo, 22)) then
-    //                 SOImportBuffer."Discounted Price NotProrated" := 0.00;
-    //             if not Evaluate(SOImportBuffer."Unit Cost", GetValueAtCell(RowNo, 23)) then
-    //                 SOImportBuffer."Unit Cost" := 0.00;
-    //             if not Evaluate(SOImportBuffer.LineTotal, GetValueAtCell(RowNo, 24)) then
-    //                 SOImportBuffer.LineTotal := 0.00;
-    //             if not Evaluate(SOImportBuffer."Organization SubTotal", GetValueAtCell(RowNo, 25)) then
-    //                 SOImportBuffer."Organization SubTotal" := 0.00;
-    //             if not Evaluate(SOImportBuffer."Reseller SubTotal", GetValueAtCell(RowNo, 26)) then
-    //                 SOImportBuffer."Reseller SubTotal" := 0.00;
-    //             if not Evaluate(SOImportBuffer."Invoice SubTotal", GetValueAtCell(RowNo, 27)) then
-    //                 SOImportBuffer."Invoice SubTotal" := 0.00;
-    //             if not Evaluate(SOImportBuffer.HST, GetValueAtCell(RowNo, 28)) then
-    //                 SOImportBuffer.HST := 0.00;
-    //             if not Evaluate(SOImportBuffer.PST, GetValueAtCell(RowNo, 29)) then
-    //                 SOImportBuffer.PST := 0.00;
-    //             if not Evaluate(SOImportBuffer.GST, GetValueAtCell(RowNo, 30)) then
-    //                 SOImportBuffer.GST := 0.00;
-    //             if not Evaluate(SOImportBuffer."Grand Total", GetValueAtCell(RowNo, 31)) then
-    //                 SOImportBuffer."Grand Total" := 0.00;
-    //             if not Evaluate(SOImportBuffer.Currency, GetValueAtCell(RowNo, 32)) then
-    //                 SOImportBuffer.Currency := '';
-    //             if not Evaluate(SOImportBuffer."Apply tax(es)", GetValueAtCell(RowNo, 33)) then
-    //                 SOImportBuffer."Apply tax(es)" := false;
-    //             if not Evaluate(SOImportBuffer."MD - STATE SALES/USE TAX", GetValueAtCell(RowNo, 34)) then
-    //                 SOImportBuffer."MD - STATE SALES/USE TAX" := 0.00;
-    //             if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM ", GetValueAtCell(RowNo, 35)) then
-    //                 SOImportBuffer."US - FEDERAL TELECOM " := 0.00;
-    //             if not Evaluate(SOImportBuffer."US - FEDERAL TELEPHONE EXCISE", GetValueAtCell(RowNo, 36)) then
-    //                 SOImportBuffer."US - FEDERAL TELEPHONE EXCISE" := 0.00;
-    //             if not Evaluate(SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE", GetValueAtCell(RowNo, 37)) then
-    //                 SOImportBuffer."US - FEDERAL UNIVERSAL SERVICE" := 0.00;
-    //             if not Evaluate(SOImportBuffer."US - FEDERAL NUMBERING ", GetValueAtCell(RowNo, 38)) then
-    //                 SOImportBuffer."US - FEDERAL NUMBERING " := 0.00;
-    //             if not Evaluate(SOImportBuffer."US-FEDERAL COMMUNICATIONS", GetValueAtCell(RowNo, 39)) then
-    //                 SOImportBuffer."US-FEDERAL COMMUNICATIONS" := 0.00;
-    //             if not Evaluate(SOImportBuffer."US - FEDERAL TELECOM RELAY", GetValueAtCell(RowNo, 40)) then
-    //                 SOImportBuffer."US - FEDERAL TELECOM RELAY" := 0.00;
-    //             if not Evaluate(SOImportBuffer."MD - STATE E911 FEES", GetValueAtCell(RowNo, 41)) then
-    //                 SOImportBuffer."MD - STATE E911 FEES" := 0.00;
-    //             if not Evaluate(SOImportBuffer."MD - STATE UNIVERSAL SERVICE", GetValueAtCell(RowNo, 42)) then
-    //                 SOImportBuffer."MD - STATE UNIVERSAL SERVICE" := 0.00;
-    //             if not Evaluate(SOImportBuffer."MD - STATE PUBLIC UTILITY", GetValueAtCell(RowNo, 43)) then
-    //                 SOImportBuffer."MD - STATE PUBLIC UTILITY" := 0.00;
-    //             if not Evaluate(SOImportBuffer."MD - STATE PUBLIC SERVICE TAX", GetValueAtCell(RowNo, 44)) then
-    //                 SOImportBuffer."MD - STATE PUBLIC SERVICE TAX" := 0.00;
-    //             if not Evaluate(SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE", GetValueAtCell(RowNo, 45)) then
-    //                 SOImportBuffer."MD-MONTGOMERY COUNTY,TELEPHONE" := 0.00;
-    //             if SOImportBuffer."Discounted Price NotProrated" <> 0.00 then
-    //                 if SOImportBuffer."Unit Cost" <> 0.00 then
-    //                     SOImportBuffer."Customer List Price" := (SOImportBuffer."Unit Cost" / SOImportBuffer."Discounted Price NotProrated") * SOImportBuffer.ListPrice
-    //                 else
-    //                     SOImportBuffer."Customer List Price" := 0.00;
-
-    //             SOImportBuffer.Insert();
-    //         end;
-
-    //         Message('Data imported successfully from Excel.');
-    //     end;
-
-
-
-
-    // local procedure GetValueAtCell(RowNo: Integer; ColNo: Integer): Text
-    // begin
-    //     TempExcelBuffer.Reset();
-    //     if TempExcelBuffer.Get(RowNo, ColNo) then
-    //         exit(TempExcelBuffer."Cell Value as Text")
-    //     else
-    //         exit('');
-    // end;
-
-    // procedure CreatePurchaseOrder(Invoice_lrec: Record "Invoice SG")
-    // var
-    //     Purchasehdr_lrec: Record "Purchase Header";
-    //     Cust_lrec: Record Customer;
-    //     Purchaseandrec: Record "Purchases & Payables Setup";
-    //     NoSeries: Codeunit "No. Series";
-    //     AMBInvoice_lrec: Record "Invoice SG";
-    //     VendorRec: Record Vendor;
-    //     VendorSelected: Boolean;
-    //     vendorNo: Code[20];
-    // begin
-    //     Purchaseandrec.Reset();
-    //     Purchaseandrec.Get();
-    //     if Purchaseandrec."Sherweb Vendor Code" <> '' then begin
-    //         // if PAGE.RunModal(PAGE::"Vendor List", VendorRec) = ACTION::LookupOK then begin
-    //         vendorNo := Purchaseandrec."Sherweb Vendor Code";
-    //         VendorSelected := true;
-    //         Purchasehdr_lrec.Reset();
-    //     Purchasehdr_lrec.SetRange("Document Type", Purchasehdr_lrec."Document Type"::Invoice);
-    //     Purchasehdr_lrec.SetRange("Vendor Invoice No.", Invoice_lrec.InvoiceNo);
-
-    //         if Purchasehdr_lrec.FindFirst() then
-    //             Error('Purchase Invoice with Vendor Invoice No. %1 already exists.', Invoice_lrec.InvoiceNo);
-    //     Purchaseandrec.Get();
-    //     Purchaseandrec.TestField("Order Nos.");
-    //     Purchasehdr_lrec.Init();
-    //     Purchasehdr_lrec."No." := NoSeries.GetNextNo(Purchaseandrec."Invoice Nos.", Today, true);
-    //     Purchasehdr_lrec."Document Type" := Purchasehdr_lrec."Document Type"::Invoice;
-    //     Purchasehdr_lrec.Validate("Buy-from Vendor No.", vendorNo);
-    //     Purchasehdr_lrec."Document Date" := Today();
-    //     Purchasehdr_lrec."Vendor Invoice No." := Invoice_lrec.InvoiceNo;
-    //     Purchasehdr_lrec.Insert();
-    //     AMBInvoice_lrec.Reset();
-    //     AMBInvoice_lrec.SetRange("InvoiceNo", Invoice_lrec.InvoiceNo);
-    //     if AMBInvoice_lrec.FindSet() then begin
-    //         repeat
-    //             CreatePurchaseLine(Purchasehdr_lrec, AMBInvoice_lrec);
-    //         until AMBInvoice_lrec.Next() = 0;
-    //     end else
-    //         Error('No invoice lines found for Invoice No. %1.', Invoice_lrec.InvoiceNo);
-
-    //         Message('Purchase Invoice %1 created successfully.', Purchasehdr_lrec."No.");
-    //         if Dialog.Confirm('Purchase Invoice has been created successfully. Do you want to open it?', true) then begin
-
-    //             Page.Run(PAGE::"Purchase Invoice", Purchasehdr_lrec);
-    //     end;
-    //     end
-    //     else
-    //         Error('Vendor code not found on Purchases & Payables Setup.');
-
-    // end;
     procedure CreatePurchaseOrder(Invoice_lrec: Record "Invoice SG")
 var
     Purchasehdr_lrec: Record "Purchase Header";
@@ -904,6 +767,7 @@ var
             Error('No invoice lines found for Invoice No. %1.', Invoice_lrec.InvoiceNo);
 
         Message('Purchase Invoice %1 created successfully.', Purchasehdr_lrec."No.");
+
 
         if Dialog.Confirm(
             'Purchase Invoice has been created successfully. Do you want to open it?', true)
@@ -1016,6 +880,7 @@ begin
 
             until InvoiceAMBRec.Next() = 0;
         Message('Sales Invoice Created: %1, Skipped: %2', CreatedCount, SkippedCount);
+        ArchiveSherwebInvoiceLines();
 end;
 
 
