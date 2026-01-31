@@ -280,7 +280,6 @@ page 50104 "Sherweb_Invoices"
                     SalesHeader: Record "Sales Header";
                 begin
                     CreateSalesOrders();
-
                     DataMgt.UpdateSherwebInvoiceStatus_SingleFlow();
                     ArchiveSherwebInvoiceLines();
 
