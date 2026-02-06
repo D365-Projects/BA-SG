@@ -7,11 +7,19 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
             trigger OnAfterValidate()
             var
                 Item_lrec: Record Item;
+                Saleshdr: Record "Sales Header";
             begin
                 Item_lrec.SetRange("No.", rec."No.");
                 if Item_lrec.Findfirst() then
                     Rec.SKU := Item_lrec."Vendor Item No.";
                 rec.UPC_SG := Item_lrec.GTIN;
+                Saleshdr.Reset();
+                Saleshdr.SetRange("No.", Rec."Document No.");
+                Saleshdr.SetRange("Document Type", Rec."Document Type");
+                if Saleshdr.FindFirst() then begin
+                    Rec."Service Period From" := Saleshdr."Service Period From";
+                    Rec."Service Period To" := Saleshdr."Service Period To";
+                end;
             end;
         }
         field(50101; "SKU"; Text[50])
@@ -79,6 +87,10 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
         field(50113; "Milestone %"; Decimal)
         {
             Caption = 'Milestone %';
+            DataClassification = ToBeClassified;
+        }
+        field(50114; "Organization"; Text[100])
+        {
             DataClassification = ToBeClassified;
         }
 

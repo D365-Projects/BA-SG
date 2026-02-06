@@ -6,6 +6,23 @@ tableextension 50110 CustomerCard_SG extends Customer
         {
             DataClassification = ToBeClassified;
         }
+        field(50101; "Excluded Customer"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            ToolTip = 'Excluded Parent Customer from Sherweb Invoice.';
+            trigger OnValidate()
+            var
+                ChildCust: Record "Child Customer_SG";
+            begin
+                ChildCust.Reset();
+                ChildCust.SetRange("Customer No", Rec."No.");
+                if ChildCust.FindSet() then
+                    repeat
+                        ChildCust."Excluded Customer" := Rec."Excluded Customer";
+                        ChildCust.Modify();
+                    until ChildCust.Next() = 0;
+            end;
+        }
     }
 
     keys

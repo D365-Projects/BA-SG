@@ -93,6 +93,10 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
                 ApplicationArea = all;
                 ToolTip = 'Specify the customer name as per the Sherweb customer account';
             }
+            field("Excluded Customer"; Rec."Excluded Customer")
+            {
+                ApplicationArea = all;
+            }
         }
 
         // Add changes to page layout here
@@ -122,6 +126,16 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
                 end;
 
 
+            }
+            action("Child Customers")
+            {
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedCategory = New;
+                PromotedIsBig = true;
+                Image = ListPage;
+                RunObject = page "Child Customers_SG";
+                RunPageLink = "Customer No" = field("No.");
             }
 
         }

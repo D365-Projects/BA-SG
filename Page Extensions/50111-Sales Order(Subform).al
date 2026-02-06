@@ -2,17 +2,6 @@ pageextension 50111 "Sales Order Line" extends "Sales Order Subform"
 {
     layout
     {
-        addbefore(Quantity)
-        {
-            field("Service Period From"; Rec."Service Period From")
-            {
-                ApplicationArea = all;
-            }
-            field("Service Period To"; Rec."Service Period To")
-            {
-                ApplicationArea = all;
-            }
-        }
         modify("Description 2")
         {
             Visible = true;
@@ -25,18 +14,18 @@ pageextension 50111 "Sales Order Line" extends "Sales Order Subform"
                 Item_lrec: Record Item;
             begin
                 if Rec.Type = rec.Type::Item then begin
-                if rec.Quantity <> 0 then begin
-                    Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                    Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                    Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                    rec.Modify();
+                    if rec.Quantity <> 0 then begin
+                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        rec.Modify();
+                    end;
+                    Item_lrec.SetRange("No.", rec."No.");
+                    if Item_lrec.Find() then begin
+                        rec.SKU := Item_lrec."Vendor Item No.";
+                        Rec."UPC_SG" := Item_lrec.GTIN;
+                    end;
                 end;
-                Item_lrec.SetRange("No.", rec."No.");
-                if Item_lrec.Find() then begin
-                    rec.SKU := Item_lrec."Vendor Item No.";
-                    Rec."UPC_SG" := Item_lrec.GTIN;
-                end;
-end;
             end;
         }
 
@@ -81,10 +70,10 @@ end;
             begin
                 if Rec.Quantity > 0 then
                     if Rec."Line Amount" > 0 then BEGIN
-                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                rec.Modify();
+                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        rec.Modify();
                     end;
             end;
         }
@@ -114,10 +103,10 @@ end;
             begin
                 if Rec.Quantity > 0 then
                     if Rec."Line Amount" > 0 then BEGIN
-                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                rec.Modify();
+                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        rec.Modify();
                     end;
             end;
         }
@@ -127,10 +116,10 @@ end;
             begin
                 if Rec.Quantity > 0 then
                     if Rec."Line Amount" > 0 then BEGIN
-                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                rec.Modify();
+                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        rec.Modify();
                     end;
             end;
         }
@@ -177,11 +166,11 @@ end;
                 myInt: Integer;
             begin
                 if Rec.Quantity > 0 then begin
-                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                Rec.Modify();
-            end;
+                    Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                    Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                    Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                    Rec.Modify();
+                end;
             end;
         }
         modify("Invoice Discount Amount")
@@ -196,10 +185,10 @@ end;
                 if Rec.FindSet() then
                     repeat
                         if Rec.Quantity > 0 then begin
-                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                        Rec.Modify();
+                            Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                            Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                            Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                            Rec.Modify();
                         end;
                     until Rec.Next() = 0;
             end;
@@ -216,10 +205,10 @@ end;
                 if Rec.FindSet() then
                     repeat
                         if Rec.Quantity > 0 then begin
-                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                        Rec.Modify();
+                            Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                            Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                            Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                            Rec.Modify();
                         end;
                     until Rec.Next() = 0;
             end;

@@ -37,8 +37,41 @@ tableextension 50105 SalesHederExt extends "Sales Header"
             Caption = 'License';
             DataClassification = ToBeClassified;
         }
-
-
+        field(50107; "Service Period From"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50108; "Service Period To"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        modify("Due Date")
+        {
+            trigger OnAfterValidate()
+            var
+                StartDate: Date;
+                EndDate: Date;
+            begin
+                CalcMonthStartEnd();
+                // Rec.Validate("Posting Date", "Due Date");
+            end;
+        }
+        modify("Posting Date")
+        {
+            trigger OnAfterValidate()
+            begin
+                if "Due Date" <> 0D then
+                    CalcMonthStartEnd();
+            end;
+        }
+        modify("Payment Terms Code")
+        {
+            trigger OnAfterValidate()
+            begin
+                if "Due Date" <> 0D then
+                    CalcMonthStartEnd();
+            end;
+        }
     }
 
     keys
@@ -50,6 +83,24 @@ tableextension 50105 SalesHederExt extends "Sales Header"
     {
         // Add changes to field groups here
     }
+    local procedure CalcMonthStartEnd()
+    var
+        StartDate: Date;
+        EndDate: Date;
+    begin
+        if "Due Date" <> 0D then begin
+            StartDate := DMY2Date(1, Date2DMY("Due Date", 2), Date2DMY("Due Date", 3));
+            EndDate := CalcDate('<1M>', StartDate) - 1;
+            Rec.Validate("Service Period From", StartDate);
+            Rec.Validate("Service Period To", EndDate);
+            // Rec.Modify();
+        end
+        else begin
+            Clear(Rec."Service Period From");
+            Clear(Rec."Service Period To");
+            // Rec.Modify();
+        end;
+    end;
 
     var
         myInt: Integer;

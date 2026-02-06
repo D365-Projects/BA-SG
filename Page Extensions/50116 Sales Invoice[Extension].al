@@ -3,6 +3,17 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
     layout
     {
 
+        addafter("Due Date")
+        {
+            field("Service Period From"; Rec."Service Period From")
+            {
+                ApplicationArea = all;
+            }
+            field("Service Period To"; Rec."Service Period To")
+            {
+                ApplicationArea = all;
+            }
+        }
         addafter(Status)
         {
 

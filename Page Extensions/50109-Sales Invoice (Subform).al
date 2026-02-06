@@ -13,6 +13,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
                 ApplicationArea = all;
 
             }
+            field(Organization; Rec.Organization)
+            {
+                ApplicationArea = all;
+            }
             field(Details_DBS; Rec.Details)
             {
                 ApplicationArea = all;
@@ -54,10 +58,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
                 if Rec.Type = Rec.Type::Item then
                     if rec.Quantity <> 0 then begin
                         Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                    Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                    Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                    rec.Modify();
-                end;
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        rec.Modify();
+                    end;
                 Item_lrec.SetRange("No.", rec."No.");
                 if Item_lrec.Find() then begin
                     rec.SKU := Item_lrec."Vendor Item No.";
@@ -108,10 +112,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
             begin
                 if Rec.Type = Rec.Type::Item then
                     if rec.Quantity <> 0 then begin
-                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                rec.Modify();
+                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        rec.Modify();
                     end;
             end;
         }
@@ -125,12 +129,12 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
             begin
                 if Rec.Type = Rec.Type::Item then
                     if rec.Quantity <> 0 then
-                    if Rec."Line Amount" > 0 then BEGIN
-                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                        rec.Modify();
-                    end;
+                        if Rec."Line Amount" > 0 then BEGIN
+                            Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                            Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                            Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                            rec.Modify();
+                        end;
             end;
         }
         modify("Line Discount %")
@@ -141,10 +145,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
             begin
                 if Rec.Type = Rec.Type::Item then
                     if rec.Quantity <> 0 then begin
-                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                rec.Modify();
+                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        rec.Modify();
                     end;
             end;
         }
@@ -156,10 +160,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
             begin
                 if Rec.Type = Rec.Type::Item then
                     if rec.Quantity <> 0 then begin
-                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                rec.Modify();
+                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        rec.Modify();
                     end;
             end;
         }
@@ -178,9 +182,9 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
                     else if rec.Quantity <> 0 then begin
 
                         Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                rec.Modify();
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        rec.Modify();
                     end;
             end;
         }
@@ -193,12 +197,12 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
             begin
                 if Rec.Type = Rec.Type::Item then
                     if rec.Quantity <> 0 then
-                    if Rec."Line Amount" > 0 then BEGIN
-                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                        Rec.Modify();
-                    end
+                        if Rec."Line Amount" > 0 then BEGIN
+                            Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                            Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                            Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                            Rec.Modify();
+                        end
             end;
         }
         modify("Inv. Discount Amount")
@@ -210,10 +214,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
             begin
                 if Rec.Type = Rec.Type::Item then
                     if rec.Quantity <> 0 then begin
-                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                Rec.Modify();
+                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                        Rec.Modify();
                     end;
             end;
         }
@@ -230,10 +234,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
                     repeat
                         if Rec.Type = Rec.Type::Item then
                             if rec.Quantity <> 0 then begin
-                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                        Rec.Modify();
+                                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                                Rec.Modify();
                             end;
                     until Rec.Next() = 0;
 
@@ -252,10 +256,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
                     repeat
                         if Rec.Type = Rec.Type::Item then
                             if rec.Quantity <> 0 then begin
-                        Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
-                        Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
-                        Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
-                        Rec.Modify();
+                                Rec."Net Price_SG" := (Rec."Line Amount" - rec."Inv. Discount Amount") / Rec.Quantity;
+                                Rec."Sales Margin_SG" := Rec."Net Price_SG" - Rec."Unit Cost";
+                                Rec."Margin %" := ROUND((Rec."Sales Margin_SG" / Rec."Net Price_SG") * 100, 0.01);
+                                Rec.Modify();
                             end;
                     until Rec.Next() = 0;
             end;

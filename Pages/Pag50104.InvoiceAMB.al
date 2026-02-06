@@ -5,7 +5,6 @@ page 50104 "Sherweb_Invoices"
     ApplicationArea = All;
     Caption = 'Sherweb Invoices';
     PageType = Worksheet;
-    ;
     SourceTable = "Invoice SG";
     CardPageId = "Sherweb Invoices";
     AutoSplitKey = true;
@@ -28,6 +27,14 @@ page 50104 "Sherweb_Invoices"
                 field(Organization; Rec.Organization)
                 {
                     ToolTip = 'Specifies the value of the Organization field.', Comment = '%';
+                }
+                field("Parent Customer"; Rec."Parent Customer")
+                {
+                    ApplicationArea = all;
+                }
+                field("Excluded Customer"; Rec."Excluded Customer")
+                {
+                    ApplicationArea = all;
                 }
                 field(Description; Rec.Description)
                 {
@@ -61,6 +68,10 @@ page 50104 "Sherweb_Invoices"
                 field(SKU; Rec.SKU)
                 {
                     ToolTip = 'Specifies the value of the SKU field.', Comment = '%';
+                }
+                field("Exclude Item"; Rec."Exclude Item")
+                {
+                    ApplicationArea = all;
                 }
                 field("Customer List Price"; Rec."Customer List Price")
                 {
@@ -267,25 +278,85 @@ page 50104 "Sherweb_Invoices"
                 end;
 
             }
+            // action("Create Sales Invoice")
+            // {
+            //     Caption = 'Sales Invoice';
+            //     Image = Order;
+            //     Promoted = true;
+            //     PromotedCategory = Process;
+            //     ApplicationArea = All;
+            //     trigger OnAction()
+
+            //     var
+            //         SalesHeader: Record "Sales Header";
+            //     begin
+            //         CreateSalesOrders();
+            //         DataMgt.UpdateSherwebInvoiceStatus_SingleFlow();
+            //         ArchiveSherwebInvoiceLines();
+            //     end;
+
+            // }
             action("Create Sales Invoice")
             {
-                Caption = 'Sales Invoice';
+                Caption = 'Create Sales Invoice';
                 Image = Order;
                 Promoted = true;
                 PromotedCategory = Process;
                 ApplicationArea = All;
+                // RunObject = page "Create Invoice_SG";
                 trigger OnAction()
-
                 var
-                    SalesHeader: Record "Sales Header";
+                    Shareweb: Record "Invoice SG";
+                    InvoiceCreat: Codeunit "SalesInvoiceCreation_SG";
+                    ParentCust: Code[20];
+                    InvDialouge: Page "Create Invoice_SG";
+                    InvDate: Date;
                 begin
-                    CreateSalesOrders();
-                    DataMgt.UpdateSherwebInvoiceStatus_SingleFlow();
-                    ArchiveSherwebInvoiceLines();
-
-
+                    if InvDialouge.RunModal() = Action::LookupOK then begin
+                        // Shareweb.Reset();
+                        // Shareweb.SetCurrentKey(InvoiceNo);
+                        // Shareweb.SetAscending(InvoiceNo, true);
+                        // Shareweb.SetRange("Excluded Customer", false);
+                        // Shareweb.SetFilter("Parent Customer", '<>%1', '');
+                        // if Shareweb.FindSet() then begin
+                        //     repeat
+                        //         if (ParentCust <> Shareweb."Parent Customer") then begin
+                        //             InvDate := InvDialouge.GetInvoiceDate();
+                        //             InvoiceCreat.CreateInvoicesForParent(Shareweb);
+                        //             ParentCust := Shareweb."Parent Customer";
+                        //         end;
+                        //     until Shareweb.Next() = 0;
+                        Message('Sales Invoice created successfully.');
+                        // end;
+                    end;
                 end;
 
+
+            }
+            action(Itemcheck)
+            {
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                trigger OnAction()
+                var
+                    Shareweb: Record "Invoice SG";
+                    Item: Record Item;
+                    test: Text;
+                begin
+                    Shareweb.Reset();
+                    if Shareweb.FindSet() then
+                        repeat
+                            Item.Reset();
+                            Item.SetRange("No.", Shareweb.SKU);
+                            if not Item.FindFirst() then begin
+                                test += Shareweb.SKU + ' ,';
+                                Message('%1', test);
+                            end;
+                        until Shareweb.Next() = 0;
+
+                end;
             }
             action(CreateMissingItems)
             {
@@ -347,7 +418,6 @@ page 50104 "Sherweb_Invoices"
         ExcelImportSuccess: Label 'Excel data imported successfully', MaxLength = 50;
 
         DataMgt: Codeunit "Data Management";
-
 
 
 
@@ -634,8 +704,8 @@ page 50104 "Sherweb_Invoices"
 
             SOImportBuffer.Qty := ParseCSVDecimal(GetCSVColumn(Line, 17));
 
-            SOImportBuffer.Organization :=
-                GetCSVColumn(Line, 18);
+            // SOImportBuffer.Organization := GetCSVColumn(Line, 18);
+            SOImportBuffer.Validate(Organization, GetCSVColumn(Line, 18));
 
             SOImportBuffer.Description :=
                 GetCSVColumn(Line, 19);
@@ -721,13 +791,13 @@ page 50104 "Sherweb_Invoices"
     end;
 
     procedure CreatePurchaseOrder(Invoice_lrec: Record "Invoice SG")
-var
-    Purchasehdr_lrec: Record "Purchase Header";
-    Purchaseandrec: Record "Purchases & Payables Setup";
-    NoSeries: Codeunit "No. Series";
-    AMBInvoice_lrec: Record "Invoice SG";
-    VendorRec: Record Vendor;
-    vendorNo: Code[20];
+    var
+        Purchasehdr_lrec: Record "Purchase Header";
+        Purchaseandrec: Record "Purchases & Payables Setup";
+        NoSeries: Codeunit "No. Series";
+        AMBInvoice_lrec: Record "Invoice SG";
+        VendorRec: Record Vendor;
+        vendorNo: Code[20];
     begin
         Purchaseandrec.Get();
         Purchaseandrec.TestField("Sherweb Vendor Code");
@@ -812,7 +882,8 @@ var
 
         Purchase_lrec.Insert();
     end;
-local procedure CreateSalesOrders()
+
+    local procedure CreateSalesOrders()
     var
         SalesHdr: Record "Sales Header";
         PostedSalesHdr: Record "Sales Invoice Header";
@@ -826,7 +897,7 @@ local procedure CreateSalesOrders()
         CreatedCount: Integer;
         SkippedCount: Integer;
         AlreadyExists: Boolean;
-begin
+    begin
         SalesSetup.Get();
         SalesSetup.TestField("Invoice Nos.");
 
@@ -866,13 +937,13 @@ begin
                     SalesHdr."External Document No." := CurrInvoiceNo;
                     SalesHdr."Document Date" := Today();
                     SalesHdr.Insert();
-                LinesAMB.Reset();
-                LinesAMB.SetRange(Organization, OrgCode);
-                LinesAMB.SetRange(InvoiceNo, CurrInvoiceNo);
-                if LinesAMB.FindSet() then
+                    LinesAMB.Reset();
+                    LinesAMB.SetRange(Organization, OrgCode);
+                    LinesAMB.SetRange(InvoiceNo, CurrInvoiceNo);
+                    if LinesAMB.FindSet() then
                         repeat
                             CreateSalesLine(SalesHdr, LinesAMB);
-                    until LinesAMB.Next() = 0;
+                        until LinesAMB.Next() = 0;
 
                     CreatedCount += 1;
                 end;
@@ -880,7 +951,7 @@ begin
             until InvoiceAMBRec.Next() = 0;
         Message('Sales Invoice Created: %1, Skipped: %2', CreatedCount, SkippedCount);
         ArchiveSherwebInvoiceLines();
-end;
+    end;
 
 
 
@@ -909,9 +980,9 @@ end;
         if salesLine_lrec.Insert(true) then begin
 
             salesLine_lrec."Type" := salesLine_lrec."Type"::Item;
-        salesLine_lrec.Validate("No.", Invoice_lrec."SKU");
-        salesLine_lrec.Validate("Service Period From", Invoice_lrec."ServicePeriodFrom");
-        salesLine_lrec.Validate("Service Period To", Invoice_lrec."ServicePeriodTo");
+            salesLine_lrec.Validate("No.", Invoice_lrec."SKU");
+            salesLine_lrec.Validate("Service Period From", Invoice_lrec."ServicePeriodFrom");
+            salesLine_lrec.Validate("Service Period To", Invoice_lrec."ServicePeriodTo");
             salesLine_lrec.Description := CopyStr(Invoice_lrec.Description, 1, MaxStrLen(salesLine_lrec.Description));
             salesLine_lrec.Details := Invoice_lrec.Description;
             if Invoice_lrec."Customer List Price" <> 0 then

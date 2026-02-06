@@ -48,6 +48,10 @@ tableextension 50107 SalesInvoiceLine extends "Sales Invoice Line"
             Caption = 'Milestone %';
             DataClassification = ToBeClassified;
         }
+        field(50114; "Organization"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
 
 
     }

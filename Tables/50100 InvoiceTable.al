@@ -5,8 +5,25 @@ table 50100 "Invoice SG"
 
     fields
     {
-        field(1; "InvoiceNo"; Code[20]) { DataClassification = ToBeClassified; }
-        field(2; "Organization"; Text[100]) { DataClassification = ToBeClassified; }
+        field(1; "InvoiceNo"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(2; "Organization"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                ChildCust: Record "Child Customer_SG";
+            begin
+                ChildCust.Reset();
+                ChildCust.SetRange(Description, Rec.Organization);
+                if ChildCust.FindFirst() then begin
+                    Validate("Parent Customer", ChildCust."Customer No");
+                    Validate("Excluded Customer", ChildCust."Excluded Customer");
+                end;
+            end;
+        }
         field(3; "Description"; Text[1000]) { DataClassification = ToBeClassified; }
         field(4; "InvoicingDate"; Date) { DataClassification = ToBeClassified; }
         field(5; "InvoicePeriodFrom"; Date) { DataClassification = ToBeClassified; }
@@ -14,7 +31,19 @@ table 50100 "Invoice SG"
         field(7; "ServicePeriodFrom"; Date) { DataClassification = ToBeClassified; }
         field(8; "ServicePeriodTo"; Date) { DataClassification = ToBeClassified; }
         field(9; "Qty"; Decimal) { DataClassification = ToBeClassified; }
-        field(10; "SKU"; Code[20]) { DataClassification = ToBeClassified; }
+        field(10; "SKU"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                Item: Record Item;
+            begin
+                Item.Reset();
+                Item.SetRange("No.", Rec.SKU);
+                if Item.FindFirst() then
+                    Rec.Validate("Exclude Item", Item."Exclude Item");
+            end;
+        }
         field(11; "ListPrice"; Decimal) { DataClassification = ToBeClassified; }
         field(12; "Discounted Price NotProrated"; Decimal) { DataClassification = ToBeClassified; }
         field(13; "Unit Cost"; Decimal) { DataClassification = ToBeClassified; }
@@ -48,6 +77,20 @@ table 50100 "Invoice SG"
 
         field(41; "PI"; Boolean) { DataClassification = ToBeClassified; }
         field(42; "PPI"; Boolean) { DataClassification = ToBeClassified; }
+        field(43; "Parent Customer"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(44; "Excluded Customer"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            ToolTip = 'Excluded Customer from Sherweb Invoice.';
+        }
+        field(50100; "Exclude Item"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            ToolTip = 'This Item will be excluded from invoice generation through the Sherweb invoicing';
+        }
     }
     keys
     {

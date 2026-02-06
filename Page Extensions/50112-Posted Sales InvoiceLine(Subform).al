@@ -18,6 +18,10 @@ pageextension 50112 "Posted Sales Invoice" extends "Posted Sales Invoice Subform
             {
                 ApplicationArea = all;
             }
+            field(Organization; Rec.Organization)
+            {
+                ApplicationArea = all;
+            }
             field(Details; Rec.Details)
             {
                 ApplicationArea = all;
