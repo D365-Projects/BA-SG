@@ -3,6 +3,7 @@ page 50107 "Create Invoice_SG"
     Caption = 'Create Invoice';
     PageType = StandardDialog;
     ApplicationArea = All;
+    SourceTable = "Invoice SG";
 
     layout
     {
@@ -15,6 +16,13 @@ page 50107 "Create Invoice_SG"
                     Caption = 'Invoice Date';
                     ApplicationArea = All;
                     ShowMandatory = true;
+                    trigger OnValidate()
+                    var
+                        myInt: Integer;
+                    begin
+                        if (InvDate < Rec.InvoicingDate) or (InvDate = Rec.InvoicingDate) then
+                            Error('Invoice Date cannot be before Invoicing Date.');
+                    end;
                 }
             }
         }
@@ -26,27 +34,27 @@ page 50107 "Create Invoice_SG"
         InvoiceCreat: Codeunit "SalesInvoiceCreation_SG";
         ParentCust: Code[20];
         InvDialouge: Page "Create Invoice_SG";
+        Cust: Record Customer;
     begin
         if CloseAction = Action::OK then begin
             if InvDate = 0D then
                 Error('Invoice Date is required.');
-            Shareweb.Reset();
-            Shareweb.SetCurrentKey(InvoiceNo);
-            Shareweb.SetAscending(InvoiceNo, true);
-            Shareweb.SetRange("Excluded Customer", false);
-            Shareweb.SetFilter("Parent Customer", '<>%1', '');
-            if Shareweb.FindSet() then begin
+            Cust.Reset();
+            Cust.SetRange("Excluded Customer", false);
+            if Cust.FindSet() then begin
                 repeat
-                    if (ParentCust <> Shareweb."Parent Customer") then begin
-                        // InvDate := InvDialouge.GetInvoiceDate();
+                    Shareweb.Reset();
+                    Shareweb.SetCurrentKey(InvoiceNo);
+                    Shareweb.SetAscending(InvoiceNo, true);
+                    Shareweb.SetRange("Excluded Customer", false);
+                    Shareweb.SetRange("Parent Customer", Cust."No.");
+                    if Shareweb.FindFirst() then begin
                         InvoiceCreat.CreateInvoicesForParent(Shareweb, InvDate);
-                        ParentCust := Shareweb."Parent Customer";
                     end;
-                until Shareweb.Next() = 0;
-                Message('Sales Invoice created successfully.');
                 // end;
+                until Cust.Next() = 0;
+                Message('Sales Invoice created successfully.');
             end;
-
         end;
         exit(true);
     end;

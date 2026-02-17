@@ -45,33 +45,45 @@ tableextension 50105 SalesHederExt extends "Sales Header"
         {
             DataClassification = ToBeClassified;
         }
-        modify("Due Date")
+        field(50109; "Case 1"; Boolean)
         {
-            trigger OnAfterValidate()
-            var
-                StartDate: Date;
-                EndDate: Date;
-            begin
-                CalcMonthStartEnd();
-                // Rec.Validate("Posting Date", "Due Date");
-            end;
+            DataClassification = ToBeClassified;
         }
-        modify("Posting Date")
+        field(50110; "Case 2"; Boolean)
         {
-            trigger OnAfterValidate()
-            begin
-                if "Due Date" <> 0D then
-                    CalcMonthStartEnd();
-            end;
+            DataClassification = ToBeClassified;
         }
-        modify("Payment Terms Code")
+        field(50111; "Case 3"; Boolean)
         {
-            trigger OnAfterValidate()
-            begin
-                if "Due Date" <> 0D then
-                    CalcMonthStartEnd();
-            end;
+            DataClassification = ToBeClassified;
         }
+        // modify("Due Date")
+        // {
+        //     trigger OnAfterValidate()
+        //     var
+        //         StartDate: Date;
+        //         EndDate: Date;
+        //     begin
+        //         CalcMonthStartEnd();
+        //         // Rec.Validate("Posting Date", "Due Date");
+        //     end;
+        // }
+        // modify("Posting Date")
+        // {
+        //     trigger OnAfterValidate()
+        //     begin
+        //         if "Due Date" <> 0D then
+        //             CalcMonthStartEnd();
+        //     end;
+        // }
+        // modify("Payment Terms Code")
+        // {
+        //     trigger OnAfterValidate()
+        //     begin
+        //         if "Due Date" <> 0D then
+        //             CalcMonthStartEnd();
+        //     end;
+        // }
     }
 
     keys

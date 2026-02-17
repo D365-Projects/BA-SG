@@ -93,6 +93,12 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
         {
             DataClassification = ToBeClassified;
         }
+        field(50115; "Customer Subsc Contr"; Boolean)
+        {
+            Caption = 'Customer Subscription Contract';
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
 
     }
 

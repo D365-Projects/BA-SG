@@ -88,11 +88,11 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
         }
         addafter(Name)
         {
-            field("Sherweb Customer Name"; Rec."Sherweb Customer Name")
-            {
-                ApplicationArea = all;
-                ToolTip = 'Specify the customer name as per the Sherweb customer account';
-            }
+            // field("Sherweb Customer Name"; Rec."Sherweb Customer Name")
+            // {
+            //     ApplicationArea = all;
+            //     ToolTip = 'Specify the customer name as per the Sherweb customer account';
+            // }
             field("Excluded Customer"; Rec."Excluded Customer")
             {
                 ApplicationArea = all;

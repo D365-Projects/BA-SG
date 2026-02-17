@@ -73,6 +73,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
 
         addafter("Description 2")
         {
+            field("Customer Subsc Contr"; Rec."Customer Subsc Contr")
+            {
+                ApplicationArea = all;
+            }
             field(SKU; Rec.SKU)
             {
                 ApplicationArea = All;

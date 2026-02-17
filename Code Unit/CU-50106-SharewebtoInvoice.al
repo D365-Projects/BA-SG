@@ -21,11 +21,11 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             if PaymentTerm.FindFirst() then begin
                 // Invoice 1
                 if PaymentTerm."Case 1" then
-                    CreateInvoiceType12(InvSg, SalesSetup, true, InvDate);
+                    CreateInvoiceType1(InvSg, SalesSetup, InvDate);
 
                 // Invoice 2
                 if PaymentTerm."Case 2" then
-                    CreateInvoiceType12(InvSg, SalesSetup, false, InvDate);
+                    CreateInvoiceType2(InvSg, SalesSetup, InvDate);
 
                 // Invoice 3
                 if PaymentTerm."Case 3" then
@@ -35,14 +35,19 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         MarkInvoiceSGProcessed(InvSg);
     end;
 
-    local procedure CreateInvoiceType12(
-        InvSg: Record "Invoice SG";
-        SalesSetup: Record "Sales & Receivables Setup";
-        Handle: Boolean; InvDate: Date)
+    local procedure CreateInvoiceType1(InvSg: Record "Invoice SG"; SalesSetup: Record "Sales & Receivables Setup"; InvDate: Date)
     var
         SalesHdr: Record "Sales Header";
         NoSeries: Codeunit "No. Series";
         InvSg2: Record "Invoice SG";
+        StartDate: Date;
+        EndDate: Date;
+        Newdate: Date;
+        SubscrCntract: Record "Customer Subscription Contract";
+        SalesLine: Record "Sales Line";
+        NextNo: Integer;
+        CustSubContractLines: Record "Cust. Sub. Contract Line";
+        SubscriptionLine: Record "Subscription Line";
     begin
         // if InvoiceAlreadyExists(InvSg) then
         //     exit;
@@ -51,7 +56,10 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         InvSg2.SetFilter(ServicePeriodTo, '<>%1', 0D);
         InvSg2.SetRange(InvoiceNo, InvSg.InvoiceNo);
         InvSg2.SetRange("Parent Customer", InvSg."Parent Customer");
+        InvSg2.SetRange(Processed, false);
         if InvSg2.FindFirst() then begin
+            // 
+            Clear(Newdate);
             SalesHdr.Init();
             SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
             SalesHdr."No." := NoSeries.GetNextNo(SalesSetup."Invoice Nos.", WorkDate(), true);
@@ -59,12 +67,61 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             SalesHdr."External Document No." := InvSg.InvoiceNo;
             SalesHdr.Validate("Document Date", InvDate);
             SalesHdr.Insert(true);
-            SalesHdr.Validate("Posting Date", InvDate);
+            Newdate := CALCDATE('<-1M>', InvDate);
+            StartDate := DMY2Date(1, Date2DMY(Newdate, 2), Date2DMY(Newdate, 3));
+            EndDate := CalcDate('<1M>', StartDate) - 1;
+            SalesHdr."Service Period From" := StartDate;
+            SalesHdr."Service Period To" := EndDate;
+            SalesHdr.Validate("Posting Date", SalesHdr."Due Date");
+            SalesHdr."Case 1" := true;
             SalesHdr.Modify();
-            if Handle then
-                CreateSalesInvLines1(SalesHdr, InvSg)
-            else
-                CreateSalesInvLines2(SalesHdr, InvSg);
+            CreateSalesInvLines1(SalesHdr, InvSg)
+        end;
+    end;
+
+    local procedure CreateInvoiceType2(
+            InvSg: Record "Invoice SG";
+            SalesSetup: Record "Sales & Receivables Setup"; InvDate: Date)
+    var
+        SalesHdr: Record "Sales Header";
+        NoSeries: Codeunit "No. Series";
+        InvSg2: Record "Invoice SG";
+        StartDate: Date;
+        EndDate: Date;
+        Newdate: Date;
+        SubscrCntract: Record "Customer Subscription Contract";
+        SalesLine: Record "Sales Line";
+        NextNo: Integer;
+        CustSubContractLines: Record "Cust. Sub. Contract Line";
+        SubscriptionLine: Record "Subscription Line";
+    begin
+        // if InvoiceAlreadyExists(InvSg) then
+        //     exit;
+        InvSg2.Reset();
+        InvSg2.SetFilter(ServicePeriodFrom, '<>%1', 0D);
+        InvSg2.SetFilter(ServicePeriodTo, '<>%1', 0D);
+        InvSg2.SetRange(InvoiceNo, InvSg.InvoiceNo);
+        InvSg2.SetRange("Parent Customer", InvSg."Parent Customer");
+        InvSg2.SetRange(Processed, false);
+        if InvSg2.FindFirst() then begin
+            // 
+            Clear(Newdate);
+            SalesHdr.Init();
+            SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
+            SalesHdr."No." := NoSeries.GetNextNo(SalesSetup."Invoice Nos.", WorkDate(), true);
+            SalesHdr.Validate("Sell-to Customer No.", InvSg."Parent Customer");
+            SalesHdr."External Document No." := InvSg.InvoiceNo;
+            SalesHdr.Validate("Document Date", InvDate);
+            SalesHdr.Insert(true);
+            StartDate := DMY2Date(1, Date2DMY(InvDate, 2), Date2DMY(InvDate, 3));
+            EndDate := CalcDate('<1M>', StartDate) - 1;
+            SalesHdr."Service Period From" := StartDate;
+            SalesHdr."Service Period To" := EndDate;
+            SalesHdr.Validate("Posting Date", SalesHdr."Due Date");
+            SalesHdr."Case 2" := true;
+
+            SalesHdr.Modify();
+            CreateSalesInvLines2(SalesHdr, InvSg);
         end;
     end;
 
@@ -75,12 +132,20 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         SalesHdr: Record "Sales Header";
         NoSeries: Codeunit "No. Series";
         InvSg2: Record "Invoice SG";
+        EndDate: Date;
+        StartDate: Date;
+        SubscrCntract: Record "Customer Subscription Contract";
+        SalesLine: Record "Sales Line";
+        NextNo: Integer;
+        CustSubContractLines: Record "Cust. Sub. Contract Line";
+        SubscriptionLine: Record "Subscription Line";
     begin
         // if InvoiceAlreadyExists(InvSg) then
         //     exit;
         InvSg2.Reset();
         InvSg2.SetRange(InvoiceNo, InvSg.InvoiceNo);
         InvSg2.SetRange("Parent Customer", InvSg."Parent Customer");
+        InvSg2.SetRange(Processed, false);
         if InvSg2.FindFirst() then begin
             SalesHdr.Init();
             SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;
@@ -89,23 +154,56 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             SalesHdr."External Document No." := InvSg.InvoiceNo;
             SalesHdr.Validate("Document Date", InvDate);
             SalesHdr.Insert(true);
-            SalesHdr.Validate("Posting Date", InvDate);
+            StartDate := DMY2Date(1, Date2DMY(SalesHdr."Due Date", 2), Date2DMY(SalesHdr."Due Date", 3));
+            EndDate := CalcDate('<1M>', StartDate) - 1;
+            SalesHdr."Service Period From" := StartDate;
+            SalesHdr."Service Period To" := EndDate;
+            SalesHdr.Validate("Posting Date", SalesHdr."Due Date");
+            // subscription Line Insert
+            SubscrCntract.Reset();
+            SubscrCntract.SetRange("Sell-to Customer No.", InvSg2."Parent Customer");
+            if SubscrCntract.FindFirst() then begin
+                CustSubContractLines.Reset();
+                CustSubContractLines.SetRange("Contract Line Type", CustSubContractLines."Contract Line Type"::Item);
+                if CustSubContractLines.FindSet() then begin
+                    repeat
+                        // Get related Subscription Line with date filtering
+                        if SubscriptionLine.Get(CustSubContractLines."Subscription Line Entry No.") then begin
+                            if (SubscriptionLine."Subscription Line Start Date" <= InvDate) and (SubscriptionLine."Subscription Line End Date" >= InvDate) then begin
+
+                                SalesLine.Reset();
+                                SalesLine.SetRange("Document Type", SalesLine."Document Type"::Invoice);
+                                SalesLine.SetRange("Document No.", SalesHdr."No.");
+                                if SalesLine.FindLast() then
+                                    NextNo := SalesLine."Line No." + 10000
+                                else
+                                    NextNo := 10000;
+                                SalesLine.Init();
+                                SalesLine."Document Type" := SalesHdr."Document Type";
+                                SalesLine."Document No." := SalesHdr."No.";
+                                SalesLine."Line No." := NextNo;
+                                SalesLine.Type := SalesLine.Type::Item;
+                                SalesLine.Validate("No.", SubscriptionLine."Invoicing Item No.");
+                                SubscriptionLine.CalcFields(Quantity);
+                                SalesLine.Validate(Quantity, SubscriptionLine.Quantity);
+                                SalesLine.Validate("Unit Price", SubscriptionLine.Price);
+                                SalesLine."Customer Subsc Contr" := true;
+                                SalesLine.Organization := CustSubContractLines.Organization;
+                                // SalesLine.Validate("Service Period From", SubscriptionLine."Subscription Line Start Date");
+                                // SalesLine.Validate("Service Period To", SubscriptionLine."Subscription Line End Date");
+                                SalesLine.Insert();
+                            end;
+                        end;
+                    until CustSubContractLines.Next() = 0;
+                end;
+            end;
+
+            // subscription Line Insert
+            SalesHdr."Case 3" := true;
+
             SalesHdr.Modify();
             CreateSalesInvLinesforInvoice3(SalesHdr, InvSg);
         end;
-    end;
-
-    local procedure MarkInvoiceSGProcessed(InvSg: Record "Invoice SG")
-    var
-        InvSG2: Record "Invoice SG";
-    begin
-        InvSG2.SetRange(InvoiceNo, InvSg.InvoiceNo);
-        InvSG2.SetRange("Parent Customer", InvSg."Parent Customer");
-        if InvSG2.FindSet() then
-            repeat
-                InvSG2.SI := true;
-                InvSG2.Modify();
-            until InvSG2.Next() = 0;
     end;
 
 
@@ -155,9 +253,12 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         InvSg2.SetFilter(ServicePeriodFrom, '<>%1', 0D);
         InvSg2.SetFilter(ServicePeriodTo, '<>%1', 0D);
         InvSg2.SetRange("Exclude Item", false);
+        InvSg2.SetRange("Excluded Customer", false);
         InvSg2.SetRange(InvoiceNo, InvSg.InvoiceNo);
         InvSg2.SetRange("Parent Customer", InvSg."Parent Customer");
-        // InvSg2.SetFilter(Qty, '<>%1', 0);
+        InvSg2.SetFilter(Qty, '<>%1', 0);
+        InvSg2.SetFilter(ListPrice, '<>%1', 0);
+        InvSg2.SetRange(Processed, false);
         if InvSg2.FindSet then
             repeat
                 InsertSalesLine(SalesHdr, InvSg2, True);
@@ -175,8 +276,12 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         InvSg2.SetFilter(ServicePeriodFrom, '<>%1', 0D);
         InvSg2.SetFilter(ServicePeriodTo, '<>%1', 0D);
         InvSg2.SetRange("Exclude Item", false);
+        InvSg2.SetRange("Excluded Customer", false);
         InvSg2.SetRange(InvoiceNo, InvSg.InvoiceNo);
         InvSg2.SetRange("Parent Customer", InvSg."Parent Customer");
+        InvSg2.SetFilter(Qty, '<>%1', 0);
+        InvSg2.SetFilter(ListPrice, '<>%1', 0);
+        InvSg2.SetRange(Processed, false);
         if InvSg2.FindSet then
             repeat
                 Clear(MonthEnd);
@@ -229,6 +334,10 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         InvSg2.SetRange(InvoiceNo, InvSg.InvoiceNo);
         InvSg2.SetRange("Parent Customer", InvSg."Parent Customer");
         InvSg2.SetRange("Exclude Item", false);
+        InvSg2.SetRange("Excluded Customer", false);
+        InvSg2.SetFilter(Qty, '<>%1', 0);
+        InvSg2.SetFilter(ListPrice, '<>%1', 0);
+        InvSg2.SetRange(Processed, false);
         if InvSg2.FindSet then
             repeat
                 Clear(MonthEnd);
@@ -395,6 +504,19 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             end;
         end;
         Saleslin.Modify();
+    end;
+
+    local procedure MarkInvoiceSGProcessed(InvSg: Record "Invoice SG")
+    var
+        InvSG2: Record "Invoice SG";
+    begin
+        InvSG2.SetRange(InvoiceNo, InvSg.InvoiceNo);
+        InvSG2.SetRange("Parent Customer", InvSg."Parent Customer");
+        if InvSG2.FindSet() then
+            repeat
+                InvSG2.Processed := true;
+                InvSG2.Modify();
+            until InvSG2.Next() = 0;
     end;
 
     var

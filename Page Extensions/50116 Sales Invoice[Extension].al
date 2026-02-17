@@ -5,6 +5,18 @@ pageextension 50116 SalesInvoiceExt_SG extends "Sales Invoice"
 
         addafter("Due Date")
         {
+            field("Case 1"; Rec."Case 1")
+            {
+                ApplicationArea = all;
+            }
+            field("Case 2"; Rec."Case 2")
+            {
+                ApplicationArea = all;
+            }
+            field("Case 3"; Rec."Case 3")
+            {
+                ApplicationArea = all;
+            }
             field("Service Period From"; Rec."Service Period From")
             {
                 ApplicationArea = all;

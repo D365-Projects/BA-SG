@@ -86,10 +86,14 @@ table 50100 "Invoice SG"
             DataClassification = ToBeClassified;
             ToolTip = 'Excluded Customer from Sherweb Invoice.';
         }
-        field(50100; "Exclude Item"; Boolean)
+        field(45; "Exclude Item"; Boolean)
         {
             DataClassification = ToBeClassified;
             ToolTip = 'This Item will be excluded from invoice generation through the Sherweb invoicing';
+        }
+        field(46; "Processed"; Boolean)
+        {
+            DataClassification = ToBeClassified;
         }
     }
     keys

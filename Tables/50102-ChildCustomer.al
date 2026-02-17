@@ -32,6 +32,19 @@ table 50102 "Child Customer_SG"
         {
             DataClassification = ToBeClassified;
             ToolTip = 'Excluded Customer from Sherweb Invoice.';
+            trigger OnValidate()
+            var
+                InvSG: Record "Invoice SG";
+            begin
+                InvSG.Reset();
+                InvSG.SetRange(Organization, Rec.Description);
+                if InvSG.FindSet() then
+                    repeat
+                        InvSG.Validate("Excluded Customer", Rec."Excluded Customer");
+                        InvSG."Parent Customer" := Rec."Customer No";
+                        InvSG.Modify();
+                    until InvSG.Next() = 0;
+            end;
         }
     }
 

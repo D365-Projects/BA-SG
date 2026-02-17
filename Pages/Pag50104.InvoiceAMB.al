@@ -4,7 +4,7 @@ page 50104 "Sherweb_Invoices"
 {
     ApplicationArea = All;
     Caption = 'Sherweb Invoices';
-    PageType = Worksheet;
+    PageType = List;
     SourceTable = "Invoice SG";
     CardPageId = "Sherweb Invoices";
     AutoSplitKey = true;
@@ -31,10 +31,12 @@ page 50104 "Sherweb_Invoices"
                 field("Parent Customer"; Rec."Parent Customer")
                 {
                     ApplicationArea = all;
+                    Editable = false;
                 }
                 field("Excluded Customer"; Rec."Excluded Customer")
                 {
                     ApplicationArea = all;
+                    Editable = false;
                 }
                 field(Description; Rec.Description)
                 {
@@ -72,6 +74,7 @@ page 50104 "Sherweb_Invoices"
                 field("Exclude Item"; Rec."Exclude Item")
                 {
                     ApplicationArea = all;
+                    Editable = false;
                 }
                 field("Customer List Price"; Rec."Customer List Price")
                 {
@@ -197,6 +200,10 @@ page 50104 "Sherweb_Invoices"
                 {
                     ToolTip = 'Specifies the value of the MD - MONTGOMERY COUNTY, TELEPHONE TAX field.', Comment = '%';
                 }
+                field(Processed; Rec.Processed)
+                {
+                    ApplicationArea = all;
+                }
                 field(SI; Rec.SI)
                 {
                     ToolTip = 'Specifies whether the SI field is selected.', Comment = '%';
@@ -312,6 +319,10 @@ page 50104 "Sherweb_Invoices"
                     InvDialouge: Page "Create Invoice_SG";
                     InvDate: Date;
                 begin
+                    Shareweb.Reset();
+                    Shareweb.SetRange("Parent Customer", '');
+                    if Shareweb.FindFirst() then
+                        Error('Parent Customer value is missing for Invoice No. %1 and Organization No. %2', Shareweb.InvoiceNo, Shareweb.Organization);
                     if InvDialouge.RunModal() = Action::LookupOK then begin
                         // Shareweb.Reset();
                         // Shareweb.SetCurrentKey(InvoiceNo);
@@ -710,8 +721,9 @@ page 50104 "Sherweb_Invoices"
             SOImportBuffer.Description :=
                 GetCSVColumn(Line, 19);
 
-            SOImportBuffer.sku :=
-                GetCSVColumn(Line, 20);
+            // SOImportBuffer.sku :=
+            //     GetCSVColumn(Line, 20);
+            SOImportBuffer.Validate(sku, GetCSVColumn(Line, 20));
 
             SOImportBuffer."Discounted Price NotProrated" :=
                 ParseCSVDecimal(GetCSVColumn(Line, 21));

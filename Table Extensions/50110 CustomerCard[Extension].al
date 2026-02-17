@@ -18,7 +18,7 @@ tableextension 50110 CustomerCard_SG extends Customer
                 ChildCust.SetRange("Customer No", Rec."No.");
                 if ChildCust.FindSet() then
                     repeat
-                        ChildCust."Excluded Customer" := Rec."Excluded Customer";
+                        ChildCust.Validate("Excluded Customer", Rec."Excluded Customer");
                         ChildCust.Modify();
                     until ChildCust.Next() = 0;
             end;
