@@ -73,6 +73,8 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             SalesHdr."Service Period From" := StartDate;
             SalesHdr."Service Period To" := EndDate;
             SalesHdr.Validate("Posting Date", SalesHdr."Due Date");
+            SalesHdr.Validate("Order Date", InvDate);
+
             SalesHdr."Case 1" := true;
             SalesHdr.Modify();
             CreateSalesInvLines1(SalesHdr, InvSg)
@@ -112,12 +114,20 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             SalesHdr.Validate("Sell-to Customer No.", InvSg."Parent Customer");
             SalesHdr."External Document No." := InvSg.InvoiceNo;
             SalesHdr.Validate("Document Date", InvDate);
-            SalesHdr.Insert(true);
+            StartDate := DMY2Date(1, Date2DMY(SalesHdr."Due Date", 2), Date2DMY(SalesHdr."Due Date", 3));
+            EndDate := CalcDate('<1M>', StartDate) - 1;
+            if (InvDate >= StartDate) and (InvDate <= EndDate) then
+                exit
+            else
+                SalesHdr.Insert(true);
+
             StartDate := DMY2Date(1, Date2DMY(InvDate, 2), Date2DMY(InvDate, 3));
             EndDate := CalcDate('<1M>', StartDate) - 1;
             SalesHdr."Service Period From" := StartDate;
             SalesHdr."Service Period To" := EndDate;
             SalesHdr.Validate("Posting Date", SalesHdr."Due Date");
+            SalesHdr.Validate("Order Date", InvDate);
+
             SalesHdr."Case 2" := true;
 
             SalesHdr.Modify();
@@ -159,12 +169,16 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             SalesHdr."Service Period From" := StartDate;
             SalesHdr."Service Period To" := EndDate;
             SalesHdr.Validate("Posting Date", SalesHdr."Due Date");
+            SalesHdr.Validate("Order Date", InvDate);
+
             // subscription Line Insert
             SubscrCntract.Reset();
             SubscrCntract.SetRange("Sell-to Customer No.", InvSg2."Parent Customer");
             if SubscrCntract.FindFirst() then begin
                 CustSubContractLines.Reset();
                 CustSubContractLines.SetRange("Contract Line Type", CustSubContractLines."Contract Line Type"::Item);
+                CustSubContractLines.SetRange("Subscription Contract No.", SubscrCntract."No.");
+                CustSubContractLines.SetRange(Organization, InvSg2.Organization);
                 if CustSubContractLines.FindSet() then begin
                     repeat
                         // Get related Subscription Line with date filtering
@@ -183,7 +197,7 @@ codeunit 50106 "SalesInvoiceCreation_SG"
                                 SalesLine."Document No." := SalesHdr."No.";
                                 SalesLine."Line No." := NextNo;
                                 SalesLine.Type := SalesLine.Type::Item;
-                                SalesLine.Validate("No.", SubscriptionLine."Invoicing Item No.");
+                                SalesLine.Validate("No.", CustSubContractLines."No.");
                                 SubscriptionLine.CalcFields(Quantity);
                                 SalesLine.Validate(Quantity, SubscriptionLine.Quantity);
                                 SalesLine.Validate("Unit Price", SubscriptionLine.Price);
@@ -441,14 +455,17 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         UnitPrice: Decimal;
         Cust: Record Customer;
         PriceListLine: Record "Price List Line";
+        EndOfMonth: Date;
     begin
         Clear(UnitPrice);
         Clear(UnitPriceday);
         Clear(Day);
+        Clear(EndOfMonth);
 
         if InvSg.ServicePeriodTo <> 0D then begin
-            UnitPriceday := InvSg.ServicePeriodTo - InvSg.ServicePeriodFrom;
-            Day := Date2DMY(InvSg.ServicePeriodTo, 1);
+            EndOfMonth := CalcDate('<CM>', InvSg.ServicePeriodTo);
+            UnitPriceday := InvSg.ServicePeriodTo - InvSg.ServicePeriodFrom + 1;
+            Day := Date2DMY(EndOfMonth, 1);
             UnitPrice := (InvSg.ListPrice / Day) * UnitPriceday;
         end;
 
