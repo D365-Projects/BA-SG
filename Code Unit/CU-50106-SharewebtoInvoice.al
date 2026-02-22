@@ -365,8 +365,8 @@ codeunit 50106 "SalesInvoiceCreation_SG"
                         Saleslin.SetRange("Document No.", SalesHdr."No.");
                         Saleslin.SetRange("Document Type", SalesHdr."Document Type");
                         Saleslin.SetRange(Type, Saleslin.Type::Item);
-                        Saleslin.SetRange("No.", InvSg.SKU);
-                        Saleslin.SetRange(Organization, InvSg.Organization);
+                        Saleslin.SetRange("No.", InvSg2.SKU);
+                        Saleslin.SetRange(Organization, InvSg2.Organization);
                         Saleslin.SetRange("Unit Price", InvSg2.ListPrice);
                         if Saleslin.FindFirst() then begin
                             Saleslin.Validate(Quantity, (Saleslin.Quantity + InvSg2.Qty));
@@ -380,8 +380,8 @@ codeunit 50106 "SalesInvoiceCreation_SG"
                     Saleslin.SetRange("Document No.", SalesHdr."No.");
                     Saleslin.SetRange("Document Type", SalesHdr."Document Type");
                     Saleslin.SetRange(Type, Saleslin.Type::Item);
-                    Saleslin.SetRange("No.", InvSg.SKU);
-                    Saleslin.SetRange(Organization, InvSg.Organization);
+                    Saleslin.SetRange("No.", InvSg2.SKU);
+                    Saleslin.SetRange(Organization, InvSg2.Organization);
                     Saleslin.SetRange("Unit Price", InvSg2.ListPrice);
                     if Saleslin.FindFirst() then begin
                         Saleslin.Validate(Quantity, (Saleslin.Quantity + InvSg2.Qty));
