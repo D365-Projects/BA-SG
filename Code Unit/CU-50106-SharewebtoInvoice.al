@@ -308,7 +308,7 @@ codeunit 50106 "SalesInvoiceCreation_SG"
                         Saleslin.SetRange("Document No.", SalesHdr."No.");
                         Saleslin.SetRange("Document Type", SalesHdr."Document Type");
                         Saleslin.SetRange(Type, Saleslin.Type::Item);
-                        Saleslin.SetRange("No.", InvSg.SKU);
+                        Saleslin.SetRange("No.", InvSg2.SKU);
                         Saleslin.SetRange("Service Period From", InvSg2.ServicePeriodFrom);
                         Saleslin.SetRange("Service Period To", InvSg2.ServicePeriodTo);
                         Saleslin.SetRange("Unit Price", InvSg2.ListPrice);
