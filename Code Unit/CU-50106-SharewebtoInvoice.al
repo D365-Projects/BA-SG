@@ -178,12 +178,12 @@ codeunit 50106 "SalesInvoiceCreation_SG"
                 CustSubContractLines.Reset();
                 CustSubContractLines.SetRange("Contract Line Type", CustSubContractLines."Contract Line Type"::Item);
                 CustSubContractLines.SetRange("Subscription Contract No.", SubscrCntract."No.");
-                CustSubContractLines.SetRange(Organization, InvSg2.Organization);
+                // CustSubContractLines.SetRange(Organization, InvSg2.Organization);
                 if CustSubContractLines.FindSet() then begin
                     repeat
                         // Get related Subscription Line with date filtering
                         if SubscriptionLine.Get(CustSubContractLines."Subscription Line Entry No.") then begin
-                            if (SubscriptionLine."Subscription Line Start Date" <= InvDate) and (SubscriptionLine."Subscription Line End Date" >= InvDate) then begin
+                            if (SubscriptionLine."Subscription Line Start Date" <= SalesHdr."Service Period From") and (SubscriptionLine."Subscription Line End Date" >= SalesHdr."Service Period From") then begin
 
                                 SalesLine.Reset();
                                 SalesLine.SetRange("Document Type", SalesLine."Document Type"::Invoice);
@@ -203,8 +203,8 @@ codeunit 50106 "SalesInvoiceCreation_SG"
                                 SalesLine.Validate("Unit Price", SubscriptionLine.Price);
                                 SalesLine."Customer Subsc Contr" := true;
                                 SalesLine.Organization := CustSubContractLines.Organization;
-                                // SalesLine.Validate("Service Period From", SubscriptionLine."Subscription Line Start Date");
-                                // SalesLine.Validate("Service Period To", SubscriptionLine."Subscription Line End Date");
+                                SalesLine.Validate("Service Period From", SalesHdr."Service Period From");
+                                SalesLine.Validate("Service Period To", SalesHdr."Service Period To");
                                 SalesLine.Insert();
                             end;
                         end;
@@ -511,6 +511,9 @@ codeunit 50106 "SalesInvoiceCreation_SG"
                         Saleslin.Validate("Unit Price", UnitPrice)
                     else
                         Saleslin.Validate("Unit Price", InvSg.ListPrice);
+                end
+                else begin
+                    Saleslin.Validate("Unit Price", PriceListLine."Unit Price");
                 end;
             end
             else begin
