@@ -1,6 +1,20 @@
 codeunit 50105 GenralSubscriber
 {
 
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", OnAfterValidateEvent, "Sell-to Customer No.", true, true)]
+    local procedure OnAfterValidateEvent(var Rec: Record "Sales Header")
+    var
+        Cust: Record Customer;
+    begin
+        if Rec."Document Type" = Rec."Document Type"::Invoice then begin
+            Cust.Reset();
+            Cust.SetRange("No.", Rec."Sell-to Customer No.");
+            if Cust.FindFirst() then begin
+                Rec."Your Reference" := Cust."PO Reference No";
+                // Rec.Modify();
+            end;
+        end;
+    end;
 
     [EventSubscriber(ObjectType::Table, DataBase::"Sales Header", 'OnBeforeSalesLineInsert', '', true, true)]
     local procedure OnBeforeSalesLineInsertOnRecreateSalesLine(var TempSalesLine: Record "Sales Line"; var SalesLine: Record "Sales Line")

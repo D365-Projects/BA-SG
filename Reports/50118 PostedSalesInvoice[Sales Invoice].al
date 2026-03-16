@@ -35,7 +35,7 @@ report 50118 "Standard Sales - Invoices_SG"
             column(Sell_to_County; "Sell-to County") { }
             column(Sell_to_Post_Code; "Sell-to Post Code") { }
             column(Sell_to_Customer_No_; "Sell-to Customer No.") { }
-column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
+            column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
 
             column(Sell_to_Address; "Sell-to Address") { }
             column(Bill_to_Address; "Bill-to Address") { }
@@ -47,7 +47,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
             {
             }
             column(InvoiceNo_; "No.") { }
-            column(External_Document_No_; "External Document No.") { }
+            column(External_Document_No_; "Your Reference") { }
             column(Due_Date; "Due Date") { }
             column(Amount; Amount) { }
 
@@ -198,7 +198,6 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
 
             column(TotalAmount_Including_VAT; "Amount Including VAT") { }
             column(Invoice_Discount_Amount; "Invoice Discount Amount") { }
-
 
             dataitem(Line; "Sales Invoice Line")
             {
@@ -373,7 +372,7 @@ column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
         layout("StandardSalesInvoice.rdlc")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/StandardSalesInvoice(Detailed).rdlc';
+            LayoutFile = './Layouts/StandardSalesInvoice(Detailed).rdl';
             Caption = 'Standard Sales Tax Invoice (RDLC)';
             Summary = 'Standard Sales Tax Invoice (RDLC) is the most detailed layout and provides most flexible layout options.';
         }

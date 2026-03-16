@@ -97,6 +97,10 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
             {
                 ApplicationArea = all;
             }
+            field("PO Reference No"; Rec."PO Reference No")
+            {
+                ApplicationArea = all;
+            }
         }
 
         // Add changes to page layout here

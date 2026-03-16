@@ -72,7 +72,7 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             EndDate := CalcDate('<1M>', StartDate) - 1;
             SalesHdr."Service Period From" := StartDate;
             SalesHdr."Service Period To" := EndDate;
-            SalesHdr.Validate("Posting Date", SalesHdr."Due Date");
+            SalesHdr.Validate("Posting Date", SalesHdr."Due Date" + 7);
             SalesHdr.Validate("Order Date", InvDate);
 
             SalesHdr."Case 1" := true;
@@ -125,7 +125,7 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             EndDate := CalcDate('<1M>', StartDate) - 1;
             SalesHdr."Service Period From" := StartDate;
             SalesHdr."Service Period To" := EndDate;
-            SalesHdr.Validate("Posting Date", SalesHdr."Due Date");
+            SalesHdr.Validate("Posting Date", SalesHdr."Due Date" + 7);
             SalesHdr.Validate("Order Date", InvDate);
 
             SalesHdr."Case 2" := true;
@@ -168,7 +168,7 @@ codeunit 50106 "SalesInvoiceCreation_SG"
             EndDate := CalcDate('<1M>', StartDate) - 1;
             SalesHdr."Service Period From" := StartDate;
             SalesHdr."Service Period To" := EndDate;
-            SalesHdr.Validate("Posting Date", SalesHdr."Due Date");
+            SalesHdr.Validate("Posting Date", SalesHdr."Due Date" + 7);
             SalesHdr.Validate("Order Date", InvDate);
 
             // subscription Line Insert

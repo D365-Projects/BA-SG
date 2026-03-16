@@ -48,6 +48,22 @@ table 50101 "Invoice SG(Archived)"
 
         field(41; "PI"; Boolean) { DataClassification = ToBeClassified; }
         field(42; "PPI"; Boolean) { DataClassification = ToBeClassified; }
+        field(43; "Parent Customer"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(44; "Excluded Customer"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(45; "Exclude Item"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(46; "Processed"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {

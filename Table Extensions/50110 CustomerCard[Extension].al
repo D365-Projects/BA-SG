@@ -23,6 +23,10 @@ tableextension 50110 CustomerCard_SG extends Customer
                     until ChildCust.Next() = 0;
             end;
         }
+        field(50102; "PO Reference No"; Text[35])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

@@ -54,6 +54,12 @@ page 50107 "Create Invoice_SG"
                 // end;
                 until Cust.Next() = 0;
                 Message('Sales Invoice created successfully.');
+                Shareweb.Reset();
+                Shareweb.SetRange(Processed, true);
+                if Shareweb.FindSet() then
+                    repeat
+                        Shareweb.Delete();
+                    until Shareweb.Next() = 0;
             end;
         end;
         exit(true);

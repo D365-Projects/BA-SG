@@ -44,7 +44,7 @@ report 50121 "Sales Invoice_SG"
             {
             }
             column(InvoiceNo_; "No.") { }
-            column(External_Document_No_; "External Document No.") { }
+            column(External_Document_No_; "Your Reference") { }
             column(Due_Date; "Due Date") { }
             column(Amount; Amount) { }
 
@@ -362,7 +362,7 @@ report 50121 "Sales Invoice_SG"
         layout("StandardSalesInvoice_SG.rdlc")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/StandardSalesInvoice_SG.rdlc';
+            LayoutFile = './Layouts/StandardSalesInvoice_SG.rdl';
             Caption = 'Standard Sales Invoice License (RDLC)';
             Summary = 'The Standard Sales Invoice License (RDLC) is the most detailed layout and provides most flexible layout options.';
         }
@@ -532,7 +532,7 @@ report 50121 "Sales Invoice_SG"
         DaysCount: Integer;
         Months: Decimal;
         FirstDayOfMonth: Date;
-begin
+    begin
         if (FromDate = 0D) or (ToDate = 0D) then
             exit(0);
 
