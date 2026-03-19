@@ -57,6 +57,8 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         InvSg2.SetRange(InvoiceNo, InvSg.InvoiceNo);
         InvSg2.SetRange("Parent Customer", InvSg."Parent Customer");
         InvSg2.SetRange(Processed, false);
+        InvSg2.SetRange(SI, false);
+        InvSg2.SetRange(PSI, false);
         if InvSg2.FindFirst() then begin
             // 
             Clear(Newdate);
@@ -105,6 +107,8 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         InvSg2.SetRange(InvoiceNo, InvSg.InvoiceNo);
         InvSg2.SetRange("Parent Customer", InvSg."Parent Customer");
         InvSg2.SetRange(Processed, false);
+        InvSg2.SetRange(SI, false);
+        InvSg2.SetRange(PSI, false);
         if InvSg2.FindFirst() then begin
             // 
             Clear(Newdate);
@@ -156,6 +160,8 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         InvSg2.SetRange(InvoiceNo, InvSg.InvoiceNo);
         InvSg2.SetRange("Parent Customer", InvSg."Parent Customer");
         InvSg2.SetRange(Processed, false);
+        InvSg2.SetRange(SI, false);
+        InvSg2.SetRange(PSI, false);
         if InvSg2.FindFirst() then begin
             SalesHdr.Init();
             SalesHdr."Document Type" := SalesHdr."Document Type"::Invoice;

@@ -35,6 +35,7 @@ page 50107 "Create Invoice_SG"
         ParentCust: Code[20];
         InvDialouge: Page "Create Invoice_SG";
         Cust: Record Customer;
+        SherwebInvArch: Record "Invoice SG(Archived)";
     begin
         if CloseAction = Action::OK then begin
             if InvDate = 0D then
@@ -58,6 +59,10 @@ page 50107 "Create Invoice_SG"
                 Shareweb.SetRange(Processed, true);
                 if Shareweb.FindSet() then
                     repeat
+                        SherwebInvArch.Reset();
+                        SherwebInvArch.Init();
+                        SherwebInvArch.TransferFields(Shareweb);
+                        SherwebInvArch.Insert();
                         Shareweb.Delete();
                     until Shareweb.Next() = 0;
             end;

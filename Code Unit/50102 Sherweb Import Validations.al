@@ -126,15 +126,13 @@ codeunit 50102 "Data Management"
         FoundSalesHdr := false;
         PostedSI.Reset();
         PostedSI.SetRange("External Document No.", InvoiceSG."InvoiceNo");
-        PostedSI.SetRange("Sell-to Customer Name", InvoiceSG.Organization);
-
+        PostedSI.SetRange("Sell-to Customer No.", InvoiceSG."Parent Customer");
         if PostedSI.FindSet() then
             repeat
                 PostedSILine.Reset();
                 PostedSILine.SetRange("Document No.", PostedSI."No.");
                 PostedSILine.SetRange(Type, PostedSILine.Type::Item);
                 PostedSILine.SetRange("No.", InvoiceSG.SKU);
-
                 if PostedSILine.FindFirst() then begin
                     FoundPostedInvoice := true;
                     break;
@@ -145,12 +143,14 @@ codeunit 50102 "Data Management"
         SalesHdr.Reset();
         SalesHdr.SetRange("Document Type", SalesHdr."Document Type"::Invoice);
         SalesHdr.SetRange("External Document No.", InvoiceSG."InvoiceNo");
-        SalesHdr.SetRange("Sell-to Customer Name", InvoiceSG.Organization);
+        SalesHdr.SetRange("Sell-to Customer No.", InvoiceSG."Parent Customer");
 
         if SalesHdr.FindFirst() then
             FoundSalesHdr := true;
 
         InvoiceSG.SI := FoundSalesHdr;
+        if (FoundPostedInvoice = true) or (FoundSalesHdr = true) then
+            InvoiceSG.Processed := true;
     end;
 
     local procedure UpdatePurchaseSideStatus(var InvoiceSG: Record "Invoice SG")
