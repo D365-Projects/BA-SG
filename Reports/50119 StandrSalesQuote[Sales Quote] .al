@@ -137,12 +137,12 @@ report 50119 "Sales Quote_SG"
             column(VATRegistrationNo_Lbl; GetCustomerVATRegistrationNumberLbl())
             {
             }
-            column(GlobalLocationNumber; GetCustomerGlobalLocationNumber())
-            {
-            }
-            column(GlobalLocationNumber_Lbl; GetCustomerGlobalLocationNumberLbl())
-            {
-            }
+            // column(GlobalLocationNumber; GetCustomerGlobalLocationNumber())
+            // {
+            // }
+            // column(GlobalLocationNumber_Lbl; GetCustomerGlobalLocationNumberLbl())
+            // {
+            // }
             column(SellToFaxNo; GetSellToCustomerFaxNo())
             {
             }
