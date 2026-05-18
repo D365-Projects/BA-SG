@@ -43,7 +43,7 @@ pageextension 50117 POstedSalesInvocie_SG extends "Posted Sales Invoice"
                 ApplicationArea = all;
                 Promoted = true;
                 PromotedCategory = Process;
-                // Visible = Isvisible;
+                Visible = Isvisible;
                 Image = Report2;
                 trigger OnAction()
                 var
@@ -80,10 +80,14 @@ pageextension 50117 POstedSalesInvocie_SG extends "Posted Sales Invoice"
     trigger OnAfterGetCurrRecord();
     var
     begin
-        if Rec.Project then
-            VisibleprojectAction := true
-        else
+        if Rec.Project then begin
+            VisibleprojectAction := true;
+            Isvisible := false;
+        end
+        else begin
             VisibleProjectAction := false;
+            Isvisible := true;
+        end;
     end;
     //     trigger OnAfterGetRecord()
 
@@ -94,13 +98,18 @@ pageextension 50117 POstedSalesInvocie_SG extends "Posted Sales Invoice"
     //             Isvisible := false;
     //     end;
 
-    //     trigger OnOpenPage()
-    // var
-    //     myInt: Integer;
-    // begin
-    //         if Rec.License = true then
-    //             Isvisible := true
-    //         else
-    //             Isvisible := false;
-    //     end;
+    trigger OnOpenPage()
+    var
+        myInt: Integer;
+    begin
+        if Rec.Project then
+        begin
+            VisibleprojectAction := true;
+            Isvisible := false;
+        end
+        else begin
+            VisibleProjectAction := false;
+            Isvisible := true;
+        end;
+    end;
 }
