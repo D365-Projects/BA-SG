@@ -36,5 +36,7 @@ permissionset 50100 GeneratedPermission
         page SalesInvoiceCuePage=X,
         page "Sherweb Invoices"=X,
         page Sherweb_Invoices=X,
-        page "Sherweb_Invoices(Archived)"=X;
+        page "Sherweb_Invoices(Archived)" = X,
+        report "Sales Tax Device- Invoice_SG" = X,
+        report "Sales Tax T&M- Invoice_SG" = X;
 }

@@ -110,36 +110,12 @@ pageextension 50117 POstedSalesInvocie_SG extends "Posted Sales Invoice"
         VisibleTMAction: Boolean;
         VisibleLicenseAction: Boolean;
 
-    trigger OnAfterGetCurrRecord();
-    var
+    trigger OnAfterGetCurrRecord()
     begin
-        if Rec.Project then begin
-            VisibleprojectAction := true;
-            VisibleTMAction := false;
-            VisibleDevicesAction := false;
-            VisibleLicenseAction := false;
-            CurrPage.Update();
-        end else if Rec.Device then begin
-            VisibleprojectAction := false;
-            VisibleTMAction := false;
-            VisibleLicenseAction := false;
-            VisibleDevicesAction := true;
-        end else if Rec."T&M" then begin
-            VisibleprojectAction := false;
-            VisibleTMAction := true;
-            VisibleDevicesAction := false;
-            VisibleLicenseAction := false;
-        end else if Rec."License" then begin
-            VisibleprojectAction := false;
-            VisibleTMAction := false;
-            VisibleDevicesAction := false;
-            VisibleLicenseAction := true;
-        end else begin
-            VisibleprojectAction := false;
-            VisibleTMAction := false;
-            VisibleDevicesAction := false;
-            VisibleLicenseAction := false;
-        end;
+        VisibleProjectAction := Rec.Project;
+        VisibleDevicesAction := Rec.Device;
+        VisibleTMAction := Rec."T&M";
+        VisibleLicenseAction := Rec.License;
     end;
     //     trigger OnAfterGetRecord()
 
@@ -150,23 +126,5 @@ pageextension 50117 POstedSalesInvocie_SG extends "Posted Sales Invoice"
     //             Isvisible := false;
     //     end;
 
-    trigger OnOpenPage()
-    var
-        myInt: Integer;
-    begin
-        if Rec.Project then
-        begin
-            VisibleprojectAction := true;
-            Isvisible := false;
-        end
-        else if Rec.License then begin
-            VisibleProjectAction := false;
-            Isvisible := true;
-        end
-        else begin
-            VisibleProjectAction := false;
-            Isvisible := false;
-        end;
 
-    end;
 }
