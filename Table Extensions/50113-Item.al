@@ -19,6 +19,10 @@ tableextension 50113 "Item EXt" extends Item
                     until invoSG.Next() = 0;
             end;
         }
+        field(50101; "Shareweb Item"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

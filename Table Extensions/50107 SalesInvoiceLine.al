@@ -52,7 +52,10 @@ tableextension 50107 SalesInvoiceLine extends "Sales Invoice Line"
         {
             DataClassification = ToBeClassified;
         }
-
+        field(50116; "Duration"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
 
     }
 

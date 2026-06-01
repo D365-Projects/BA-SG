@@ -455,25 +455,25 @@ codeunit 50106 "SalesInvoiceCreation_SG"
     local procedure InsertSalesLine(SalesHdr: Record "Sales Header"; InvSg: Record "Invoice SG"; Handle: Boolean)
     var
         NextLine: Integer;
-        UnitPriceday: Integer;
-        Day: Integer;
+        // UnitPriceday: Integer;
+        // Day: Integer;
         Saleslin: Record "Sales Line";
-        UnitPrice: Decimal;
+        // UnitPrice: Decimal;
         Cust: Record Customer;
         PriceListLine: Record "Price List Line";
-        EndOfMonth: Date;
+    // EndOfMonth: Date;
     begin
-        Clear(UnitPrice);
-        Clear(UnitPriceday);
-        Clear(Day);
-        Clear(EndOfMonth);
+        // Clear(UnitPrice);
+        // Clear(UnitPriceday);
+        // Clear(Day);
+        // Clear(EndOfMonth);
 
-        if InvSg.ServicePeriodTo <> 0D then begin
-            EndOfMonth := CalcDate('<CM>', InvSg.ServicePeriodTo);
-            UnitPriceday := InvSg.ServicePeriodTo - InvSg.ServicePeriodFrom + 1;
-            Day := Date2DMY(EndOfMonth, 1);
-            UnitPrice := (InvSg.ListPrice / Day) * UnitPriceday;
-        end;
+        // if InvSg.ServicePeriodTo <> 0D then begin
+        //     EndOfMonth := CalcDate('<CM>', InvSg.ServicePeriodTo);
+        //     UnitPriceday := InvSg.ServicePeriodTo - InvSg.ServicePeriodFrom + 1;
+        //     Day := Date2DMY(EndOfMonth, 1);
+        //     UnitPrice := (InvSg.ListPrice / Day) * UnitPriceday;
+        // end;
 
         Saleslin.Reset();
         Saleslin.SetCurrentKey("Line No.");
@@ -496,39 +496,39 @@ codeunit 50106 "SalesInvoiceCreation_SG"
         Saleslin.Details := InvSg.Description;
         if Handle then begin
             Saleslin."Service Period From" := InvSg.ServicePeriodFrom;
-            Saleslin."Service Period To" := InvSg.ServicePeriodTo;
+            Saleslin.Validate("Service Period To", InvSg.ServicePeriodTo);
         end;
+        // if Handle then
+        //     Saleslin.Validate("Unit Price", InvSg.ListPrice)
+        // else
+        Saleslin.Validate("Unit Price", InvSg.ListPrice);
 
-        Cust.Reset();
-        Cust.SetRange("No.", InvSg."Parent Customer");
-        if Cust.FindFirst() then begin
-            if Cust."Customer Price Group" <> '' then begin
-                PriceListLine.Reset();
-                PriceListLine.SetRange("Source Type", PriceListLine."Source Type"::"Customer Price Group");
-                PriceListLine.SetRange("Source Group", PriceListLine."Source Group"::Customer);
-                PriceListLine.SetRange("Asset Type", PriceListLine."Asset Type"::Item);
-                PriceListLine.SetRange("Assign-to No.", Cust."Customer Price Group");
-                PriceListLine.SetRange("Product No.", InvSg.SKU);
-                PriceListLine.SetRange("Currency Code", Cust."Currency Code");
-                PriceListLine.SetFilter("Starting Date", '<=%1', SalesHdr."Posting Date");
-                PriceListLine.SetFilter("Ending Date", '>=%1', SalesHdr."Posting Date");
-                if not PriceListLine.FindSet() then begin
-                    if Handle then
-                        Saleslin.Validate("Unit Price", UnitPrice)
-                    else
-                        Saleslin.Validate("Unit Price", InvSg.ListPrice);
-                end
-                else begin
-                    Saleslin.Validate("Unit Price", PriceListLine."Unit Price");
-                end;
-            end
-            else begin
-                if Handle then
-                    Saleslin.Validate("Unit Price", UnitPrice)
-                else
-                    Saleslin.Validate("Unit Price", InvSg.ListPrice);
-            end;
-        end;
+        // Cust.Reset();
+        // Cust.SetRange("No.", InvSg."Parent Customer");
+        // if Cust.FindFirst() then begin
+        //     if Cust."Customer Price Group" <> '' then begin
+        //         PriceListLine.Reset();
+        //         PriceListLine.SetRange("Source Type", PriceListLine."Source Type"::"Customer Price Group");
+        //         PriceListLine.SetRange("Source Group", PriceListLine."Source Group"::Customer);
+        //         PriceListLine.SetRange("Asset Type", PriceListLine."Asset Type"::Item);
+        //         PriceListLine.SetRange("Assign-to No.", Cust."Customer Price Group");
+        //         PriceListLine.SetRange("Product No.", InvSg.SKU);
+        //         PriceListLine.SetRange("Currency Code", Cust."Currency Code");
+        //         PriceListLine.SetFilter("Starting Date", '<=%1', SalesHdr."Posting Date");
+        //         PriceListLine.SetFilter("Ending Date", '>=%1', SalesHdr."Posting Date");
+        //         if not PriceListLine.FindSet() then begin
+        //             if Handle then
+        //                 Saleslin.Validate("Unit Price", UnitPrice)
+        //             else
+        //                 Saleslin.Validate("Unit Price", InvSg.ListPrice);
+        //         end
+        //         else begin
+        //             Saleslin.Validate("Unit Price", PriceListLine."Unit Price");
+        //         end;
+        // end
+        // else begin
+
+        // end;
         Saleslin.Modify();
     end;
 

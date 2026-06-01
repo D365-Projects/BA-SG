@@ -18,6 +18,10 @@ pageextension 50112 "PostedSalesInvoice EXT" extends "Posted Sales Invoice Subfo
             {
                 ApplicationArea = all;
             }
+            field(Duration; Rec.Duration)
+            {
+                ApplicationArea = all;
+            }
             field(Organization; Rec.Organization)
             {
                 ApplicationArea = all;

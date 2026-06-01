@@ -8,6 +8,10 @@ pageextension 50121 "Item EXT" extends "Item Card"
             {
                 ApplicationArea = all;
             }
+            field("Shareweb Item"; Rec."Shareweb Item")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 

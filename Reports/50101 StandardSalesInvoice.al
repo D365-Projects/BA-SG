@@ -483,6 +483,7 @@ report 50101 "Standard Sales - Invoice_SG"
                 column(LineNo_Line; "Line No.")
                 {
                 }
+                column(Duration; Duration) { }
                 column(SKU; SKU)
                 {
                 }
@@ -1302,7 +1303,7 @@ report 50101 "Standard Sales - Invoice_SG"
         layout("StandardSalesInvoice_SG.rdlc")
         {
             Type = RDLC;
-            LayoutFile = './Layouts/StandardSalesInvoice.rdlc';
+            LayoutFile = './Layouts/StandardSalesInvoice.rdl';
             Caption = 'Standard Sales Invoice SG(RDLC)';
             Summary = 'The Standard Sales Invoice SG(RDLC) is the most detailed layout and provides most flexible layout options.';
         }

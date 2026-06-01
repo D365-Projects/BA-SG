@@ -205,6 +205,8 @@ report 50121 "Sales Invoice_SG"
 
                     AutoFormatType = 1;
                 }
+                column(Duration; Duration)
+                { }
                 column(AmountIncludingVAT_Line_Lbl; FieldCaption("Amount Including VAT"))
                 {
 

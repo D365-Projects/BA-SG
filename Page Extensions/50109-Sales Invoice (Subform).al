@@ -13,6 +13,10 @@ pageextension 50109 "Sales Invoice Line" extends "Sales Invoice Subform"
                 ApplicationArea = all;
 
             }
+            field(Duration; Rec.Duration)
+            {
+                ApplicationArea = all;
+            }
             field(Organization; Rec.Organization)
             {
                 ApplicationArea = all;

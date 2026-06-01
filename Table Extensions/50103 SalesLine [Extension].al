@@ -18,7 +18,7 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
                 Saleshdr.SetRange("Document Type", Rec."Document Type");
                 if Saleshdr.FindFirst() then begin
                     Rec."Service Period From" := Saleshdr."Service Period From";
-                    Rec."Service Period To" := Saleshdr."Service Period To";
+                    Rec.Validate("Service Period To", Saleshdr."Service Period To");
                 end;
             end;
         }
@@ -31,11 +31,30 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
         {
             Caption = 'Service Period From';
             DataClassification = ToBeClassified;
+            Editable = false;
         }
         field(50103; "Service Period To"; Date)
         {
             Caption = 'Service Period To';
+            Editable = false;
             DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                ItemRec: Record Item;
+                TotalDaysInMonth: Integer;
+                CalcDuration: Integer;
+            begin
+                if rec."Document Type" = Rec."Document Type"::Invoice then begin
+                    ItemRec.Reset();
+                    ItemRec.SetRange("No.", Rec."No.");
+                    if ItemRec.FindFirst() then begin
+                        if ItemRec."Shareweb Item" then begin
+                            TotalDaysInMonth := Date2DMY(CalcDate('<CM>', "Service Period From"), 1);
+                            Validate(Duration, (("Service Period To" - "Service Period From") + 1) / TotalDaysInMonth);
+                        end;
+                    end;
+                end;
+            end;
         }
         field(50104; "Sales Margin_SG"; Decimal)
         {
@@ -98,6 +117,18 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
             Caption = 'Customer Subscription Contract';
             DataClassification = ToBeClassified;
             Editable = false;
+        }
+        field(50116; "Duration"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+            trigger OnValidate()
+            var
+                myInt: Integer;
+            begin
+                if (Quantity <> 0) and ("Unit Price" <> 0) then
+                    Rec.Validate("Line Amount", (Quantity * "Unit Price" * Duration));
+            end;
         }
 
     }
