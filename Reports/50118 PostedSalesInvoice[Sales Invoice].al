@@ -16,7 +16,11 @@ report 50118 "Standard Sales - Invoices_SG"
 
 
 
-
+            column(DummyCompanyBankName; DummyCompanyInfo."Bank Name") { }
+            column(DummyCompanyBankAcc; DummyCompanyInfo."Bank Account No.")
+            { }
+            column(DummyCompanyVATREG; DummyCompanyInfo."VAT Registration No.") { }
+            column(DummyCompanyRouting; DummyCompanyInfo."Payment Routing No.") { }
             column(CompanyPicture; DummyCompanyInfo.Picture)
             {
             }

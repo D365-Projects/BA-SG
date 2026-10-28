@@ -13,7 +13,11 @@ report 50121 "Sales Invoice_SG"
         {
             DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-
+            column(DummyCompanyBankName; DummyCompanyInfo."Bank Name") { }
+            column(DummyCompanyBankAcc; DummyCompanyInfo."Bank Account No.")
+            { }
+            column(DummyCompanyVATREG; DummyCompanyInfo."VAT Registration No.") { }
+            column(DummyCompanyRouting; DummyCompanyInfo."Payment Routing No.") { }
             column(CompanyPicture; DummyCompanyInfo.Picture)
             {
             }

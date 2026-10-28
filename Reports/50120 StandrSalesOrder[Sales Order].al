@@ -16,7 +16,11 @@ report 50120 "Sales Order_SG"
 
 
 
-
+            column(DummyCompanyBankName; DummyCompanyInfo."Bank Name") { }
+            column(DummyCompanyBankAcc; DummyCompanyInfo."Bank Account No.")
+            { }
+            column(DummyCompanyVATREG; DummyCompanyInfo."VAT Registration No.") { }
+            column(DummyCompanyRouting; DummyCompanyInfo."Payment Routing No.") { }
             column(CompanyPicture; DummyCompanyInfo.Picture)
             {
             }
@@ -424,7 +428,7 @@ report 50120 "Sales Order_SG"
         DaysCount: Integer;
         Months: Decimal;
         FirstDayOfMonth: Date;
-begin
+    begin
         if (FromDate = 0D) or (ToDate = 0D) then
             exit(0);
 

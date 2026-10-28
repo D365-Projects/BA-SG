@@ -49,8 +49,10 @@ tableextension 50103 SalesLineExtension extends "Sales Line"
                     ItemRec.SetRange("No.", Rec."No.");
                     if ItemRec.FindFirst() then begin
                         if ItemRec."Shareweb Item" then begin
-                            TotalDaysInMonth := Date2DMY(CalcDate('<CM>', "Service Period From"), 1);
-                            Validate(Duration, (("Service Period To" - "Service Period From") + 1) / TotalDaysInMonth);
+                            if "Service Period From" <> 0D then begin
+                                TotalDaysInMonth := Date2DMY(CalcDate('<CM>', "Service Period From"), 1);
+                                Validate(Duration, (("Service Period To" - "Service Period From") + 1) / TotalDaysInMonth);
+                            end;
                         end;
                     end;
                 end;
