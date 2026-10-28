@@ -2,11 +2,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "tenant": "178be757-55ea-4d1b-b30b-d57187b14a74",
             "name": "Microsoft cloud sandbox",
             "request": "launch",
             "type": "al",
             "environmentType": "Sandbox",
-            "environmentName": "SNB-BA-DEMO",
+            "environmentName": "SNB-BA",
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": "All",

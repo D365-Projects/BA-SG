@@ -45,10 +45,10 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
         {
             ShowMandatory = true;
         }
-        modify("Tax Exemption No.")
-        {
-            ShowMandatory = true;
-        }
+        // modify("Tax Exemption No.")
+        // {
+        //     ShowMandatory = true;
+        // }
         modify("Customer Posting Group")
         {
             ShowMandatory = true;
@@ -170,7 +170,7 @@ pageextension 50106 CustomerCardEx extends "Customer Card"
         Rec.TestField(County);
         rec.TestField("Currency Code");
         rec.TestField("Tax Area Code");
-        Rec.TestField("Tax Exemption No.");
-        Rec.TestField("Tax Liable");
+        // rec.TestField("Tax Exemption No.");
+        rec.TestField("Tax Liable");
     end;
 }
